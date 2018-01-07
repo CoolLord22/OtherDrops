@@ -1,0 +1,13 @@
+# Stop Mob Farming (config by Zarius)
+
+aliases:
+        # blockexplosion = tnt, burn = lava, fire, fire_tick
+        - tool: &environ [DAMAGE_BLOCK_EXPLOSION, DAMAGE_STARVATION, DAMAGE_BURN, DAMAGE_ENTITY_EXPLOSION, DAMAGE_CONTACT, DAMAGE_DROWNING, DAMAGE_FALL, DAMAGE_SUFFOCATION]
+        
+        - &environNoDrop
+          tool: *environ
+          drop: NOTHING
+          flags: UNIQUE    # this means that if this drop occurs - none of the others for this creature will.
+
+otherdrops:
+    ANY_CREATURE: [*environNoDrop]

@@ -1,0 +1,80 @@
+#### Undead Chaos - config file by Zarius
+
+## Warning: zombies/skeletons in this config multiply faster than they can be killed.  This is 
+## controlled however by only occuring at night, see default "time:" just below, and by not
+## multiplying when struck with a "holy" golden sword.
+
+## I will be refining this config as time goes on to better balance it.
+
+# This config could be good for a "theme night" of chaos :)
+
+defaults:
+    biomes: ALL
+    worlds: ALL
+    time: NIGHT 
+    # weather: 
+    # permissiongroup: 
+    # permissiongroupexcept: 
+
+otherdrops:
+#### Zombies can rise again as the undead
+        ZOMBIE:
+            - tool: ALL
+              toolexcept: GOLD_SWORD
+              drop: ZOMBIE
+              quantity: 1-2
+              chance: 30
+            - tool: ALL
+              toolexcept: GOLD_SWORD
+              drop: SKELETON
+              quantity: 1
+              chance: 10
+            - tool: ALL
+              toolexcept: GOLD_SWORD
+              drop: GIANT
+              quantity: 1
+              chance: 0.5
+
+##### Giants drop 1-2 diamonds, with any weapon only (todo: move this to a monsteritemdrop file later)
+        GIANT:
+            - tool: [ANY_SWORD, BOW, ARROW]
+              drop: DIAMOND
+              quantity: 1-2
+
+# Ghasts
+        GHAST:
+            - tool: ALL
+              drop: SKELETON
+              chance: 10
+            - tool: ALL
+              drop: COW # it ate a cow?
+              chance: 1
+              message: "Looks like that ghast ate a cow!"
+
+#### Skeletons 
+        SKELETON:
+            - tool: ALL
+              toolexcept: GOLD_SWORD
+              drop: SKELETON
+              quantity: 1-3
+              chance: 30
+
+#### Players have a change of dropping 1-2 Zombies or 1-2 Skeletons exclusively
+        PLAYER:
+            - tool: ALL
+              drop: ZOMBIE
+              quantity: 1-2
+              chance: 30
+              exclusive: 1
+            - tool: ALL
+              drop: SKELETON
+              quantity: 1-2
+              chance: 30
+              exclusive: 1
+
+### A particular group (eg. admins) could drop multiple skeletons
+#        PLAYERGROUP@Admin:
+#            - tool: ALL
+#              drop: SKELETON
+#              quantity: 1-3
+          

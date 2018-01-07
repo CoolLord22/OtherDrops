@@ -1,0 +1,142 @@
+otherdrops:
+##########
+# Drop Soulsand when you dig out
+# gravel with a golden shovel
+###
+        GRAVEL:
+            - tool: GOLD_SPADE
+              drop: SOUL_SAND
+              quantity: 1
+              damage: 4
+##########
+# Drop Glowstone Dust instead of
+# Redstone when mined with a golden pick
+# Note: redstone can also be glowing, so
+# specify both
+###
+        REDSTONE_ORE:
+            - tool: GOLD_PICKAXE
+              drop: GLOWSTONE_DUST
+              quantity: 4
+        GLOWING_REDSTONE_ORE:
+            - tool: GOLD_PICKAXE
+              drop: GLOWSTONE_DUST
+              quantity: 4
+##########
+# When you mine Gold with flint & steel,
+# it comes pre-smelted!
+###
+        GOLD_ORE:
+            - tool: FLINT_AND_STEEL
+              drop: GOLD_INGOT
+              quantity: 1
+##########
+# The leaves are now diamonds! (when punched)
+###
+        LEAVES:
+            - tool: AIR
+              drop: DIAMOND
+              quantity: 1
+              chance: 33
+##########
+# Generic leaves drop apples (on decay and harvest, higher chance for harvesting manually)
+###
+        LEAVES@GENERIC:
+            - action: LEAF_DECAY
+              drop: APPLE
+              quantity: 1
+              chance: 5
+            - tool: ALL
+              drop: APPLE
+              quantity: 1
+              chance: 15
+##########
+# Grass has a 5% chance of dropping seeds during day, 5% chance of dropping brown mushroom at night
+###
+        GRASS:
+            - tool: ALL
+              drop: SEEDS
+              quantity: 1-3
+              chance: 5
+              time: DAY
+            - tool: ALL
+              drop: BROWN_MUSHROOM
+              quantity: 1
+              chance: 5
+              time: NIGHT
+##########
+# Saddled pigs drop their saddles
+###
+        PIG@SADDLED:
+            - tool: ALL
+              drop: SADDLE
+              quantity: 1
+##########
+#  If you want to vary the drop for the furnace, you can still drop
+#  the contents using CONTENTS keyword
+###
+#    ANY_FURNACE:
+#        - tool: ANY
+#          drop: CONTENTS
+#        - tool: ANY_PICKAXE
+#          drop: COBBLESTONE
+#          quantity: 2
+##########
+## Were you wishing you could have "powered creepers at night in a thunderstorm" have a 66% chance to 
+## drop diamonds (accompanied by with a bolt of lightning) only when hit with a golden sword? Now you can :D
+        CREEPER@POWERED:
+            - tool: GOLD_SWORD
+              drop: DIAMOND
+              quantity: 10
+              chance: 66
+              time: NIGHT
+              weather: THUNDER
+              event: LIGHTNING
+#
+## Unfortunately the lighting also zaps the diamonds :/  (will fix if I can) 
+##########
+#
+#       GRASS:
+## find money in the grass only during a clear day (can't see as well as
+## at night or raining)
+            - tool: ALL
+              drop: MONEY
+              quantity: 2
+              chance: 5
+              message: ["Someone dropped their change in the grass.","It's your lucky day - found some change."]
+              time: DAY
+              weather: CLEAR
+## chance of a mushroom at night whilst raining
+            - tool: ALL
+              drop: BROWN_MUSHROOM
+              quantity: 1
+              chance: 10
+              time: NIGHT
+              weather: RAIN
+## chance of a diamond at night during a thunderstorm accompanied by
+## a thunderstrike (which also destroys the diamond - oh well :D)
+            - tool: ALL
+              drop: DIAMOND
+              chance: 5
+              time: NIGHT
+              weather: THUNDER
+              event: LIGHTNING
+#
+###########
+# Permissions:
+# In the example below you need to give the player or group the
+# 'otherdrops.custom.glass' permission to drop the glass block.
+# Giving them 'otherdrops.custom.glass.pain' as well will add the pain
+# and giving 'otherdrops.custom.glass.*' will give both.
+#########
+#    GLASS:         
+#        - tool: ANY
+#          drop: GLASS
+#          quantity: 1
+#          permissions: "glass"
+#        - tool: AIR
+#          drop: NOTHING
+#          damageattacker: 2
+#          permissions: "glass.pain"
+#          message: "Ouch! That hurt."
+#          chance: 25

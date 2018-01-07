@@ -1,0 +1,23 @@
+bin/*
+bin-test/*
+.classpath
+.project
+.settings/*
+builds/*
+doc/*
+*.*~
+OtherDrops.jar
+OtherDrops/events/*.jar
+lib/bukkit*.jar
+.eclipse-build
+# Mac filesystem dust
+.DS_Store
+*/.DS_Store
+src/com/gmail/zariust/bukkit/.DS_Store
+src/com/gmail/zariust/bukkit/obevents/.DS_Store
+
+# Ignore plugin.yml as generated from plugin.yml.template
+rsrc/plugin.yml
+
+# Ignore version file this file is locally updated
+version.properties

@@ -1,0 +1,190 @@
+defaults:
+
+# TODO: mobs drop wornout armor
+otherdrops:
+    CLAY:
+        - tool: ANY
+          drop: SLIME
+          chance: 1
+          message: ["The slimy creature seems perturbed that you removed it's home."]
+    LEAVES:
+        - action: LEAF_DECAY
+          drop: stick
+          chance: 25
+        - tool: ANY_HOE
+          drop: APPLE
+          chance: 1
+        - tool: ANY_HOE
+          drop: LEAVES
+          chance: 100
+    BOOKSHELF:
+        - tool: ALL
+          drop: BOOKSHELF
+    BOAT:
+        - tool: ALL
+          drop: BOAT
+    GLASS:
+        - tool: ALL
+          drop: GLASS
+    CREEPER:
+        - tool: ANY_SWORD
+          drop: TNT
+          chance: 1
+          message: ["You slice through the green monster so quickly, it's explosive brain falls out."]
+    SPIDER:
+        - tool: ANY_SWORD
+          drop: WEB
+          chance: 1
+          message: ["Puncturing the abdomen of the arachnid reveals it's sticky web glands."]
+    SKELETON:
+        - tool: ANY_SWORD
+          drop: BOW
+          chance: 1
+        - tool: ANY_SWORD
+          drop: CHAINMAIL_HELMET
+          chance: .25
+          message: ["A little dusty, but this chainmail helmet might look good on you."]
+        - tool: ANY_SWORD
+          drop: CHAINMAIL_CHESTPLATE
+          chance: .25
+          message: ["The rusty rings of this chainmail chestplate might offer a little protection"]
+        - tool: ANY_SWORD
+          drop: CHAINMAIL_LEGGINGS
+          chance: .25
+          message: ["Unfortunately, the undergarments disintegrated long ago."]
+        - tool: ANY_SWORD
+          drop: CHAINMAIL_BOOTS
+          chance: .25
+          message: ["You really should shake the toe bones out from these boots."]
+    PIG_ZOMBIE:
+        - tool: ANY_SWORD
+          drop: GOLD_SWORD
+          chance: .25
+          message: ["A former warrior king, trapped forever in Hell."]
+        - tool: ANY_SWORD
+          drop: GOLD_SPADE
+          chance: .25
+          message: ["An opulent sceptre..."]
+        - tool: ANY_SWORD
+          drop: GOLD_PICKAXE
+          chance: .25
+          message: ["A Trophy...Useless as a tool."]
+        - tool: ANY_SWORD
+          drop: GOLD_AXE
+          chance: .25
+          message: ["Shiny...But silly..."]
+        - tool: ANY_SWORD
+          drop: GOLD_HELMET
+          chance: .25
+          message: ["A crown falls!"]
+        - tool: ANY_SWORD
+          drop: GOLD_CHESTPLATE
+          chance: .25
+          message: ["It's only for show..."]
+        - tool: ANY_SWORD
+          drop: GOLD_LEGGINGS
+          chance: .25
+          message: ["I like his style."]
+        - tool: ANY_SWORD
+          drop: GOLD_BOOTS
+          chance: .25
+          message: ["Spit Shined!"]
+        - tool: ANY_SWORD
+          drop: GOLD_HOE
+          chance: .25
+          message: ["It won't make the food taste any better."]
+    SQUID:
+        - tool: ANY
+          drop: FISHING_ROD
+          chance: 2
+          message: ["Looks like you got the one who got away."]
+        - tool: ANY
+          drop: GOLD_INGOT
+          chance: .25
+          message: ["Neptune's treasure! Too bad it's not Ariel."]
+        - tool: ANY
+          drop: IRON_INGOT
+          chance: .5
+          message: ["An old piece of anchor."]
+        - tool: ANY
+          drop: FLINT_AND_STEEL
+          chance: 1
+          message: ["This did him no good underwater."]
+        - tool: ANY
+          drop: GOLD_RECORD
+          chance: 1
+          message: ["Hopefully this is not a song from Under The Sea."]
+        - tool: ANY
+          drop: BOAT
+          chance: 2
+          message: ["The Kraken's gullet was a lot bigger than perceived."]
+        - tool: ANY
+          drop: RAW_FISH
+          chance: 50
+          message: ["Well, waste not, want not."]
+    ZOMBIE:
+        - tool: ANY_SWORD
+          drop: IRON_SWORD
+          chance: .25
+          message: ["Rusty, but the edge is true."]
+        - tool: ANY_SWORD
+          drop: IRON_SPADE
+          chance: .25
+          message: ["The poor miner's friend."]
+        - tool: ANY_SWORD
+          drop: IRON_PICKAXE
+          chance: .25
+          message: ["Let's hope you don't receive the same fate as this ghoul miner."]
+        - tool: ANY_SWORD
+          drop: IRON_AXE
+          chance: .25
+          message: ["This ghoul must have been a lumberjack."]
+        - tool: ANY_SWORD
+          drop: IRON_HOE
+          chance: .25
+          message: ["Hopefully what caused the demise of this farmer was not in his crops."]
+        - tool: ANY_SWORD
+          drop: IRON_HELMET
+          chance: .25
+          message: ["You slice the head clean from the zombie's shoulders!"]
+        - tool: ANY_SWORD
+          drop: IRON_CHESTPLATE
+          chance: .25
+          message: ["A little snug, but it should do if you suck in."]
+        - tool: ANY_SWORD
+          drop: IRON_LEGGINGS
+          chance: .25
+          message: ["A little short; but you go wading a lot anyway."]
+        - tool: ANY_SWORD
+          drop: IRON_BOOTS
+          chance: .25
+          message: ["10 and a half...You know what they say about zombies with big feet."]
+        - tool: ANY_SWORD
+          drop: COMPASS
+          chance: .12
+          message: ["Maybe this will help you keep from wandering the shambler's same path."]
+        - tool: ANY_SWORD
+          drop: WATCH
+          chance: .25
+          message: ["Slashing the monster's hand off, his gold watch is yours more easily now."]
+    GHAST:
+        - tool: ANY
+          drop: DIAMOND_SWORD
+          chance: .12
+          message: ["The Ghost gives up a most precious weapon!"]
+        - tool: ANY
+          drop: DIAMOND_HELMET
+          chance: .12
+          message: ["A Helmet of Diamond!"]
+        - tool: ANY
+          drop: DIAMOND_CHESTPLATE
+          chance: .12
+          message: ["You will feel invincible; if you can get that."]
+        - tool: ANY
+          drop: DIAMOND_LEGGINGS
+          chance: .12
+          message: ["The ultimate protection for your lower half."]
+        - tool: ANY
+          drop: DIAMOND_BOOTS
+          chance: .12
+          message: ["No polishing required."]

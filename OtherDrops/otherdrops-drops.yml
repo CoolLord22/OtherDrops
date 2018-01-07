@@ -1,0 +1,48 @@
+include-files: 
+##########
+# The plugin will scan through and load these files after loading the main config below.
+# Note: drops from included files will are inclusive and will all be added to the drop list.
+##########
+#  - includes/od-fix_undroppables.yml    # fix glass, bookshelf, boat and stairs drops
+#  - includes/od-goldtools-basic.yml     # allow gold tools chance to get ice, glowstone and grass
+#  - includes/od-goldtools-smelt.yml     # gold-pickaxe smelts ores to ingots, sand to glass, etc
+#  - includes/od-ore_extraction.yml      # allow ores to be "extracted" - leaving behind the stone
+#  - includes/od-leaf_overhaul.yml       # overhaul leaf drops (apples, cocoa beans, leaves, sticks & a very small chance of golden apple)
+#  - includes/od-playerdeath_zombie.yml  # players drop zombies on death
+#  - includes/od-undead_chaos.yml        # the undead shall rise again! Includes players dropping zombies/skeletons
+#  - includes/od-random_examples.yml     # For crazy testing only :) Read through examples before activating.
+#  - includes/od-dyewool.yml             # Dye wool after placing!
+#  - includes/od-stop_mob_farms.yml      # Stop mob farming!
+
+## Other users overhauls
+#  - includes/overhaul-catballs.yml     # great example/playable config from Catballs (disable "ob" configs before using this one, otherwise you might have too many drops)
+#  - includes/overhaul-zarius.yml       # Zar's messy config (I run this with no other includes, at the moment)
+    
+## Add your files here (alternatively just add your custom drops to the bottom of this file)
+#  - my_custom_file1.yml
+
+
+aliases:
+##########	
+# add custom YAML aliases here (advanced customisation) - see the wiki for more information
+
+defaults:
+##########	
+# add default values for the config below, "include-files" have their own "defaults" sections
+
+
+otherdrops:
+##########	
+# Your changes here, or create a new .yml file and include it above in the "include-files" section
+# Explore the included config files for many more examples
+#
+# If make a interesting or crazy config let me know on the forum and I might include it in the next release.
+#
+# Example:
+#    GLASS:
+#        - drop: GLASS
+#          
+#        - drop: MONEY
+#          quantity: 3-15
+#          message: You recycled the glass for %q dollars.
+

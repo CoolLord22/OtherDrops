@@ -1,0 +1,98 @@
+#######################
+# Config ##############
+#######################
+# Set this to "low" to reduce number of boot messages or to high, highest, extreme for more debugging info
+verbosity: normal
+
+#######################
+# Number of decimal places to round money drops off to (for the drop and message)
+money-precision: 2
+
+#######################
+# Disable anonymous logging - set this to true if you get errors in older Tekkit or Bukkit versions on startup
+disable_metrics: false
+
+#######################
+# Restore standard config/include files if they are deleted
+restore_deleted_config_files: true
+
+
+
+#######################
+# Enchantments ########
+#######################
+# Ignore level: allow enchantments to ignore start and/or max level (eg. dig_speed#50)
+# note: enchantments_ignore_level requires enchantments_use_unsafe to be true
+
+enchantments_ignore_level: false
+
+# Use unsafe: allow any enchantment on any item/tool (eg. DIRT@!DAMAGE_ALL#3)
+
+enchantments_use_unsafe: false
+####
+
+
+
+#######################
+# Drops ###############
+#######################
+# Set this to false if you don't want blocks to drop their custom configs upon explosions (eg. tnt/creepers)
+customdropsforexplosions: true
+
+#######################
+# Set this to false if you want items to drop as a single stack (true=individual item drops, like lapis drops from lapis ore)
+default_dropspread: true
+
+#######################
+# Set this to true if you want XP drops to be cancelled when configuring mob drops (unless there is a default drop)
+# - this means you need to set an XP drop yourself if you want any XP to drop
+disable_xp_on_non_default: false
+
+#######################
+# Allow any replacement block (by default non-safe replacements, eg. items, are blocked as they will crash the client)
+allow_any_replacementblock: false
+
+#######################
+# Custom blockbreak events that don't drop the default are cancelled, therefore mcMMO won't generate XP for that break
+# This setting tells OtherDrops to manually send these cancelled events to mcMMO, gathering mcMMO-XP & any double-drops, etc.
+send_customblockbreak_to_mcmmo: true
+
+#######################
+## Override Defaults ##
+##
+money_overrides_default: false  # set true to have money drops override default drops
+xp_overrides_default: false     # set true to have xp drops override default drops
+loot_overrides_default: true    # set true to have loot (anything other than money or xp, includes mobs) drops override default drops
+####
+
+
+
+#######################
+# Misc ################
+#######################
+# Override explosion cap (normally capped at max power 100f to avoid crashing server)
+override_explosion_cap: false
+# Action radius - radius to consider for message, potioneffect, sound, damage & pset actions
+action_radius: 10
+
+#######################
+# Color log messages - disable if they annoy you
+color_log_messages: true
+
+#######################
+# OtherDrops will stop spawning new mobs if the number of living entities in the current world is higher
+# this only affects the mobspawn trigger
+custom_spawn_limit: 300
+
+
+
+#######################
+# Time & date format ##
+#######################
+# For message variables (${time} & ${date})
+# see http://docs.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
+# for full details
+#
+time_format: "HH:mm:ss"
+date_format: "yyyy/MM/dd"
+####

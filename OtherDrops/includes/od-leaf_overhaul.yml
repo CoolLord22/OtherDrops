@@ -1,0 +1,93 @@
+defaults:
+
+otherdrops:
+#### Tree leaves drop apples & sticks (birch leaves drop cocoa beans) - very low chance of golden apple
+
+# Note: an average normal tree may have around 50 leaves
+# This means a 0.5% chance = 1 apple per 4 trees on average
+# Consider how many trees players chop down when changing this chance
+
+# Note2: for special "Apple Trees" see the AppleSeed plugin
+# (I combine this rare standard drop with apple trees from that)
+  LEAVES@GENERIC:
+    - action: LEAF_DECAY
+      drop: GOLDEN_APPLE
+      chance: 0.006
+    - action: LEAF_DECAY
+      drop: APPLE
+      chance: 0.5
+    - action: LEAF_DECAY
+      drop: STICK
+      chance: 0.5
+    - action: LEAF_DECAY
+      drop: LEAVES
+      chance: 0.5
+      color: GENERIC
+    - tool: ALL
+      drop: APPLE
+      chance: 2
+    - tool: ALL
+      drop: STICK
+      chance: 3
+    - tool: ALL
+      drop: GOLDEN_APPLE
+      chance: 0.02
+      message: "A §Egolden§F apple falls from the tree!"
+    - tool: ALL
+      drop: LEAVES
+      chance: 1
+      color: GENERIC
+  LEAVES@BIRCH:
+    - action: LEAF_DECAY
+      drop: STICK
+      chance: 2
+    - action: LEAF_DECAY
+      drop: LEAVES
+      chance: 0.5
+      color: BIRCH
+    - tool: ALL
+      drop: STICK
+      chance: 5
+    - tool: ALL
+      drop: LEAVES
+      chance: 1
+      color: BIRCH
+  LEAVES@REDWOOD:
+    - action: LEAF_DECAY
+      drop: STICK
+      chance: 2
+    - action: LEAF_DECAY
+      drop: LEAVES
+      chance: 0.5
+      color: REDWOOD
+    - tool: ALL
+      drop: STICK
+      chance: 5
+    - tool: ALL
+      drop: LEAVES
+      chance: 1
+      color: REDWOOD
+  LEAVES@JUNGLE:
+    - action: LEAF_DECAY
+      drop: STICK
+      chance: 2
+    - action: LEAF_DECAY
+      drop: LEAVES
+      chance: 0.5
+      color: JUNGLE
+    - tool: ALL
+      drop: STICK
+      chance: 5
+    - tool: ALL
+      drop: LEAVES
+      chance: 1
+      color: JUNGLE
+    - action: LEAF_DECAY
+      drop: INK_SACK
+      color: BROWN
+      chance: 0.5
+    - tool: ALL
+      drop: INK_SACK
+      color: BROWN
+      chance: 2
+

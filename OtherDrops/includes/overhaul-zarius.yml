@@ -1,0 +1,360 @@
+
+otherdrops:
+
+##########
+# Drop Glowstone Dust instead of
+# Redstone when mined with a golden pick
+# Note: redstone can also be glowing, so
+# specify both
+###
+  ANY_REDSTONE_ORE:
+      - tool: GOLD_PICKAXE
+        drop: GLOWSTONE_DUST
+        quantity: 4
+  COAL_ORE:
+      - tool: ANY_PICKAXE
+        drop: COAL_ORE
+        chance: 0.5
+        message: As you dig you manage to pry away a large chunk of unbroken coal.
+
+#### Giants ####
+  GIANT:
+      - tool: [ANY_SWORD, PROJECTILE_ARROW]
+        drop: DIAMOND
+        quantity: 1
+  CREEPER@POWERED:
+      - tool: ANY_SWORD
+        drop: DIAMOND
+        quantity: 1-2
+  CREEPER@UNPOWERED:
+      - tool: ALL
+        drop: COAL
+        quantity: 1
+        chance: 100
+      - tool: ALL
+        drop: CREEPER@POWERED
+        quantity: 1
+        message: WOAH! Watch out!
+        chance: 1
+      - tool: ANY_SWORD
+        drop: SULPHUR
+        quantity: 1
+        chance: 50
+      - tool: ANY_SWORD
+        drop: DIAMOND
+        quantity: 1
+        chance: 2
+  SQUID:
+      - tool: ALL
+        drop: NOTHING
+      - tool: ANY_SWORD
+        drop: INK_SACK
+      - tool: DAMAGE_FIRE
+        drop: INK_SACK
+        chance: 10
+#### Spiders ####
+  SPIDER:
+      - tool: ALL
+        drop: NOTHING
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: WEB
+        quantity: 1
+        chance: 10
+        time: NIGHT
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: STRING
+        quantity: 1
+        chance: 50
+
+  PIG_ZOMBIE:
+      - tool: ANY_SWORD
+        drop: GOLD_SWORD@RANGE-15-30
+        chance: 5
+      - tool: ANY_SWORD
+        drop: GOLD_INGOT
+        chance: 1
+
+
+#### Zombies can rise again as the undead (10% seems about right)
+  ZOMBIE:
+      - tool: ALL
+        drop: NOTHING
+        quantity: 1
+        chance: 100
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: COOKIE
+        quantity: 1-3
+        chance: 70
+      - tool: ALL
+        drop: SKELETON
+        quantity: 1
+        chance: 10
+# Ghasts drop slimes
+  GHAST:
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: SLIME_BALL
+        quantity: 5-10
+        chance: 66
+#### Skeletons sometimes drop their bow and/or quiver, also 20% chance of an extra bone drop (in addition to regular drop) and sometimes rise again (7%)
+  SKELETON:
+      - tool: ALL
+        drop: NOTHING
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: BOW
+        quantity: 1
+        chance: 1
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: ARROW
+        quantity: 12
+        chance: 10
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: FEATHER
+        quantity: 3
+        chance: 10
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: FLINT
+        quantity: 2
+        chance: 3
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: BONE
+        quantity: 1
+        chance: 20
+      - tool: ALL
+        drop: SKELETON
+        quantity: 1
+        chance: 10
+      - tool: ANY_SWORD
+        drop: CHAINMAIL_HELMET@35-66
+        chance: 1
+      - tool: ANY_SWORD
+        drop: CHAINMAIL_CHESTPLATE@55-95
+        chance: 1
+      - tool: ANY_SWORD
+        drop: CHAINMAIL_LEGGINGS@55-91
+        chance: 1
+      - tool: ANY_SWORD
+        drop: CHAINMAIL_BOOTS@40-78
+        chance: 1
+#### Allow harvesting slimeballs from mossy cobblestone with a gold pickaxe
+  MOSSY_COBBLESTONE:
+      - tool: GOLD_PICKAXE
+        drop: COBBLESTONE
+        quantity: 1
+      - tool: GOLD_PICKAXE
+        drop: SLIME_BALL
+        quantity: 1
+        chance: 30
+#### Can't find coal?  Just keep digging (low chance of coal from stone)
+  STONE:
+      - tool: ANY_PICKAXE
+        drop: DEFAULT
+      - tool: ANY_PICKAXE
+        drop: COAL
+        chance: 0.1
+        message: You found a little coal in that stone.
+
+#### Ideas:
+#### Rare slime from dirt?
+#### Bookshelves drop bookshelves? (check if this is fixed in 1.5)
+#### Fix:: stairs drop stairs
+#### Sometimes things get dropped in the sand - low chance of stick (driftwood), very low chance of watch or compass
+  SAND:
+      - tool: ALL
+        drop: SAND
+        chance: 100
+
+      - tool: ALL
+        drop: WATCH
+        chance: 0.01
+        message: Looks like someone dropped their watch in the sand.
+
+      - dropgroup: mapcompass
+        chance: 0.01
+        drops:
+          - tool: ALL
+            drop: COMPASS
+            message: Looks like someone dropped their compass in the sand.
+          - tool: ALL
+            drop: MAP
+            color: 9
+            message: Looks like someone dropped their map in the sand.
+        
+      - tool: ALL
+        drop: STICK
+        chance: 0.4
+        message: You found some driftwood in the sand.
+
+
+#### Logs are occasionally slimey and sometimes "stick"y :)
+  LOG:
+      - tool: ALL
+        drop: DEFAULT
+
+      - tool: ALL
+        drop: STICK
+        quantity: 4
+        chance: 2
+
+      - tool: ALL
+        drop: SLIME_BALL
+        quantity: 1
+        chance: 0.3
+        message: ["That log seemed a bit slimey."]
+
+#### Tree leaves drop apples & sticks (birch leaves drop cocoa beans) - very low chance of golden apple
+  LEAVES@GENERIC:
+      - action: LEAF_DECAY
+        drop: GOLDEN_APPLE
+        chance: 0.006
+      - action: LEAF_DECAY
+        drop: APPLE
+        chance: 0.5
+      - action: LEAF_DECAY
+        drop: STICK
+        chance: 0.5
+      - action: LEAF_DECAY
+        drop: LEAVES
+        chance: 0.5
+        color: GENERIC
+      - tool: ALL
+        drop: APPLE
+        chance: 2
+      - tool: ALL
+        drop: STICK
+        chance: 3
+      - tool: ALL
+        drop: GOLDEN_APPLE
+        chance: 0.02
+      - tool: ALL
+        drop: LEAVES
+        chance: 1
+        color: GENERIC
+  LEAVES@BIRCH:
+      - action: LEAF_DECAY
+        drop: STICK
+        chance: 2
+      - action: LEAF_DECAY
+        drop: INK_SACK
+        color: BROWN
+        chance: 3
+      - action: LEAF_DECAY
+        drop: LEAVES
+        chance: 0.5
+        color: BIRCH
+      - tool: ALL
+        drop: STICK
+        chance: 5
+      - tool: ALL
+        drop: INK_SACK
+        color: BROWN
+        chance: 10
+      - tool: ALL
+        drop: LEAVES
+        chance: 1
+        color: BIRCH
+  LEAVES@REDWOOD:
+      - action: LEAF_DECAY
+        drop: STICK
+        chance: 2
+      - action: LEAF_DECAY
+        drop: LEAVES
+        chance: 0.5
+        color: REDWOOD
+      - tool: ALL
+        drop: STICK
+        chance: 5
+      - tool: ALL
+        drop: LEAVES
+        chance: 1
+        color: REDWOOD
+
+
+##########
+# Glass drops glass
+###
+  # Glassdrop - glass drops glass, however hitting with hands will hurt
+  GLASS:
+      - tool: ANY
+        drop: GLASS
+      - tool: AIR
+        drop: NOTHING # note: glass will be dropped as per above "ANY" block
+        damageattacker: 1-2
+        message: "Ouch! Breaking glass with your bare hands hurts."
+        chance: 50
+      - tool: ANY
+        toolexcept: GOLD_PICKAXE
+        drop: NOTHING
+        exclusive: 1
+        chance: 10
+        message: "Aw, the glass broke... (you might be more careful with a gold pickaxe)."
+##########
+# Bookshelves drop bookshelves (with axe)
+###
+  BOOKSHELF:
+      - tool: ANY_AXE
+        drop: BOOKSHELF
+        quantity: 1
+
+# Stairs drop stairs rather than a block
+  WOOD_STAIRS:
+      - tool: ANY_AXE
+        drop: WOOD_STAIRS
+  COBBLESTONE_STAIRS:
+      - tool: ANY_PICKAXE
+        drop: COBBLESTONE_STAIRS
+  BOAT:
+      - tool: ALL
+        drop: BOAT
+
+
+#### Optionals (any tool you want, or ALL - using gold tools gives them more of a use)
+  ICE:
+      - tool: GOLD_PICKAXE
+        drop: ICE
+        chance: 50
+  GRASS:
+      - tool: GOLD_SPADE
+        drop: GRASS
+        chance: 30
+  GLOWSTONE:
+      - tool: GOLD_PICKAXE
+        drop: GLOWSTONE
+        chance: 40
+
+  MOB_SPAWNER:
+      - tool: ALL
+        drop: NOTHING
+        chance: 1
+        message: "The mob spawner broke as you tried to retrieve it."
+
+  SLIME:
+      - tool: ALL
+        drop: SLIME_BALL
+        chance: 30
+        exclusive: 1
+      - tool: ANY_SWORD
+        drop: SLIME_BALL
+        chance: 60
+        exclusive: 1
+
+  CREEPER:
+      - tool: ALL
+        drop: NOTHING
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: SAND
+
+  COW:
+      - tool: ALL
+        drop: NOTHING
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: DEFAULT
+  SHEEP:
+      - tool: ALL
+        drop: NOTHING
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: DEFAULT
+  PIG:
+      - tool: ALL
+        drop: NOTHING
+      - tool: [ANY_SWORD, BOW, ARROW]
+        drop: DEFAULT   

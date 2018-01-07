@@ -1,0 +1,21 @@
+defaults:
+
+otherdrops:
+#### Optionals 
+# (any tool you want, or ALL - using gold tools gives them more of a use, 
+#   keeping chance low makes players work for these special items)
+
+        ICE:
+            - tool: GOLD_PICKAXE
+              drop: ICE
+              chance: 40
+            - world: world_nether
+              drop: NOTHING        # disable ice dropping water in the nether
+        GRASS:
+            - tool: GOLD_HOE
+              drop: GRASS
+              chance: 20
+        GLOWSTONE:
+            - tool: GOLD_PICKAXE
+              drop: GLOWSTONE
+              chance: 30

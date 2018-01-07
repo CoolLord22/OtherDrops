@@ -1,0 +1,33 @@
+# Gold tools have a chance to smelt ores (yes, I like chances but you can change to 100% if you want :D
+# by Zarius
+
+defaults:
+  biomes: ALL
+  worlds: ALL
+  # time: 
+  # weather: 
+  # permissiongroup: 
+  # permissiongroupexcept: 
+  
+otherdrops:
+  LOG: 
+    - tool: GOLD_AXE
+      drop: CHARCOAL
+      chance: 70
+  SAND:
+    - tool: GOLD_SPADE
+      drop: GLASS
+      chance: 50
+      damagetool: 2
+  IRON_ORE:
+    - tool: GOLD_PICKAXE
+      drop: IRON_INGOT
+      chance: 40
+  GOLD_ORE:
+    - tool: GOLD_PICKAXE
+      drop: GOLD_INGOT
+      chance: 20
+  GLOWSTONE:
+    - tool: GOLD_PICKAXE
+      drop: GLOWSTONE
+      chance: 30

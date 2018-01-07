@@ -1,0 +1,47 @@
+name: OtherDrops
+main: com.gmail.zariust.otherdrops.OtherDrops
+version: @build.major@.@build.minor@.@build.revision@
+builddate: @build.date-refer to version.properties for details@
+author: Zarius
+authors: [cyklo, Celtic Minstrel]
+website: http://dev.bukkit.org/server-mods/otherdrops/
+commands:
+    od:
+        description: Administrate the OtherDrops plugin
+        aliases: [otherdrops, odreload, odr, odshow, ods, ode, o, odd, odi, odst, odt, odc]
+        usage: |
+            OtherDrops (configure anything to drop anything) 
+            §7version: @build.major@.@build.minor@.@build.revision@ built: @build.date@
+
+            (/odr) /od reload - reload config
+            (/odi) /od id - show data values for item held in hand
+            (/odd) /od drop <string> - parse the string and drop relevant item/mob
+            /od (enable|disable) - turn OtherDrops on or off (will reset on server reload)
+            /od show <block> - show custom drops for particular blocktype
+            /od settings - show current global settings
+
+softdepend:
+  - BigBrother
+  - WorldGuard
+  - LogBlock
+  - HawkEye
+  - Vault
+  - Multiverse-Core
+  - CoreProtect
+permissions:
+    otherdrops.admin.id:
+        default: op
+        description: Gives permission to ID items (show name@data).
+    otherdrops.admin.reloadconfig:
+        default: op
+        description: Gives permission to reload the config files for OtherDrops.
+    otherdrops.admin.show:
+        default: op
+        description: Gives permission to show the registered drops.
+    otherdrops.admin.drop:
+        default: op
+        description: Gives permission to use drop command (/odd).
+    otherdrops.admin.enabledisable:
+        default: op
+        description: Gives permission to turn OtherDrops on and off.
+        

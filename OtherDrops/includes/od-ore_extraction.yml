@@ -1,0 +1,43 @@
+defaults:
+
+otherdrops:
+    # The goal of this module is to allow a server to set ore to seem to be "extracted"
+    # from stone, leaving behind the stone.  Drops should be set to equal the default drops
+    # (as "replacementblock" cannot work with drop: DEFAULT) --> is this still accurate?
+    
+    COAL_ORE:
+        - replacementblock: STONE
+          drop: COAL
+          tool: ANY_PICKAXE
+    IRON_ORE:
+        - replacementblock: STONE
+          drop: IRON_INGOT
+          tool: [STONE_PICKAXE, IRON_PICKAXE, DIAMOND_PICKAXE]
+          
+    GOLD_ORE:
+        - replacementblock: STONE
+          drop: GOLD_INGOT
+          tool: [IRON_PICKAXE, DIAMOND_PICKAXE]
+    DIAMOND_ORE:
+        - replacementblock: STONE
+          drop: DIAMOND
+          tool: [IRON_PICKAXE, DIAMOND_PICKAXE]
+    LAPIS_ORE:
+        - replacementblock: STONE
+          drop: DYE@BLUE
+          quantity: 4-8
+          dropspread: true
+          tool: [STONE_PICKAXE, IRON_PICKAXE, DIAMOND_PICKAXE]
+    REDSTONE_ORE:
+        - replacementblock: STONE
+          drop: REDSTONE
+          quantity: 4-5
+          dropspread: true
+          tool: [IRON_PICKAXE, DIAMOND_PICKAXE]
+    GLOWING_REDSTONE_ORE:
+        - replacementblock: STONE
+          drop: REDSTONE
+          quantity: 4-5
+          dropspread: true
+          tool: [IRON_PICKAXE, DIAMOND_PICKAXE]
+    

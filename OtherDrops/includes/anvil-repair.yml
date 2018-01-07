@@ -1,0 +1,54 @@
+# 0 1  2  3 -> New
+# 4 5  6  7 -> Slightly Damaged
+# 8 9 10 11 -> Badly Damaged
+
+otherdrops:
+  ANVIL@4:
+    - action: LEFTCLICK
+      replacementblock: ANVIL@0
+      event: LIGHTNING@HARMLESS
+      tool: IRON_INGOT
+      consumetool: 1
+  ANVIL@5:
+    - action: LEFTCLICK
+      replacementblock: ANVIL@1
+      event: LIGHTNING@HARMLESS
+      tool: IRON_INGOT
+      consumetool: 1
+  ANVIL@6:
+    - action: LEFTCLICK
+      replacementblock: ANVIL@2
+      event: LIGHTNING@HARMLESS
+      tool: IRON_INGOT
+      consumetool: 1
+  ANVIL@7:
+    - action: LEFTCLICK
+      replacementblock: ANVIL@3
+      event: LIGHTNING@HARMLESS
+      tool: IRON_INGOT
+      consumetool: 1
+  ANVIL@8:
+    - action: LEFTCLICK
+      replacementblock: ANVIL@4
+      event: LIGHTNING@HARMLESS
+      tool: IRON_INGOT
+      consumetool: 1
+  ANVIL@9:
+    - action: LEFTCLICK
+      replacementblock: ANVIL@5
+      event: LIGHTNING@HARMLESS
+      tool: IRON_INGOT
+      consumetool: 1
+  ANVIL@10:
+    - action: LEFTCLICK
+      replacementblock: ANVIL@6
+      event: LIGHTNING@HARMLESS
+      tool: IRON_INGOT
+      consumetool: 1
+  ANVIL@11:
+    - action: LEFTCLICK
+      replacementblock: ANVIL@7
+      event: LIGHTNING@HARMLESS
+      tool: IRON_INGOT
+      consumetool: 1
+

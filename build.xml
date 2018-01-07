@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<project name="OtherDrops" basedir="." default="build">
+	    <property name="lib" location="lib" />
+	    <property name="src" location="src" />
+	    <property name="rsrc" location="rsrc" />
+
+	    <!--
+	    Include Ant-Contrib tasks
+	    See: http://ant-contrib.sourceforge.net/tasks/tasks/
+	    -->
+	    <taskdef resource="net/sf/antcontrib/antlib.xml">
+	        <classpath>
+	            <pathelement location="${lib}/ant-contrib-1.0b3.jar" />
+	        </classpath>
+	    </taskdef>
+
+	    <!--/
+	    Auto-increment revision number and build date.
+	    -->
+	    <propertyfile file="version.properties">
+	        <entry key="build.revision.number" type="int" operation="+" value="1" pattern="00" />
+	        <entry key="build.date" type="date" value="now" />
+	    </propertyfile>
+
+	    <property file="version.properties" />
+
+	    <!--
+	    Copy the template to live file and replace build date and version number fields.
+	    -->
+	    <copy file="rsrc/plugin.yml.template" tofile="rsrc/plugin.yml" overwrite="true" />
+	    <replace file="rsrc/plugin.yml" value="value not found in version.properties" propertyFile="version.properties">
+	        <replacefilter token="@build.date-refer to version.properties for details@" property="build.date" />
+	        <replacefilter token="@build.date@" property="build.date" />
+	        <replacefilter token="@build.major@" property="build.major.number" />
+	        <replacefilter token="@build.minor@" property="build.minor.number" />
+	        <replacefilter token="@build.revision@" property="build.revision.number" />
+	    </replace>
+
+	    <!--
+	    Read in the version number from the .yml file.
+	    Ensures the zip has the same version as the actual plugin.yml.
+	    -->
+	    <loadfile srcFile="${rsrc}/plugin.yml" property="otherdrops.version">
+	        <filterchain>
+	            <linecontainsregexp>
+	                <regexp pattern="^version:\s*.*$" />
+	            </linecontainsregexp>
+	            <tokenfilter>
+	                <replaceregex pattern="^version:\s*(.*)$" replace="\1" />
+	            </tokenfilter>
+	            <striplinebreaks />
+	        </filterchain>
+	    </loadfile>
+
+	    <!--
+	    Find latest Bukkit jar in lib directory
+	    You may manually override this property by setting lib.bukkit.version
+	    on the command line using the -D switch, e.g.:
+	    
+	    $ ant -Dlib.bukkit.version="0.0.1-r746" build
+	    -->
+	    <last id="lib.bukkit.jar">
+	        <sort>
+	            <fileset dir="${lib}" includes="bukkit-*.jar" />
+	        </sort>
+	    </last>
+	    <property name="lib.bukkit.jar" refid="lib.bukkit.jar" />
+	    <propertyregex property="lib.bukkit.version" input="${lib.bukkit.jar}" regexp="([\d\.-R]+-r\d+)\.jar$" select="\1" />
+
+	    <property name="output-jar" value="${ant.project.name}.jar" />
+	    <property name="events-dir" value="${ant.project.name}/events" />
+
+	    <property name="debuglevel" value="source,lines" />
+
+	    <!-- These custom settings work if you set them to run before any other build targets -->
+	    <target name="celtic">
+	        <property name="dependencies" value="../lib" />
+	        <property name="lib.bukkit" location="${dependencies}/bukkit.jar" />
+	        <property name="export-dir" value="../../plugins/" />
+	        <property name="economy-dir" value="${dependencies}/economy" />
+	        <property name="iConomy" value="iConomy" />
+	    </target>
+
+	    <target name="zarius">
+	        <property name="dependencies" value="dependencies" />
+	        <property name="lib.bukkit" location="lib/bukkit.jar" />
+	        <property name="export-dir" value="/home/zarius/Games/Minecraft/Servers/Ifami/Testing/plugins/" />
+	    </target>
+
+	    <!-- Default setting (if custom setting above not set) -->
+	    <target name="default">
+	        <property name="lib.bukkit" location="${lib}/bukkit.jar" />
+	        <property name="dependencies" value="dependencies" />
+	        <property name="economy-dir" value="${dependencies}/EconomyRegister" />
+	        <property name="iConomy" value="iCo" />
+	    </target>
+
+	    <target name="init" depends="default">
+	        <echo message="Building ${ant.project.name} ${otherdrops.version} against Bukkit ${lib.bukkit.version}..." />
+	        <mkdir dir="bin" />
+	        <!--<copy file="${src}/plugin.yml" todir="bin" />-->
+
+	        <property name="bigbrother-location" value="${dependencies}/BigBrother.jar" />
+	        <property name="logblock-location" value="${dependencies}/LogBlock.jar" />
+	        <property name="coreprotect-location" value="${dependencies}/CoreProtect.jar" />
+	        <property name="mobarena-location" value="${dependencies}/MobArena.jar" />
+	        <property name="moneydrop-location" value="${dependencies}/MoneyDrop.jar" />
+	        <property name="heroes-location" value="${dependencies}/Heroes.jar" />
+	        <property name="worldguard-location" value="${dependencies}/WorldGuard.jar" />
+	        <property name="worldedit-location" value="${dependencies}/WorldEdit.jar" />
+	        <property name="hawkeye-location" value="${dependencies}/HawkEye.jar" />
+	        <property name="vault-location" value="${dependencies}/Vault.jar" />
+	        <property name="regenblock-location" value="${dependencies}/RegenBlock.jar" />
+            <property name="prism-location" value="${dependencies}/Prism.jar" />
+            <property name="rpgitems-location" value="${dependencies}/rpgitems.jar" />
+            <property name="mcmmo-location" value="${dependencies}/mcMMO.jar" />
+
+
+	        <path id="classpath">
+	            <pathelement location="bin" />
+	            <pathelement location="${lib.bukkit}" />
+	            <pathelement location="${logblock-location}" />
+	            <pathelement location="${coreprotect-location}" />
+	            <pathelement location="${bigbrother-location}" />
+	            <pathelement location="${mobarena-location}" />
+	            <pathelement location="${moneydrop-location}" />
+	            <pathelement location="${heroes-location}" />
+	            <pathelement location="${worldguard-location}" />
+	            <pathelement location="${worldedit-location}" />
+	            <pathelement location="${hawkeye-location}" />
+	            <pathelement location="${vault-location}" />
+	            <pathelement location="${regenblock-location}" />
+                <pathelement location="${prism-location}" />
+                <pathelement location="${rpgitems-location}" />
+                <pathelement location="${mcmmo-location}" />
+	        </path>
+	    </target>
+
+	    <target name="clean">
+	        <delete dir="bin" />
+	        <delete dir="${ant.project.name}/events" includes="**/*" />
+	        <delete file="${output-jar}" />
+	        <delete dir="builds" />
+	    </target>
+
+	    <target name="build" depends="init">
+	        <echo message="${ant.project.name}: ${ant.file}" />
+	        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeAntRuntime="no">
+	            <src path="${src}" />
+	            <classpath refid="classpath" />
+	        </javac>
+	    </target>
+
+	    <target name="jar" depends="build">
+	        <!-- The event jars -->
+	        <jar destfile="${events-dir}/Weather.jar">
+	            <fileset dir="bin">
+	                <include name="**/odspecials/LightningEvent.*" />
+	                <include name="**/odspecials/StormEvent.*" />
+	                <include name="**/odspecials/ThunderEvent.*" />
+	                <include name="**/odspecials/WeatherEvents.*" />
+	            </fileset>
+	            <fileset dir="${rsrc}/Weather/" includes="event.info" />
+	        </jar>
+	        <jar destfile="${events-dir}/Trees.jar">
+	            <fileset dir="bin">
+	                <include name="**/odspecials/TreeEvent.*" />
+	                <include name="**/odspecials/TreeEvents.*" />
+	            </fileset>
+	            <fileset dir="${rsrc}/Trees/" includes="event.info" />
+	        </jar>
+	        <jar destfile="${events-dir}/Explosions.jar">
+	            <fileset dir="bin">
+	                <include name="**/odspecials/ExplosionEvents.*" />
+	                <include name="**/odspecials/ExplodeEvent.*" />
+	            </fileset>
+	            <fileset dir="${rsrc}/Explosions/" includes="event.info" />
+	        </jar>
+	        <jar destfile="${events-dir}/Sheep.jar">
+	            <fileset dir="bin">
+	                <include name="**/odspecials/SheepEvents.*" />
+	                <include name="**/odspecials/ShearEvent.*" />
+	                <include name="**/odspecials/DyeEvent.*" />
+	            </fileset>
+	            <fileset dir="${rsrc}/Sheep/" includes="event.info" />
+	        </jar>
+	        <jar destfile="${output-jar}">
+	                <fileset dir="bin/" excludes="**/odspecials/*.class" />
+	                <fileset dir="rsrc/" includes="plugin.yml" />
+                    <fileset dir="OtherDrops/" />
+	        </jar>
+
+	    </target>
+
+	    <target name="dist" depends="clean,build,jar">
+	        <!-- Dist no longer needed? The jar is now our distribution.
+	        
+	        <property name="zipfile" value="builds/${ant.project.name}_${otherdrops.version}.zip" />
+	        <zip destfile="${zipfile}" basedir="." includes="${output-jar} ${ant.project.name}/" /> 
+	        
+	        -->
+	    	
+	    </target>
+
+	    <!-- "export-dir" parameter needs to be defined in a custom settings build target -->
+	    <target name="test" depends="jar" if="export-dir">
+	        <copy file="${output-jar}" todir="${export-dir}" />
+	    	
+	    	<!-- Yes, still need to copy the events files in case they have been updated. -->
+	        <copy todir="${export-dir}/OtherDrops/events">
+	            <fileset dir="${events-dir}" />
+	        </copy>
+	        <property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
+	        <echo>Current build number:${build.number}</echo>
+	    </target>
+
+	</project>

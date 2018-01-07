@@ -1,0 +1,14 @@
+defaults:
+
+otherdrops:
+  PLAYER:
+    - tool: ALL
+      drop: ZOMBIE
+      quantity: 1
+
+### A particular group (eg. admins) could drop skeletons
+#    PLAYERGROUP@Admin:
+#        - tool: ALL
+#          drop: SKELETON
+#          quantity: 1
+          
