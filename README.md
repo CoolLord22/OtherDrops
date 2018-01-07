@@ -19,7 +19,7 @@ you need to download a Bukkit build and place into the `lib` folder - rename it 
 
 Then build using your IDE or:
 
-    $ ant build
+    $ ant jar
 
 Use `ant -p` to see a complete list of Ant tasks.
 
