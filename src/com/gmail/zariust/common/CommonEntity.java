@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.SpectralArrow;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.EnderPearl;
@@ -33,6 +34,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.ThrownExpBottle;
 import org.bukkit.entity.ThrownPotion;
+import org.bukkit.entity.TippedArrow;
 import org.bukkit.entity.WitherSkull;
 import org.bukkit.entity.minecart.PoweredMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
@@ -116,9 +118,13 @@ public final class CommonEntity {
     public static Material getProjectileType(Entity e) {
         if (!(e instanceof Projectile)) return null;
 
-        // Arrow, Egg, EnderPearl, Fireball, Fish, LargeFireball, SmallFireball, Snowball, ThrownExpBottle, ThrownPotion, WitherSkull
+        // Arrow, Egg, EnderPearl, Fireball, Fish, LargeFireball, SmallFireball, Snowball, ThrownExpBottle, ThrownPotion, WitherSkull, SpectralArrow, and TippedArrow
         if (e instanceof Arrow)
             return Material.ARROW;
+        if (e instanceof SpectralArrow)
+            return Material.SPECTRAL_ARROW;
+        if (e instanceof TippedArrow)
+            return Material.TIPPED_ARROW;
         if (e instanceof Egg)
             return Material.EGG;
         if (e instanceof EnderPearl)
