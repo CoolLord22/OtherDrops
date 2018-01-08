@@ -99,7 +99,9 @@ public class ProjectileAgent implements Agent {
     private static LivingSubject getShooterAgent(Projectile missile) {
         // Get the LivingAgent representing the shooter, which could be null, a
         // CreatureAgent, or a PlayerAgent
-        LivingEntity shooter = (LivingEntity) missile.getShooter();
+    	LivingEntity shooter = null;
+    	if (missile.getShooter() instanceof LivingEntity)
+    		shooter = (LivingEntity) missile.getShooter();
         if (shooter == null)
             return null;
         else if (shooter instanceof Player)
@@ -266,6 +268,10 @@ public class ProjectileAgent implements Agent {
             mat = Material.FISHING_ROD;
         else if (name.equals("ARROW"))
             mat = Material.ARROW;
+        else if (name.equals("SPECTRALARROW"))
+            mat = Material.SPECTRAL_ARROW;
+        else if (name.equals("TIPPEDARROW"))
+            mat = Material.TIPPED_ARROW;
         else if (name.equals("ANY"))
             mat = null;
         else {
@@ -312,7 +318,7 @@ public class ProjectileAgent implements Agent {
                     HIGH);
             return null;
         }
-        if (agent.getShooter() != null)
+        if (agent.getShooter() instanceof LivingEntity)
             return ((LivingEntity) agent.getShooter()).getLocation();
         return null;
     }
