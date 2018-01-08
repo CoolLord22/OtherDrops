@@ -14,7 +14,7 @@ Building from source
 
 These instructions assume you have already forked and/or cloned the project and have on your computer.
 
-Rename `version.properties.rename_me` to `version.properties` and adjust the version numbers appropriately (see inside the file for more details).
+Rename `version.properties.CHANGEME` to `version.properties` and adjust the version numbers appropriately (see inside the file for more details).
 
 OtherDrops comes with most dependencies already stored in the repository (for simplicity) however
 you need to download a Bukkit build and place into the `lib` folder - rename it to `bukkit.jar`
