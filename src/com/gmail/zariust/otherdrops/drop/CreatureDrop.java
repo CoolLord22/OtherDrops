@@ -219,7 +219,7 @@ public class CreatureDrop extends DropType {
             String displayName) {
 
         try {
-            String versionString = Bukkit.getBukkitVersion().substring(0, 3)
+            String versionString = Bukkit.getBukkitVersion().substring(0, 6)
 
                     .replaceAll("[.]", "");
             int bukkitVersion = Integer.valueOf(versionString);
