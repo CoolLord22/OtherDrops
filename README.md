@@ -6,7 +6,7 @@ customize what blocks and dead mobs drop when they are destroyed. Apples from
 leaves, no more broken glass, and much, much more.
 
 Please see the project page for full details here: <http://dev.bukkit.org/server-mods/otherdrops/>
-
+Please see the spigot page for more download information here: <https://www.spigotmc.org/resources/otherdrops-updated.51793/>
 Building from source
 --------------------
 
