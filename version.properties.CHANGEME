@@ -7,8 +7,8 @@
 # as this will make it easier to track versions
 
 build.major.number=3
-build.minor.number=1-CoolLord22
+build.minor.number=1
 
 # Don't change these (as they are auto-calculated)
-build.revision.number=05
+build.revision.number=00
 build.date=2018/01/08 14\:33
