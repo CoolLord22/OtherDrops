@@ -2,126 +2,133 @@
 # By Celtic Minstrel
 
 defaults:
-    biomes: ALL
     worlds: ALL
-    action: RIGHT_CLICK
-
-aliases:
-  - &bleach
-    tool: DYE@WHITE
-    replacementblock: WOOL@WHITE
-    consumetool: 1
+    trigger: RIGHT_CLICK
 
 otherdrops:
-    WOOL@WHITE:
-      - tool: DYE@RED
-        replacementblock: WOOL@RED
+    35@0:
+      - tool: 351@1
+        replacementblock: 35@14
         consumetool: 1
-      - tool: DYE@GREEN
-        replacementblock: WOOL@GREEN
+      - tool: 351@2
+        replacementblock: 35@13
         consumetool: 1
-      - tool: DYE@BLUE
-        replacementblock: WOOL@BLUE
+      - tool: 351@4
+        replacementblock: 35@11
         consumetool: 1
-      - tool: DYE@CYAN
-        replacementblock: WOOL@CYAN
+      - tool: 351@6
+        replacementblock: 35@9
         consumetool: 1
-      - tool: DYE@MAGENTA
-        replacementblock: WOOL@MAGENTA
+      - tool: 351@13
+        replacementblock: 35@2
         consumetool: 1
-      - tool: DYE@YELLOW
-        replacementblock: WOOL@YELLOW
+      - tool: 351@11
+        replacementblock: 35@4
         consumetool: 1
-      - tool: DYE@PINK
-        replacementblock: WOOL@PINK
+      - tool: 351@9
+        replacementblock: 35@6
         consumetool: 1
-      - tool: DYE@LIME
-        replacementblock: WOOL@LIME
+      - tool: 351@10
+        replacementblock: 35@5
         consumetool: 1
-      - tool: DYE@LIGHT_BLUE
-        replacementblock: WOOL@LIGHT_BLUE
+      - tool: 351@12
+        replacementblock: 35@3
         consumetool: 1
-      - tool: DYE@BROWN
-        replacementblock: WOOL@BROWN
+      - tool: 351@3
+        replacementblock: 35@12
         consumetool: 1
-      - tool: DYE@ORANGE
-        replacementblock: WOOL@ORANGE
+      - tool: 351@14
+        replacementblock: 35@1
         consumetool: 1
-      - tool: DYE@PURPLE
-        replacementblock: WOOL@PURPLE
+      - tool: 351@5
+        replacementblock: 35@10
         consumetool: 1
-      - tool: DYE@SILVER
-        replacementblock: WOOL@SILVER
+      - tool: 351@7
+        replacementblock: 35@8
         consumetool: 1
-      - tool: DYE@GRAY
-        replacementblock: WOOL@GRAY
+      - tool: 351@8
+        replacementblock: 35@7
         consumetool: 1
-      - tool: DYE@BLACK
-        replacementblock: WOOL@BLACK
+      - tool: 351@0
+        replacementblock: 35@15
         consumetool: 1
-    WOOL@RED:
-      - tool: DYE@YELLOW
-        replacementblock: WOOL@ORANGE
+    35@14:
+      - tool: 351@11
+        replacementblock: 35@1
         consumetool: 1
-      - tool: DYE@BLUE
-        replacementblock: WOOL@PURPLE
+      - tool: 351@4
+        replacementblock: 35@10
         consumetool: 1
-      - tool: DYE@WHITE
-        replacementblock: WOOL@PINK
+      - tool: 351@15
+        replacementblock: 35@6
         consumetool: 1
-    WOOL@GREEN:
-      - tool: DYE@BLUE
-        replacementblock: WOOL@CYAN
+    35@13:
+      - tool: 351@4
+        replacementblock: 35@9
         consumetool: 1
-      - tool: DYE@WHITE
-        replacementblock: WOOL@LIME
+      - tool: 351@15
+        replacementblock: 35@5
         consumetool: 1
-    WOOL@BLUE:
-      - tool: DYE@GREEN
-        replacementblock: WOOL@CYAN
+    35@11:
+      - tool: 351@2
+        replacementblock: 35@9
         consumetool: 1
-      - tool: DYE@RED
-        replacementblock: WOOL@PURPLE
+      - tool: 351@1
+        replacementblock: 35@10
         consumetool: 1
-      - tool: DYE@WHITE
-        replacementblock: WOOL@LIGHT_BLUE
+      - tool: 351@15
+        replacementblock: 35@3
         consumetool: 1
-    WOOL@CYAN:
-      - *bleach
-    WOOL@MAGENTA:
-      - *bleach
-    WOOL@YELLOW:
-      - tool: DYE@RED
-        replacementblock: WOOL@ORANGE
+    35@9:
+      - tool: 351@15
+        replacementblock: 35@0
         consumetool: 1
-      - *bleach
-    WOOL@PINK:
-      - tool: DYE@PURPLE
-        replacementblock: WOOL@MAGENTA
+    35@2:
+      - tool: 351@15
+        replacementblock: 35@0
         consumetool: 1
-      - *bleach
-    WOOL@LIME:
-      - *bleach
-    WOOL@LIGHT_BLUE:
-      - *bleach
-    WOOL@BROWN:
-      - tool: DYE@WHITE
-        replacementblock: WOOL@ORANGE
+    35@4:
+      - tool: 351@1
+        replacementblock: 35@1
         consumetool: 1
-    WOOL@ORANGE:
-      - *bleach
-    WOOL@PURPLE:
-      - tool: DYE@PINK
-        replacementblock: WOOL@MAGENTA
+      - tool: 351@15
+        replacementblock: 35@0
         consumetool: 1
-      - *bleach
-    WOOL@SILVER:
-      - *bleach
-    WOOL@GRAY:
-      - tool: DYE@WHITE
-        replacementblock: WOOL@SILVER
+    35@6:
+      - tool: 351@5
+        replacementblock: 35@2
         consumetool: 1
-    WOOL@BLACK:
-      - tool: DYE@WHITE
-        replacementblock: WOOL@GRAY
+      - tool: 351@15
+        replacementblock: 35@0
+        consumetool: 1
+    35@5:
+      - tool: 351@15
+        replacementblock: 35@0
+        consumetool: 1
+    35@3:
+      - tool: 351@15
+        replacementblock: 35@0
+        consumetool: 1
+    35@1:
+      - tool: 351@15
+        replacementblock: 35@0
+        consumetool: 1
+    35@10:
+      - tool: 351@9
+        replacementblock: 35@2
+        consumetool: 1
+      - tool: 351@15
+        replacementblock: 35@0
+        consumetool: 1
+    35@8:
+      - tool: 351@15
+        replacementblock: 35@0
+        consumetool: 1
+    35@7:
+      - tool: 351@15
+        replacementblock: 35@8
+        consumetool: 1
+    35@15:
+      - tool: 351@15
+        replacementblock: 35@7
         consumetool: 1
