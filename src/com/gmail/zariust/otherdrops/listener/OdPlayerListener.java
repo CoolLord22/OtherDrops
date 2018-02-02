@@ -24,6 +24,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.Log;
@@ -43,6 +44,9 @@ public class OdPlayerListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         // Deliberately processing cancelled events as a click into air
         // is always "cancelled" and we want to catch that event
+        if (event.getHand() == EquipmentSlot.OFF_HAND) {
+            return; // off hand packet, ignore.
+        }
         if (event.isCancelled() && (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             Log.logInfo("Cancelled event but not AIR - skipping.", Verbosity.HIGHEST);
             return;
