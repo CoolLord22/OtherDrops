@@ -6,7 +6,7 @@ bin-test/*
 builds/*
 doc/*
 *.*~
-OtherDrops.jar
+OtherDrops-*.jar
 OtherDrops/events/*.jar
 lib/bukkit*.jar
 .eclipse-build
