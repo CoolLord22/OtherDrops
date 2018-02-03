@@ -1,9 +1,8 @@
 name: OtherDrops
 main: com.gmail.zariust.otherdrops.OtherDrops
-version: @build.major@.@build.minor@.@build.revision@
-builddate: @build.date-refer to version.properties for details@
+version: <Version>
 author: Zarius
-authors: [cyklo, Celtic Minstrel]
+authors: [<Name>, Updated by CoolLord22]
 website: http://dev.bukkit.org/server-mods/otherdrops/
 commands:
     od:
@@ -11,7 +10,7 @@ commands:
         aliases: [otherdrops, odreload, odr, odshow, ods, ode, o, odd, odi, odst, odt, odc]
         usage: |
             OtherDrops (configure anything to drop anything) 
-            §7version: @build.major@.@build.minor@.@build.revision@ built: @build.date@
+            §7version: <Version> - <Name>
 
             (/odr) /od reload - reload config
             (/odi) /od id - show data values for item held in hand

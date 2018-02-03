@@ -18,6 +18,3 @@ src/com/gmail/zariust/bukkit/obevents/.DS_Store
 
 # Ignore plugin.yml as generated from plugin.yml.template
 rsrc/plugin.yml
-
-# Ignore version file this file is locally updated
-version.properties

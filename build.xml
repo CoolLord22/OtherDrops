@@ -14,28 +14,6 @@
 	        </classpath>
 	    </taskdef>
 
-	    <!--/
-	    Auto-increment revision number and build date.
-	    -->
-	    <propertyfile file="version.properties">
-	        <entry key="build.revision.number" type="int" operation="+" value="1" pattern="00" />
-	        <entry key="build.date" type="date" value="now" />
-	    </propertyfile>
-
-	    <property file="version.properties" />
-
-	    <!--
-	    Copy the template to live file and replace build date and version number fields.
-	    -->
-	    <copy file="rsrc/plugin.yml.template" tofile="rsrc/plugin.yml" overwrite="true" />
-	    <replace file="rsrc/plugin.yml" value="value not found in version.properties" propertyFile="version.properties">
-	        <replacefilter token="@build.date-refer to version.properties for details@" property="build.date" />
-	        <replacefilter token="@build.date@" property="build.date" />
-	        <replacefilter token="@build.major@" property="build.major.number" />
-	        <replacefilter token="@build.minor@" property="build.minor.number" />
-	        <replacefilter token="@build.revision@" property="build.revision.number" />
-	    </replace>
-
 	    <!--
 	    Read in the version number from the .yml file.
 	    Ensures the zip has the same version as the actual plugin.yml.
@@ -203,15 +181,5 @@
 	    </target>
 
 	    <!-- "export-dir" parameter needs to be defined in a custom settings build target -->
-	    <target name="test" depends="jar" if="export-dir">
-	        <copy file="${output-jar}" todir="${export-dir}" />
-	    	
-	    	<!-- Yes, still need to copy the events files in case they have been updated. -->
-	        <copy todir="${export-dir}/OtherDrops/events">
-	            <fileset dir="${events-dir}" />
-	        </copy>
-	        <property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
-	        <echo>Current build number:${build.number}</echo>
-	    </target>
 
 	</project>
