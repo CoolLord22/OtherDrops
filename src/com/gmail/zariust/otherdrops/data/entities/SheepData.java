@@ -74,7 +74,7 @@ public class SheepData extends CreatureData {
     }
 
     public static CreatureData parseFromString(String state) {
-        Log.logInfo("SheepData: parsing from string: ", Verbosity.HIGHEST);
+        Log.logInfo("SheepData: parsing from string.", Verbosity.HIGHEST);
         Boolean adult = null;
         Boolean sheared = null;
         DyeColor color = null;
