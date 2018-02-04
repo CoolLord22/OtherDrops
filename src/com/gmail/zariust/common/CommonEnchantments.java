@@ -220,6 +220,9 @@ public class CommonEnchantments {
             }
         }
 
+        if (matchCount != toolEnchs.size())
+            return false;
+
         if (matchCount != customEnchs.size())
             return false;
 
