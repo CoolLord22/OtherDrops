@@ -97,20 +97,22 @@ public class SheepData extends CreatureData {
                     adult = true;
                 else if (subAge.contains("!baby"))
                     adult = false;
+                else {
+                	adult = null;
+                }
             }
             
             for (String subShear : splitShear) {
             	subShear = subShear.toLowerCase().replaceAll("[\\s-_]", "");
 
                 if (subShear.contains("!sheared"))
-                	if(adult)
-                		sheared = true;
-                	if(!adult) {
-                		Log.logWarning("FATAL: Sheep is set to sheared, but is also set as baby! Please fix! Temporarily setting Sheep as unsheared.");
-                		sheared = false;
-                	}
+                	sheared = true;
                 else if (subShear.contains("!unsheared"))
                 	sheared = false;
+                else {
+                	sheared = null;
+                }
+                	
             }
             
             for (String subColor : splitColor) {
@@ -118,52 +120,68 @@ public class SheepData extends CreatureData {
                 if (subColor.contains("!white"))
                 	color = DyeColor.WHITE;
                 
-                if (subColor.contains("!orange"))
+                else if (subColor.contains("!orange"))
                 	color = DyeColor.ORANGE;
                 
-                if (subColor.contains("!magenta"))
+                else if (subColor.contains("!magenta"))
                 	color = DyeColor.MAGENTA;
                 
-                if (subColor.contains("!lightblue"))
+                else if (subColor.contains("!lightblue"))
                 	color = DyeColor.LIGHT_BLUE;
                 
-                if (subColor.contains("!yellow"))
+                else if (subColor.contains("!yellow"))
                 	color = DyeColor.YELLOW;
                 
-                if (subColor.contains("!lime"))
+                else if (subColor.contains("!lime"))
                 	color = DyeColor.LIME;
                 
-                if (subColor.contains("!pink"))
+                else if (subColor.contains("!pink"))
                 	color = DyeColor.PINK;
                 
-                if (subColor.contains("!gray"))
+                else if (subColor.contains("!gray"))
                 	color = DyeColor.GRAY;
                 
-                if (subColor.contains("!silver"))
+                else if (subColor.contains("!silver"))
                 	color = DyeColor.SILVER;
                 
-                if (subColor.contains("!cyan"))
+                else if (subColor.contains("!cyan"))
                 	color = DyeColor.CYAN;
                 
-                if (subColor.contains("!purple"))
+                else if (subColor.contains("!purple"))
                 	color = DyeColor.PURPLE;
                 
-                if (subColor.contains("!blue"))
+                else if (subColor.contains("!blue"))
                 	color = DyeColor.BLUE;
                 
-                if (subColor.contains("!brown"))
+                else if (subColor.contains("!brown"))
                 	color = DyeColor.BROWN;
                 
-                if (subColor.contains("!green"))
+                else if (subColor.contains("!green"))
                 	color = DyeColor.GREEN;
                 
-                if (subColor.contains("!red"))
+                else if (subColor.contains("!red"))
                 	color = DyeColor.RED;
                 
-                if (subColor.contains("!black"))
+                else if (subColor.contains("!black"))
                 	color = DyeColor.BLACK;
                 
+                else {
+                	color = null;
+                }
+                
             }
+        }
+        if(sheared) {
+        	if(!adult) {
+        		Log.logWarning("FATAL: Sheep is set as BABY and SHEARED, an impossible combination. This drop will NOT occur!");
+                return new SheepData(sheared, color, adult);
+        	}
+        	else if(adult) {
+                return new SheepData(sheared, color, adult);
+        	}
+        }
+        else {
+            return new SheepData(sheared, color, adult);		
         }
 
         return new SheepData(sheared, color, adult);
