@@ -171,18 +171,6 @@ public class SheepData extends CreatureData {
                 
             }
         }
-        if(sheared) {
-        	if(!adult) {
-        		Log.logWarning("FATAL: Sheep is set as BABY and SHEARED, an impossible combination. This drop will NOT occur!");
-                return new SheepData(sheared, color, adult);
-        	}
-        	else if(adult) {
-                return new SheepData(sheared, color, adult);
-        	}
-        }
-        else {
-            return new SheepData(sheared, color, adult);		
-        }
 
         return new SheepData(sheared, color, adult);
     }
