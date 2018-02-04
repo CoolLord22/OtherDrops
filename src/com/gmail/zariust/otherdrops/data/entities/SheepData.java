@@ -15,14 +15,14 @@ import com.gmail.zariust.otherdrops.data.Data;
 public class SheepData extends CreatureData {
     Boolean     sheared = null; // null = wildcard
     DyeColor    color   = null;
-    AgeableData ageData = null;
+    Boolean     adult = null;
 
-    public SheepData(Boolean sheared, DyeColor color, AgeableData ageData) {
+    public SheepData(Boolean sheared, DyeColor color, Boolean adult) {
         this.sheared = sheared;
         this.color = color;
         if (color != null)
             data = color.getWoolData();
-        this.ageData = ageData;
+        this.adult = adult;
     }
 
     @Override
@@ -34,7 +34,9 @@ public class SheepData extends CreatureData {
                     z.setSheared(true);
             if (color != null)
                 z.setColor(color);
-            ageData.setOn(mob, owner);
+            if (adult != null)
+                if (!adult)
+                    z.setBaby();
         }
     }
 
@@ -42,10 +44,11 @@ public class SheepData extends CreatureData {
     public boolean matches(Data d) {
         if (!(d instanceof SheepData))
             return false;
+        
         SheepData vd = (SheepData) d;
-
-        if (!ageData.matches(vd.ageData))
-            return false;
+        if (this.adult != null)
+            if (this.adult != vd.adult)
+                return false;
 
         if (this.sheared != null)
             if (this.sheared != vd.sheared)
@@ -62,7 +65,7 @@ public class SheepData extends CreatureData {
         if (entity instanceof Sheep) {
             return new SheepData(((Sheep) entity).isSheared(),
                     ((Sheep) entity).getColor(),
-                    (AgeableData) AgeableData.parseFromEntity(entity));
+                    (((Sheep) entity).isAdult()));
         } else {
             Log.logInfo("SheepData: error, parseFromEntity given different creature - this shouldn't happen.");
             return null;
@@ -71,35 +74,99 @@ public class SheepData extends CreatureData {
     }
 
     public static CreatureData parseFromString(String state) {
-        Log.logInfo("SheepData: parsing from string.", Verbosity.HIGHEST);
+        Log.logInfo("SheepData: parsing from string: ", Verbosity.HIGHEST);
+        Boolean adult = null;
         Boolean sheared = null;
         DyeColor color = null;
 
-        AgeableData ageData = (AgeableData) AgeableData.parseFromString(state);
-
         if (!state.isEmpty() && !state.equals("0")) {
-            String split[] = state
+            String splitAge[] = state
+                    .split(OtherDropsConfig.CreatureDataSeparator);
+            
+            String splitShear[] = state
+                    .split(OtherDropsConfig.CreatureDataSeparator);
+            
+            String splitColor[] = state
                     .split(OtherDropsConfig.CreatureDataSeparator);
 
-            // TODO:
-            // support int and intrange : if(state.startsWith("RANGE")) return
-            // RangeData.parse(state);
-            for (String sub : split) {
-                sub = sub.toLowerCase().replaceAll("[\\s-_]", "");
-                if (sub.matches("(sheared|shorn)"))
-                    sheared = true;
-                else if (sub.matches("(unsheared|unshorn)"))
-                    sheared = false;
+            
+            for (String subAge : splitAge) {
+                subAge = subAge.toLowerCase().replaceAll("[\\s-_]", "");
+                
+                if (subAge.contains("!adult"))
+                    adult = true;
+                else if (subAge.contains("!baby"))
+                    adult = false;
+            }
+            
+            for (String subShear : splitShear) {
+            	subShear = subShear.toLowerCase().replaceAll("[\\s-_]", "");
 
-                try {
-                    color = DyeColor.valueOf(sub.toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    // no need to do anything, leave color = null
-                }
+                if (subShear.contains("!sheared"))
+                	if(adult)
+                		sheared = true;
+                	if(!adult) {
+                		Log.logWarning("FATAL: Sheep is set to sheared, but is also set as baby! Please fix! Temporarily setting Sheep as unsheared.");
+                		sheared = false;
+                	}
+                else if (subShear.contains("!unsheared"))
+                	sheared = false;
+            }
+            
+            for (String subColor : splitColor) {
+            	subColor = subColor.toLowerCase().replaceAll("[\\s-_]", "");
+                if (subColor.contains("!white"))
+                	color = DyeColor.WHITE;
+                
+                if (subColor.contains("!orange"))
+                	color = DyeColor.ORANGE;
+                
+                if (subColor.contains("!magenta"))
+                	color = DyeColor.MAGENTA;
+                
+                if (subColor.contains("!lightblue"))
+                	color = DyeColor.LIGHT_BLUE;
+                
+                if (subColor.contains("!yellow"))
+                	color = DyeColor.YELLOW;
+                
+                if (subColor.contains("!lime"))
+                	color = DyeColor.LIME;
+                
+                if (subColor.contains("!pink"))
+                	color = DyeColor.PINK;
+                
+                if (subColor.contains("!gray"))
+                	color = DyeColor.GRAY;
+                
+                if (subColor.contains("!silver"))
+                	color = DyeColor.SILVER;
+                
+                if (subColor.contains("!cyan"))
+                	color = DyeColor.CYAN;
+                
+                if (subColor.contains("!purple"))
+                	color = DyeColor.PURPLE;
+                
+                if (subColor.contains("!blue"))
+                	color = DyeColor.BLUE;
+                
+                if (subColor.contains("!brown"))
+                	color = DyeColor.BROWN;
+                
+                if (subColor.contains("!green"))
+                	color = DyeColor.GREEN;
+                
+                if (subColor.contains("!red"))
+                	color = DyeColor.RED;
+                
+                if (subColor.contains("!black"))
+                	color = DyeColor.BLACK;
+                
             }
         }
 
-        return new SheepData(sheared, color, ageData);
+        return new SheepData(sheared, color, adult);
     }
 
     @Override
@@ -113,7 +180,10 @@ public class SheepData extends CreatureData {
             val += "!";
             val += color.toString();
         }
-        val += ageData.toString();
+        if (adult != null) {
+            val += "!";
+            val += adult ? "ADULT" : "BABY";
+        }
         return val;
     }
 

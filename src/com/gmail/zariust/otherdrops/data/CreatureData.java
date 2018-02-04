@@ -47,6 +47,8 @@ import com.gmail.zariust.otherdrops.data.entities.SlimeData;
 import com.gmail.zariust.otherdrops.data.entities.VillagerData;
 import com.gmail.zariust.otherdrops.data.entities.WolfData;
 import com.gmail.zariust.otherdrops.data.entities.ZombieData;
+import com.gmail.zariust.otherdrops.data.entities.ZombieVillagerData;
+import com.gmail.zariust.otherdrops.data.entities.HuskData;
 
 // Range only allowed for SHEEP, SLIME, and PIG_ZOMBIE
 public class CreatureData implements Data, RangeableData {
@@ -67,6 +69,9 @@ public class CreatureData implements Data, RangeableData {
         // Specific data (+LivingEntity)
         aMap.put(EntityType.ZOMBIE, ZombieData.class); // includes
                                                        // LivingEntityData
+        aMap.put(EntityType.ZOMBIE_VILLAGER, ZombieVillagerData.class);
+        aMap.put(EntityType.HUSK, HuskData.class);
+        
         aMap.put(EntityType.PIG_ZOMBIE, PigZombieData.class); // extends Zombie
         aMap.put(EntityType.CREEPER, CreeperData.class);
         aMap.put(EntityType.SKELETON, SkeletonData.class); // includes

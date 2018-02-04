@@ -40,7 +40,7 @@ public enum CreatureGroup {
     
     CREATURE_BUG(SPIDER, CAVE_SPIDER, SILVERFISH, ENDERMITE), 
     
-    CREATURE_WATER(SQUID),
+    CREATURE_WATER(SQUID, ELDER_GUARDIAN, GUARDIAN),
     
     // FIXME:: (Zarius) Lazy aliases - find a better way that covers both with
     // CREATURE_ and without?
