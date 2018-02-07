@@ -11,14 +11,11 @@ import com.gmail.zariust.otherdrops.data.CreatureData;
 import com.gmail.zariust.otherdrops.data.Data;
 
 public class ZombieData extends CreatureData {
-    Boolean          villager = null; // Is this zombie a villager? null =
-                                      // wildcard
     Boolean          adult    = null; // Zombie's are not "Ageable" - baby/adult
                                       // is handled differently
     LivingEntityData leData   = null;
 
-    public ZombieData(Boolean villager, Boolean adult, LivingEntityData leData) {
-        this.villager = villager;
+    public ZombieData(Boolean adult, LivingEntityData leData) {
         this.adult = adult;
         this.leData = leData;
     }
@@ -27,9 +24,6 @@ public class ZombieData extends CreatureData {
     public void setOn(Entity mob, Player owner) {
         if (mob instanceof Zombie) {
             Zombie z = (Zombie) mob;
-            if (villager != null)
-                if (villager)
-                    z.setVillager(true);
             if (adult != null)
                 if (!adult)
                     z.setBaby(true);
@@ -45,9 +39,6 @@ public class ZombieData extends CreatureData {
 
         ZombieData vd = (ZombieData) d;
 
-        if (this.villager != null)
-            if (this.villager != vd.villager)
-                return false;
         if (this.adult != null)
             if (this.adult != vd.adult)
                 return false;
@@ -60,8 +51,7 @@ public class ZombieData extends CreatureData {
 
     public static CreatureData parseFromEntity(Entity entity) {
         if (entity instanceof Zombie) {
-            return new ZombieData(((Zombie) entity).isVillager(),
-                    (!((Zombie) entity).isBaby()),
+            return new ZombieData((!((Zombie) entity).isBaby()),
                     (LivingEntityData) LivingEntityData.parseFromEntity(entity));
         } else {
             Log.logInfo("ZombieData: error, parseFromEntity given different creature - this shouldn't happen.");
@@ -74,7 +64,6 @@ public class ZombieData extends CreatureData {
         // state example: VILLAGER!BABY, BABY, BABY!NORMAL (order doesn't
         // matter)
         Boolean adult = null;
-        Boolean villager = null;
         LivingEntityData leData = (LivingEntityData) LivingEntityData
                 .parseFromString(state);
 
@@ -84,27 +73,19 @@ public class ZombieData extends CreatureData {
 
             for (String sub : split) {
                 sub = sub.toLowerCase().replaceAll("[\\s-_]", "");
-                if (sub.equalsIgnoreCase("adult"))
+                if (sub.contains("!adult"))
                     adult = true;
-                else if (sub.equalsIgnoreCase("baby"))
+                else if (sub.contains("!baby"))
                     adult = false;
-                else if (sub.equalsIgnoreCase("villager"))
-                    villager = true;
-                else if (sub.equalsIgnoreCase("normal"))
-                    villager = false;
             }
         }
 
-        return new ZombieData(villager, adult, leData);
+        return new ZombieData(adult, leData);
     }
 
     @Override
     public String toString() {
         String val = "";
-        if (villager != null) {
-            val += OtherDropsConfig.CreatureDataSeparator;
-            val += villager ? "VILLAGER" : "NORMAL";
-        }
         if (adult != null) {
             val += OtherDropsConfig.CreatureDataSeparator;
             val += adult ? "ADULT" : "BABY";

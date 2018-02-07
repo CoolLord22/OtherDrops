@@ -49,6 +49,8 @@ import com.gmail.zariust.otherdrops.data.entities.WolfData;
 import com.gmail.zariust.otherdrops.data.entities.ZombieData;
 import com.gmail.zariust.otherdrops.data.entities.ZombieVillagerData;
 import com.gmail.zariust.otherdrops.data.entities.HuskData;
+import com.gmail.zariust.otherdrops.data.entities.DonkeyData;
+import com.gmail.zariust.otherdrops.data.entities.*;
 
 // Range only allowed for SHEEP, SLIME, and PIG_ZOMBIE
 public class CreatureData implements Data, RangeableData {
@@ -86,6 +88,10 @@ public class CreatureData implements Data, RangeableData {
         aMap.put(EntityType.MAGMA_CUBE, SlimeData.class);
         aMap.put(EntityType.ENDERMAN, EndermanData.class);
         aMap.put(EntityType.HORSE, HorseData.class);
+        aMap.put(EntityType.DONKEY, DonkeyData.class);
+        aMap.put(EntityType.MULE, MuleData.class);
+        aMap.put(EntityType.ZOMBIE_HORSE, ZombieHorseData.class);
+        aMap.put(EntityType.SKELETON_HORSE, SkeletonHorseData.class);
 
         // Scan through all entity types and if there's no current mapping
         // then check if it's an Ageable or LivingEntity and assign a mapping
