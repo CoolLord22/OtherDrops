@@ -1216,7 +1216,8 @@ public class OtherDropsConfig {
         Material mat = null;
         try {
             mat = Material.getMaterial(Integer.parseInt(name));
-        } catch (NumberFormatException e) {
+        } 
+        catch (NumberFormatException e) {
             mat = Material.getMaterial(name.toUpperCase());
         }
         if (mat == null)

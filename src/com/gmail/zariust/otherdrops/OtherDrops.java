@@ -88,6 +88,7 @@ public class OtherDrops extends JavaPlugin {
         if (OtherDropsConfig.exportEnumLists)
             exportEnumLists();
         Log.logInfo("OtherDrops loaded.");
+    	Updater.runUpdateCheck();
     }
 
     // Exports known enum lists to text files as this can assist in viewing what values are available to use and/or new values that have
@@ -103,7 +104,6 @@ public class OtherDrops extends JavaPlugin {
         writeNames(Profession.class);
         writeNames("Horse.Color", Horse.Color.class);
         writeNames("Horse.Style", Horse.Style.class);
-        writeNames("Horse.Variant", Horse.Variant.class);
 
         File folder = new File("plugins" + File.separator + "OtherDrops");
         BufferedWriter out = null;

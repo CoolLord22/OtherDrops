@@ -18,7 +18,6 @@ package com.gmail.zariust.otherdrops;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,20 +39,20 @@ import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.WeatherType;
 import org.bukkit.World;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.block.Block;
+import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Egg;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -105,7 +104,6 @@ public class PlayerWrapper implements Player {
     }
 
     @Override
-    // TODO: Could returning null cause issues?
     public PermissionAttachment addAttachment(Plugin plugin) {
         return null;
     }
@@ -117,7 +115,6 @@ public class PlayerWrapper implements Player {
     }
 
     @Override
-    // TODO: Could returning null cause issues?
     public PermissionAttachment addAttachment(Plugin plugin, String perm,
             boolean val) {
         return null;
@@ -203,12 +200,12 @@ public class PlayerWrapper implements Player {
 
     @Override
     public ItemStack getItemInHand() {
-        return caller.getItemInHand();
+        return caller.getInventory().getItemInMainHand();
     }
 
     @Override
     public void setItemInHand(ItemStack item) {
-        caller.setItemInHand(item);
+        caller.getInventory().setItemInMainHand(item);
     }
 
     @Override
@@ -234,22 +231,6 @@ public class PlayerWrapper implements Player {
     @Override
     public Location getEyeLocation() {
         return caller.getEyeLocation();
-    }
-
-    @Override
-    public List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance) {
-        return caller.getLineOfSight(transparent, maxDistance);
-    }
-
-    @Override
-    public Block getTargetBlock(HashSet<Byte> transparent, int maxDistance) {
-        return caller.getTargetBlock(transparent, maxDistance);
-    }
-
-    @Override
-    public List<Block> getLastTwoTargetBlocks(HashSet<Byte> transparent,
-            int maxDistance) {
-        return caller.getLastTwoTargetBlocks(transparent, maxDistance);
     }
     
     @Override
@@ -372,6 +353,11 @@ public class PlayerWrapper implements Player {
         return caller.getPassenger();
     }
 
+	@Override
+	public List<Entity> getPassengers() {
+        return caller.getPassengers();
+	}
+	
     @Override
     public boolean setPassenger(Entity passenger) {
         return caller.setPassenger(passenger);
@@ -608,11 +594,6 @@ public class PlayerWrapper implements Player {
     }
 
     @Override
-    public void setBanned(boolean ban) {
-        caller.setBanned(ban);
-    }
-
-    @Override
     public void setWhitelisted(boolean wl) {
         caller.setWhitelisted(wl);
     }
@@ -759,939 +740,918 @@ public class PlayerWrapper implements Player {
 
     @Override
     public Set<String> getListeningPluginChannels() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void sendPluginMessage(Plugin arg0, String arg1, byte[] arg2) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public boolean getAllowFlight() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setAllowFlight(boolean arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void playEffect(EntityEffect arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public boolean canSee(Player arg0) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void hidePlayer(Player arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setBedSpawnLocation(Location arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void showPlayer(Player arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public boolean addPotionEffect(PotionEffect arg0) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean addPotionEffect(PotionEffect arg0, boolean arg1) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean addPotionEffects(Collection<PotionEffect> arg0) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public Collection<PotionEffect> getActivePotionEffects() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean hasPotionEffect(PotionEffectType arg0) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void removePotionEffect(PotionEffectType arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public <T> void playEffect(Location arg0, Effect arg1, T arg2) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void closeInventory() {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public ItemStack getItemOnCursor() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public InventoryView getOpenInventory() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public InventoryView openEnchanting(Location arg0, boolean arg1) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public InventoryView openInventory(Inventory arg0) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void openInventory(InventoryView arg0) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public InventoryView openWorkbench(Location arg0, boolean arg1) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setItemOnCursor(ItemStack arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public boolean setWindowProperty(Property arg0, int arg1) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public <T extends Projectile> T launchProjectile(Class<? extends T> arg0) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public EntityType getType() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public List<MetadataValue> getMetadata(String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean hasMetadata(String arg0) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void removeMetadata(String arg0, Plugin arg1) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setMetadata(String arg0, MetadataValue arg1) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void abandonConversation(Conversation arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void acceptConversationInput(String arg0) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean beginConversation(Conversation arg0) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isConversing() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void sendMessage(String[] arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public Entity getVehicle() {
-        // TODO Auto-generated method stub
-        return caller.getVehicle();
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void abandonConversation(Conversation arg0,
             ConversationAbandonedEvent arg1) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public Inventory getEnderChest() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public int getExpToLevel() {
-        // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isBlocking() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean getCanPickupItems() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public EntityEquipment getEquipment() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean getRemoveWhenFarAway() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean hasLineOfSight(Entity arg0) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setCanPickupItems(boolean arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setRemoveWhenFarAway(boolean arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public Location getLocation(Location arg0) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isValid() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void resetMaxHealth() {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public float getFlySpeed() {
-        // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public float getWalkSpeed() {
-        // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void giveExpLevels(int arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public boolean isFlying() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void playSound(Location arg0, Sound arg1, float arg2, float arg3) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void playSound(Location location, String sound, SoundCategory category, float volume, float pitch) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void playSound(Location location, Sound sound, SoundCategory category, float volume, float pitch) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setBedSpawnLocation(Location arg0, boolean arg1) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setFlySpeed(float arg0) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setFlying(boolean arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     // for 1.4.6
     public void setTexturePack(String arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setWalkSpeed(float arg0) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public String getCustomName() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isCustomNameVisible() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setCustomName(String arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setCustomNameVisible(boolean arg0) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public WeatherType getPlayerWeather() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public Scoreboard getScoreboard() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     @Deprecated
     public boolean isOnGround() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void resetPlayerWeather() {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
         
     }
 
     @Override
     public void setPlayerWeather(WeatherType arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
         
     }
 
     @Override
     public void setScoreboard(Scoreboard arg0) throws IllegalArgumentException,
             IllegalStateException {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
         
-    }
-
-    // Minecraft 1.6.1 methods:
-
-    @Override
-    @Deprecated
-    public int _INVALID_getLastDamage() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    @Deprecated
-    public void _INVALID_setLastDamage(int arg0) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void setLastDamage(double arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    @Deprecated
-    public void _INVALID_damage(int arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    @Deprecated
-    public void _INVALID_damage(int arg0, Entity arg1) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    @Deprecated
-    public int _INVALID_getHealth() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    @Deprecated
-    public int _INVALID_getMaxHealth() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    @Deprecated
-    public void _INVALID_setHealth(int arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    @Deprecated
-    public void _INVALID_setMaxHealth(int arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void damage(double arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void damage(double arg0, Entity arg1) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setHealth(double arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setMaxHealth(double arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public double getLastDamage() {
-        // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public double getHealth() {
-        // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public double getMaxHealth() {
-        // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public Entity getLeashHolder() throws IllegalStateException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isLeashed() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean setLeashHolder(Entity arg0) {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public double getHealthScale() {
-        // TODO Auto-generated method stub
-        return 0;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isHealthScaled() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void playSound(Location arg0, String arg1, float arg2, float arg3) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setHealthScale(double arg0) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setHealthScaled(boolean arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void setResourcePack(String arg0) {
-        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public void stopSound(Sound sound) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void stopSound(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void sendSignChange(Location lctn, String[] strings) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void removeAchievement(Achievement a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean hasAchievement(Achievement a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void decrementStatistic(Statistic ststc) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void decrementStatistic(Statistic ststc, int i) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setStatistic(Statistic ststc, int i) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public int getStatistic(Statistic ststc) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void decrementStatistic(Statistic ststc, Material mtrl) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public int getStatistic(Statistic ststc, Material mtrl) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void decrementStatistic(Statistic ststc, Material mtrl, int i) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setStatistic(Statistic ststc, Material mtrl, int i) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void incrementStatistic(Statistic ststc, EntityType et) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void decrementStatistic(Statistic ststc, EntityType et) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public int getStatistic(Statistic ststc, EntityType et) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void incrementStatistic(Statistic ststc, EntityType et, int i) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void decrementStatistic(Statistic ststc, EntityType et, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setStatistic(Statistic ststc, EntityType et, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public Entity getSpectatorTarget() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setSpectatorTarget(Entity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void sendTitle(String string, String string1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void sendTitle(String string, String string1, int int1, int int2, int int3) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void stopSound(Sound sound, SoundCategory category) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void stopSound(String sound, SoundCategory category) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void resetTitle() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void spawnParticle(Particle prtcl, Location lctn, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void spawnParticle(Particle prtcl, double d, double d1, double d2, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public <T> void spawnParticle(Particle prtcl, Location lctn, int i, T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public <T> void spawnParticle(Particle prtcl, double d, double d1, double d2, int i, T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void spawnParticle(Particle prtcl, Location lctn, int i, double d, double d1, double d2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void spawnParticle(Particle prtcl, double d, double d1, double d2, int i, double d3, double d4, double d5) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public <T> void spawnParticle(Particle prtcl, Location lctn, int i, double d, double d1, double d2, T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public <T> void spawnParticle(Particle prtcl, double d, double d1, double d2, int i, double d3, double d4, double d5, T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void spawnParticle(Particle prtcl, Location lctn, int i, double d, double d1, double d2, double d3) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void spawnParticle(Particle prtcl, double d, double d1, double d2, int i, double d3, double d4, double d5, double d6) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public <T> void spawnParticle(Particle prtcl, Location lctn, int i, double d, double d1, double d2, double d3, T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public <T> void spawnParticle(Particle prtcl, double d, double d1, double d2, int i, double d3, double d4, double d5, double d6, T t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Spigot spigot() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public MainHand getMainHand() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public InventoryView openMerchant(Villager vlgr, boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
     @Override
     public InventoryView openMerchant(Merchant merchant, boolean force) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
 
     }
 
     @Override
     public List<Block> getLineOfSight(Set<Material> set, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public Block getTargetBlock(Set<Material> set, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public List<Block> getLastTwoTargetBlocks(Set<Material> set, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isGliding() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setGliding(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setAI(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean hasAI() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setCollidable(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isCollidable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public AttributeInstance getAttribute(Attribute atrbt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setGlowing(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isGlowing() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setInvulnerable(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isInvulnerable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isSilent() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setSilent(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean hasGravity() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setGravity(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public <T extends Projectile> T launchProjectile(Class<? extends T> type, Vector vector) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean isHandRaised() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public PotionEffect getPotionEffect(PotionEffectType pet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public int getPortalCooldown() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public void setPortalCooldown(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public Set<String> getScoreboardTags() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean addScoreboardTag(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public boolean removeScoreboardTag(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
+
+	@Override
+	public int getCooldown(Material arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Entity getShoulderEntityLeft() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Entity getShoulderEntityRight() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean hasCooldown(Material arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setCooldown(Material arg0, int arg1) {
+		throw new UnsupportedOperationException("Not supported yet.");
+		
+	}
+
+	@Override
+	public void setShoulderEntityLeft(Entity arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+		
+	}
+
+	@Override
+	public void setShoulderEntityRight(Entity arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+		
+	}
+
+	@Override
+	public boolean addPassenger(Entity arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public double getHeight() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public PistonMoveReaction getPistonMoveReaction() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public double getWidth() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean removePassenger(Entity arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public AdvancementProgress getAdvancementProgress(Advancement arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public String getLocale() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean hasAchievement(Achievement arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void hidePlayer(Plugin arg0, Player arg1) {
+		throw new UnsupportedOperationException("Not supported yet.");
+		
+	}
+
+	@Override
+	public void removeAchievement(Achievement arg0) {
+		throw new UnsupportedOperationException("Not supported yet.");
+		
+	}
+
+	@Override
+	public void setResourcePack(String arg0, byte[] arg1) {
+		throw new UnsupportedOperationException("Not supported yet.");
+		
+	}
+
+	@Override
+	public void showPlayer(Plugin arg0, Player arg1) {
+		throw new UnsupportedOperationException("Not supported yet.");
+		
+	}
 
 }
