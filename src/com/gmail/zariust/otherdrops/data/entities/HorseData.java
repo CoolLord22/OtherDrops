@@ -14,19 +14,13 @@ import com.gmail.zariust.otherdrops.data.Data;
 public class HorseData extends CreatureData {
     Horse.Color horseColor = null; // null = wildcard
     Horse.Style horseStyle = null; // null = wildcard
-    Horse.Variant horseVariant = null; // null = wildcard
-    Boolean carryingChest = null;
-    Double jumpStrength = null;
     Boolean tamed = null;
 
     AgeableData ageData = null;
 
-    public HorseData(Horse.Color horseColor, Horse.Style horseStyle, Horse.Variant horseVariant, Boolean thisChest, Double thisJump, Boolean thisTamed, AgeableData ageData) {
+    public HorseData(Horse.Color horseColor, Horse.Style horseStyle, Boolean thisTamed, AgeableData ageData) {
         this.horseColor = horseColor;
         this.horseStyle = horseStyle;
-        this.horseVariant = horseVariant;
-        this.carryingChest = thisChest;
-        this.jumpStrength = thisJump;
         this.tamed = thisTamed;
         this.ageData = ageData;
     }
@@ -43,12 +37,6 @@ public class HorseData extends CreatureData {
                 z.setColor(horseColor);
             if (horseStyle != null)
                 z.setStyle(horseStyle);
-            if (horseVariant != null)
-                z.setVariant(horseVariant);
-            if (carryingChest != null)
-                z.setCarryingChest(carryingChest);
-            if (jumpStrength != null)
-                z.setJumpStrength(jumpStrength);
 
             if (tamed != null)
                 if (tamed)
@@ -75,18 +63,6 @@ public class HorseData extends CreatureData {
         if (this.horseStyle != null)
             if (this.horseStyle != vd.horseStyle)
                 return false;
-
-        if (this.horseVariant != null)
-            if (this.horseVariant != vd.horseVariant)
-                return false;
-
-        if (this.carryingChest != null)
-            if (this.carryingChest != vd.carryingChest)
-                return false;
-
-        if (this.jumpStrength != null)
-            if (this.jumpStrength != vd.jumpStrength)
-                return false;
         
         if (this.tamed != null)
             if (this.tamed != vd.tamed)
@@ -97,8 +73,7 @@ public class HorseData extends CreatureData {
 
     public static CreatureData parseFromEntity(Entity entity) {
         if (entity instanceof Horse) {
-            return new HorseData(((Horse) entity).getColor(), ((Horse) entity).getStyle(), ((Horse) entity).getVariant(), ((Horse) entity).isCarryingChest(),
-                    ((Horse) entity).getJumpStrength(), ((Horse) entity).isTamed(), (AgeableData) AgeableData.parseFromEntity(entity));
+            return new HorseData(((Horse) entity).getColor(), ((Horse) entity).getStyle(), ((Horse) entity).isTamed(), (AgeableData) AgeableData.parseFromEntity(entity));
         } else {
             Log.logInfo("HorseData: error, parseFromEntity given different creature - this shouldn't happen.");
             return null;
@@ -111,9 +86,6 @@ public class HorseData extends CreatureData {
 
         Horse.Color thisColor = null; // null = wildcard
         Horse.Style thisStyle = null; // null = wildcard
-        Horse.Variant thisVariant = null; // null = wildcard
-        Boolean thisChest = null;
-        Double thisJump = null;
         Boolean thisTamed = null;
 
         AgeableData ageData = (AgeableData) AgeableData.parseFromString(state);
@@ -124,88 +96,60 @@ public class HorseData extends CreatureData {
 
             for (String sub : split) {
                 sub = sub.toLowerCase().replaceAll("[\\s-_]", "");
-                if (sub.matches("[0-9,.]*j")) {
-                    thisJump = Double.valueOf(sub.substring(0, sub.length() - 1));
-                    continue;
-                } else if (sub.equals("chest")) {
-                    thisChest = true;
-                    continue;
-                } else if (sub.equals("nochest")) {
-                    thisChest = false;
-                    continue;
-                } else if (sub.matches("(tame[d]?)")) {
+                if (sub.contains("!tamed")) {
                     thisTamed = true;
-                    continue;
+                }
+                if (sub.contains("!untamed")) {
+                    thisTamed = false;
                 }
 
-                Horse.Color tempColor = null; // null = wildcard
-                Horse.Style tempStyle = null; // null = wildcard
-                Horse.Variant tempVariant = null; // null = wildcard
-                tempColor = matchColor(sub);
-                if (tempColor != null && thisColor == null) {
-                    thisColor = tempColor;
-                    Log.logInfo("HorseData: setting color" + thisColor.toString(), Verbosity.HIGHEST);
-                } else {
-                    tempStyle = matchStyle(sub);
-                    if (tempStyle != null && thisStyle == null) {
-                        thisStyle = tempStyle;
-                        Log.logInfo("HorseData: setting style" + thisStyle.toString(), Verbosity.HIGHEST);
-                    } else {
-                        tempVariant = matchVariant(sub);
-                        if (tempVariant != null && thisVariant == null) {
-                            thisVariant = tempVariant;
-                            Log.logInfo("HorseData: setting variant" + thisVariant.toString(), Verbosity.HIGHEST);
-                        }
-                    }
+                //start color matching
+                if (sub.contains("!colorblack")) {
+                	thisColor = (Horse.Color.BLACK);
+                }
+                if (sub.contains("!colorbrown")) {
+                	thisColor = (Horse.Color.BROWN);
+                }
+                if (sub.contains("!colordarkbrown")) {
+                	thisColor = (Horse.Color.DARK_BROWN);
+                }
+                if (sub.contains("!colorchestnut")) {
+                	thisColor = (Horse.Color.CHESTNUT);
+                }
+                if (sub.contains("!colorcreamy")) {
+                	thisColor = (Horse.Color.CREAMY);
+                }
+                if (sub.contains("!colorgray")) {
+                	thisColor = (Horse.Color.GRAY);
+                }
+                if (sub.contains("!colorwhite")) {
+                	thisColor = (Horse.Color.WHITE);
+                }
+                
+                if (sub.contains("!styleblackdots")) {
+                	thisStyle = (Horse.Style.BLACK_DOTS);
+                }
+                if (sub.contains("!stylenone")) {
+                	thisStyle = (Horse.Style.NONE);
+                }
+                if (sub.contains("!stylewhite")) {
+                	thisStyle = (Horse.Style.WHITE);
+                }
+                if (sub.contains("!stylewhitefield")) {
+                	thisStyle = (Horse.Style.WHITEFIELD);
+                }
+                if (sub.contains("!stylewhitedots")) {
+                	thisStyle = (Horse.Style.WHITE_DOTS);
                 }
             }
         }
 
-        return new HorseData(thisColor, thisStyle, thisVariant, thisChest, thisJump, thisTamed, ageData);
+        return new HorseData(thisColor, thisStyle, thisTamed, ageData);
     }
 
     private static CreatureData getData(String state) {
         return new HorseData(state);
 
-    }
-
-    /**
-     * @param sub
-     */
-    public static Horse.Style matchStyle(String sub) {
-        for (Horse.Style type : Horse.Style.values()) {
-            if (sub.equals(type.name().toLowerCase()
-                    .replaceAll("[\\s-_]", "")))
-                return type;
-        }
-        Log.logInfo("HorseData: style not found (" + sub + ")", Verbosity.HIGHEST);
-        return null;
-    }
-
-    /**
-     * @param sub
-     */
-    public static Horse.Color matchColor(String sub) {
-        for (Horse.Color type : Horse.Color.values()) {
-            if (sub.equals(type.name().toLowerCase()
-                    .replaceAll("[\\s-_]", "")))
-                return type;
-        }
-        Log.logInfo("HorseData: color not found (" + sub + ")", Verbosity.HIGHEST);
-        return null;
-    }
-
-    /**
-     * @param sub
-     */
-    public static Horse.Variant matchVariant(String sub) {
-        for (Horse.Variant type : Horse.Variant.values()) {
-            if (sub.equals(type.name().toLowerCase()
-                    .replaceAll("[\\s-_]", "")))
-                return type;
-        }
-        Log.logInfo("HorseData: variant not found (" + sub + ")", Verbosity.HIGHEST);
-        return null;
     }
 
     @Override
@@ -215,14 +159,6 @@ public class HorseData extends CreatureData {
             val += "!!" + horseColor.toString();
         if (horseStyle != null)
             val += "!!" + horseStyle.toString();
-        if (horseVariant != null)
-            val += "!!" + horseVariant.toString();
-        if (carryingChest != null && carryingChest)
-            val += "!!CHEST";
-        if (carryingChest != null && !carryingChest)
-            val += "!!NOCHEST";
-        if (jumpStrength != null)
-            val += "!!" + jumpStrength.toString() + "j";
         if (tamed != null) {
             val += "!";
             val += "!!" + (tamed ? "TAME" : "UNTAMED");

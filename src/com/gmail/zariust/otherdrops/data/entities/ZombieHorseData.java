@@ -2,65 +2,72 @@ package com.gmail.zariust.otherdrops.data.entities;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Pig;
+import org.bukkit.entity.ZombieHorse;
 import org.bukkit.entity.Player;
 
+import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.OtherDropsConfig;
 import com.gmail.zariust.otherdrops.data.CreatureData;
 import com.gmail.zariust.otherdrops.data.Data;
 
-public class PigData extends CreatureData {
-    Boolean     saddled = null; // null = wildcard
+public class ZombieHorseData extends CreatureData {
+    Boolean tamed = null;
     AgeableData ageData = null;
 
-    public PigData(Boolean saddled, AgeableData ageData) {
-        this.saddled = saddled;
+    public ZombieHorseData(Boolean thisTamed, AgeableData ageData) {
+        this.tamed = thisTamed;
         this.ageData = ageData;
+    }
+
+    public ZombieHorseData(String state) {
+        // TODO Auto-generated constructor stub
     }
 
     @Override
     public void setOn(Entity mob, Player owner) {
-        if (mob instanceof Pig) {
-            Pig z = (Pig) mob;
-            if (saddled != null)
-                if (saddled)
-                    z.setSaddle(true);
+        if (mob instanceof ZombieHorse) {
+            ZombieHorse z = (ZombieHorse) mob;
+
+            if (tamed != null)
+                if (tamed)
+                    z.setOwner(owner);
+
             ageData.setOn(mob, owner);
         }
     }
 
     @Override
     public boolean matches(Data d) {
-        if (!(d instanceof PigData))
+        if (!(d instanceof ZombieHorseData))
             return false;
-        PigData vd = (PigData) d;
+
+        ZombieHorseData vd = (ZombieHorseData) d;
 
         if (!ageData.matches(vd.ageData))
             return false;
-
-        if (this.saddled != null)
-            if (this.saddled != vd.saddled)
+        
+        if (this.tamed != null)
+            if (this.tamed != vd.tamed)
                 return false;
 
         return true;
     }
 
     public static CreatureData parseFromEntity(Entity entity) {
-        if (entity instanceof Pig) {
-            return new PigData(((Pig) entity).hasSaddle(),
-                    (AgeableData) AgeableData.parseFromEntity(entity));
+        if (entity instanceof ZombieHorse) {
+            return new ZombieHorseData(((ZombieHorse) entity).isTamed(), (AgeableData) AgeableData.parseFromEntity(entity));
         } else {
-            Log.logInfo("PigData: error, parseFromEntity given different creature - this shouldn't happen.");
+            Log.logInfo("ZombieHorseData: error, parseFromEntity given different creature - this shouldn't happen.");
             return null;
         }
 
     }
 
     public static CreatureData parseFromString(String state) {
-        // state example: VILLAGER!BABY, BABY, BABY!NORMAL (order doesn't
-        // matter)
-        Boolean saddled = null;
+        // return getData(state);
+        Boolean thisTamed = null;
+
         AgeableData ageData = (AgeableData) AgeableData.parseFromString(state);
 
         if (!state.isEmpty() && !state.equals("0")) {
@@ -69,22 +76,30 @@ public class PigData extends CreatureData {
 
             for (String sub : split) {
                 sub = sub.toLowerCase().replaceAll("[\\s-_]", "");
-                if (sub.contains("!saddled"))
-                    saddled = true;
-                else if (sub.contains("!unsaddled"))
-                    saddled = false;
+                if (sub.contains("!tamed")) {
+                    thisTamed = true;
+                    continue;
+            	} else if (sub.contains("!untamed")) {
+            		thisTamed = false;
+            		continue;
+            	}
             }
         }
 
-        return new PigData(saddled, ageData);
+        return new ZombieHorseData(thisTamed, ageData);
+    }
+
+    private static CreatureData getData(String state) {
+        return new ZombieHorseData(state);
+
     }
 
     @Override
     public String toString() {
         String val = "";
-        if (saddled != null) {
+        if (tamed != null) {
             val += "!";
-            val += saddled ? "SADDLED" : "UNSADDLED";
+            val += "!!" + (tamed ? "TAME" : "UNTAMED");
         }
         val += ageData.toString();
         return val;

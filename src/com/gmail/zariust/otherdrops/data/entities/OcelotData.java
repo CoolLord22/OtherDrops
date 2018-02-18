@@ -87,9 +87,9 @@ public class OcelotData extends CreatureData {
             for (String sub : split) {
                 sub = sub.toLowerCase().replaceAll("[\\s-_]", "")
                         .replaceAll("cat", "");
-                if (sub.equalsIgnoreCase("adult"))
+                if (sub.contains("adult"))
                     adult = true;
-                else if (sub.equalsIgnoreCase("baby"))
+                else if (sub.contains("baby"))
                     adult = false;
                 else if (sub.matches("tame[d]*"))
                     tamed = true;
