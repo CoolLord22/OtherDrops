@@ -3,12 +3,16 @@ package com.gmail.zariust.otherdrops;
 import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
-
 import org.bukkit.ChatColor;
-
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
+import net.minecraft.server.v1_12_R1.IChatBaseComponent;
+import net.minecraft.server.v1_12_R1.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_12_R1.PacketPlayOutChat;
 
 public class Updater {
     public static Updater uc;
@@ -26,10 +30,9 @@ public class Updater {
         try {
             JSONArray versionsArray = (JSONArray) JSONValue
                     .parseWithException(IOUtils.toString(new URL(String.valueOf(VERSION_URL)), "UTF-8")); 
-            Double lastVersion = Double
-                    .parseDouble(((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString().replace("-", "").replaceAll("[a-zA-Z]+", ""));
+            String lastVersion = ((JSONObject) versionsArray.get(versionsArray.size() - 1)).get("name").toString().replace("-", "").replaceAll("[a-zA-Z]+", "");
             
-            if (lastVersion > Double.parseDouble(OtherDrops.plugin.getDescription().getVersion())) {
+            if(Integer.parseInt(lastVersion.replaceAll("\\.","")) > Integer.parseInt(OtherDrops.plugin.getDescription().getVersion().replaceAll("\\.",""))) {
                 JSONArray updatesArray = (JSONArray) JSONValue
                         .parseWithException(IOUtils.toString(new URL(String.valueOf(DESCRIPTION_URL)), "UTF-8"));
                 String updateName = ((JSONObject) updatesArray.get(updatesArray.size() - 1)).get("title").toString();
@@ -37,6 +40,7 @@ public class Updater {
                 return update;
             }
         } catch (Exception exc) {
+        	exc.printStackTrace();
             return new String[0];
         }
         return new String[0];
@@ -44,7 +48,6 @@ public class Updater {
     
     public static void runUpdateCheck() {
         Log.logInfoNoVerbosity(ChatColor.GREEN + "Checking for updates...");
-        
     	Object[] updates = getLastUpdate();
     	
     	if(updates.length == 2) {
@@ -56,6 +59,18 @@ public class Updater {
     	}
     	else {
     		Log.logInfoNoVerbosity(ChatColor.GREEN + "Hooray! You are running the latest version!");
+    	}
+    }
+    
+    public static void runPlayerUpdateCheck(Player player) throws InterruptedException {
+    	Object[] updates = getLastUpdate();
+    	
+    	IChatBaseComponent updateLink = ChatSerializer.a("{\"text\":\" Download latest version here!\",\"color\":\"red\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.spigotmc.org/resources/otherdrops-updated.51793/updates\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to open Spigot page!\"}]}}}");
+        PacketPlayOutChat ppoc = new PacketPlayOutChat(updateLink);
+        
+    	if(updates.length == 2) {
+    		player.sendMessage(ChatColor.GREEN + "[OtherDrops] " + ChatColor.RED + "Your current version of OtherDrops is outdated. Available version: " + ChatColor.GREEN + updates[0] + ChatColor.RED + " Current version: " + ChatColor.GREEN +  OtherDrops.plugin.getDescription().getVersion());
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(ppoc);
     	}
     }
 }

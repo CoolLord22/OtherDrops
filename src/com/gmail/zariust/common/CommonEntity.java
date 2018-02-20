@@ -27,7 +27,7 @@ import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
-import org.bukkit.entity.Fish;
+import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
@@ -56,7 +56,6 @@ public final class CommonEntity {
     public static EntityType getCreatureEntityType(String name) {
         if (name == null || name.isEmpty())
             return null;
-        String originalName = name;
         name = name.split("@")[0].toLowerCase(); // remove data value, if any,
                                                  // and make **lowercase** (keep
                                                  // in mind below)
@@ -131,7 +130,7 @@ public final class CommonEntity {
             return Material.ENDER_PEARL;
         if (e instanceof Fireball)
             return Material.FIRE;
-        if (e instanceof Fish)
+        if (e instanceof FishHook)
             return Material.FISHING_ROD;
         if (e instanceof Snowball)
             return Material.SNOW_BALL;

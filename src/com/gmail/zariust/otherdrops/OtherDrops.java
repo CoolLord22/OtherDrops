@@ -58,6 +58,7 @@ import com.gmail.zariust.otherdrops.listener.OdProjectileHitListener;
 import com.gmail.zariust.otherdrops.listener.OdRedstoneListener;
 import com.gmail.zariust.otherdrops.listener.OdSpawnListener;
 import com.gmail.zariust.otherdrops.listener.OdVehicleListener;
+import com.gmail.zariust.otherdrops.listener.PlayerJoinUpdateChecker;
 import com.gmail.zariust.otherdrops.options.Weather;
 
 public class OtherDrops extends JavaPlugin {
@@ -221,6 +222,8 @@ public class OtherDrops extends JavaPlugin {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         String registered = "Loaded listeners: ";
 
+        pm.registerEvents(new PlayerJoinUpdateChecker(), plugin);
+        
         if (OtherDropsConfig.dropForBlocks) {
             registered += "Block, ";
             pm.registerEvents(new OdBlockListener(plugin), plugin);

@@ -15,6 +15,9 @@ lib/bukkit*.jar
 */.DS_Store
 src/com/gmail/zariust/bukkit/.DS_Store
 src/com/gmail/zariust/bukkit/obevents/.DS_Store
+.metadata/
+.recommenders/
 
 # Ignore plugin.yml as generated from plugin.yml.template
 rsrc/plugin.yml
+/.metadata/
