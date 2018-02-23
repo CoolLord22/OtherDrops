@@ -5,7 +5,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Donkey;
 import org.bukkit.entity.Player;
 
-import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.OtherDropsConfig;
 import com.gmail.zariust.otherdrops.data.CreatureData;
@@ -91,7 +90,6 @@ public class DonkeyData extends CreatureData {
 
     private static CreatureData getData(String state) {
         return new DonkeyData(state);
-
     }
 
     @Override
