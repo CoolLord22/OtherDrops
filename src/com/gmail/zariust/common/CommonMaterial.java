@@ -276,7 +276,7 @@ public final class CommonMaterial {
     }
 
     public static int getDyeColor(DyeColor color) {
-        return 0xF - color.getDyeData();
+        return color.getDyeData();
     }
 
     @SuppressWarnings("incomplete-switch")
