@@ -172,17 +172,36 @@ public class DropRunner implements Runnable {
                                                         // just a copy of it.
             Target toReplace = currentEvent.getTarget();
             BlockTarget tempReplace = customDrop.getReplacementBlock();
-            if (customDrop.getReplacementBlock().getMaterial() == null) {
-                tempReplace = new BlockTarget(toReplace.getLocation()
-                        .getBlock());
+            BlockTarget ifFarmlandUpOneBlock;
+            BlockTarget getsBlockBeingChanged = new BlockTarget(toReplace.getLocation().getBlock());;
+            
+            if(customDrop.getReplacementBlock().getMaterial() == null) {
+                tempReplace = new BlockTarget(toReplace.getLocation().getBlock());
             }
+            
             Log.logInfo("Replacing " + toReplace.toString() + " with "
                     + customDrop.getReplacementBlock().toString(),
                     Verbosity.HIGHEST);
-            if (tempReplace.getMaterial() == Material.AIR && currentEvent.getRealEvent() instanceof EntityDeathEvent) {
+            
+            if(tempReplace.getMaterial() == Material.AIR && currentEvent.getRealEvent() instanceof EntityDeathEvent) {
                 if (!(currentEvent.getVictim() instanceof Player))
                     currentEvent.getVictim().remove();
-            } else {
+            } 
+            
+            if(getsBlockBeingChanged.getMaterial() == Material.SOIL && 
+            		(tempReplace.getMaterial() == Material.CROPS || tempReplace.getMaterial() == Material.BEETROOT_BLOCK 
+            		|| tempReplace.getMaterial() == Material.CARROT || tempReplace.getMaterial() == Material.POTATO 
+            		|| tempReplace.getMaterial() == Material.MELON_STEM || tempReplace.getMaterial() == Material.PUMPKIN_STEM)) {
+            	ifFarmlandUpOneBlock = new BlockTarget(toReplace.getLocation().add(0, 1, 0).getBlock());
+            	ifFarmlandUpOneBlock.setTo(tempReplace);
+            }
+
+            if(getsBlockBeingChanged.getMaterial() == Material.SOUL_SAND && (tempReplace.getMaterial() == Material.NETHER_WARTS)) {
+            	ifFarmlandUpOneBlock = new BlockTarget(toReplace.getLocation().add(0, 1, 0).getBlock());
+            	ifFarmlandUpOneBlock.setTo(tempReplace);
+            }
+            
+            else {
                 toReplace.setTo(tempReplace);
             }
             currentEvent.setCancelled(true);
