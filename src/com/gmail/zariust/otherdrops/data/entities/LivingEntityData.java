@@ -24,8 +24,7 @@ public class LivingEntityData extends CreatureData {
     CreatureEquipment equip      = null;
     String            customName = null;
 
-    public LivingEntityData(Double maxHealth, CreatureEquipment equip,
-            String customName) {
+    public LivingEntityData(Double maxHealth, CreatureEquipment equip, String customName) {
         this.maxHealth = maxHealth;
         this.equip = equip;
         this.customName = ODVariables.preParse(customName);
@@ -70,15 +69,14 @@ public class LivingEntityData extends CreatureData {
                 if (equip.bootsChance != null)
                     z.getEquipment().setBootsDropChance(equip.bootsChance);
 
-            } else {
             }
-            setDefaultEq((LivingEntity) mob);
+            else {
+                setDefaultEq((LivingEntity) mob);
+            }
 
             // not currently used - refer to CreatureDrop instead
             if (customName != null) {
-                String parsedCustomName = new ODVariables()
-                .setPlayerName(owner.getName())
-                .parse(customName);
+                String parsedCustomName = new ODVariables().setPlayerName(owner.getName()).parse(customName);
 
                 z.setCustomName(parsedCustomName);
             }
@@ -91,11 +89,11 @@ public class LivingEntityData extends CreatureData {
             Skeleton skellie = (Skeleton) mob;
             if (skellie.getSkeletonType() == SkeletonType.WITHER) {
                 if (equip == null || equip.hands == null)
-                    skellie.getEquipment().setItemInHand(
+                    skellie.getEquipment().setItemInMainHand(
                             new ItemStack(Material.STONE_SWORD));
             } else {
                 if (equip == null || equip.hands == null)
-                    skellie.getEquipment().setItemInHand(
+                    skellie.getEquipment().setItemInMainHand(
                             new ItemStack(Material.BOW));
             }
         }
@@ -103,50 +101,53 @@ public class LivingEntityData extends CreatureData {
 
     @Override
     public boolean matches(Data d) {
+    	boolean match = true;
         if (!(d instanceof LivingEntityData)) {
             Log.logInfo("Checking LivingEntityData: target data not LivingEntityData. d=" + d.toString() + " (type: " + d.getClass().getName() + ")", Verbosity.EXTREME);
-            return false;
+            match = false;
         }
+        
         LivingEntityData vd = (LivingEntityData) d;
 
-        if (this.maxHealth != null)
-            if (!this.maxHealth.equals(vd.maxHealth))
-            {
+        if (this.maxHealth != null) {
+            if (!this.maxHealth.equals(vd.maxHealth)) {
                 Log.logInfo("Checking LivingEntityData: maxHealth failed.", Verbosity.EXTREME);
-                return false;
+                match = false;
             }
+        }
 
         // compare equipment
         if (this.equip != null) {
-            if (!this.equip.matches(vd.equip))
-            {
+            if (!this.equip.matches(vd.equip)) {
                 Log.logInfo("Checking LivingEntityData: equipment failed.", Verbosity.EXTREME);
-                return false;
+                match = false;
             }
         }
 
         if (this.customName != null) {
-            if (this.customName.isEmpty()) {
-                // if this.customName is empty it means "match only mobs with no name"
+            if (this.customName.equals("CoolLordsWayToEnsureNobodyUsesThisNameHAHA")) {
                 if (!(vd.customName == null)) { // this means the mob has a name, so fail
-                    Log.logInfo("Checking LivingEntityData: customname failed.", Verbosity.EXTREME);
-                    return false;
+                    Log.logInfo("Checking LivingEntityData: customname1 failed.", Verbosity.EXTREME);
+                    match = false;
                 }
-            } else if (this.customName.equals("*")) {
+            } 
+            else if (this.customName.equals("*")) {
                 // * is a wildcard = match any name (except none) so fail if no mob name
                 if (vd.customName == null) {
-                    Log.logInfo("Checking LivingEntityData: customname failed.", Verbosity.EXTREME);
-                    return false;
+                    Log.logInfo("Checking LivingEntityData: customname2 failed.", Verbosity.EXTREME);
+                    match = false;
                 }
-            } else {
-                // not empty & not wildcard - check for name match
-                if (vd.customName == null || !vd.customName.equals(this.customName))
-                    Log.logInfo("Checking LivingEntityData: customname failed.", Verbosity.EXTREME);
-                    return false;
+            } 
+            else if (vd.customName == null) {
+            		Log.logInfo("Checking LivingEntityData: customname3 failed.", Verbosity.EXTREME);
+            		match = false;
+            } 
+            else if (!vd.customName.equals(this.customName)) {
+            		Log.logInfo("Checking LivingEntityData: customname4 failed.", Verbosity.EXTREME);
+            		match = false;
             }
         }
-
-        return true;
+        return match;
     }
 
     public static CreatureData parseFromEntity(Entity entity) {
@@ -165,24 +166,21 @@ public class LivingEntityData extends CreatureData {
         Double maxHealth = null;
         CreatureEquipment equip = null;
         String customName = null;
+        String newState = state;
 
         if (!state.isEmpty() && !state.equals("0")) {
-            if (state.contains("~")) customName = ""; // to support "ZOMBIE~" meaning Zombie with no custom name
-            
             String customNameSplit[] = state.split("~", 2);
-            state = customNameSplit[0];
+            newState = customNameSplit[0];
             if (customNameSplit.length > 1)
                 customName = customNameSplit[1];
 
-            String split[] = state
-                    .split(OtherDropsConfig.CreatureDataSeparator);
+            String split[] = newState.split(OtherDropsConfig.CreatureDataSeparator);
 
             for (String sub : split) {
-
-                if (sub.matches("(?i)[0-9.]+hp?")) { // need to check numbers
-                                                    // before any .toLowerCase()
+                if (sub.matches("(?i)[0-9.]+hp?")) {
                     maxHealth = Double.valueOf(sub.replaceAll("[^0-9.]", ""));
-                } else {
+                }
+                else {
                     sub = sub.replaceAll("[\\s-_]", "");
                     if (sub.matches("(?i)eq:.*")) {
                         if (equip == null)
@@ -192,7 +190,8 @@ public class LivingEntityData extends CreatureData {
                 }
             }
         }
-
+        if(customName == null && (state.contains("~")))
+        	customName = "CoolLordsWayToEnsureNobodyUsesThisNameHAHA";
         return new LivingEntityData(maxHealth, equip, customName);
     }
 

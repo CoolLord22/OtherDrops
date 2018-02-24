@@ -184,8 +184,11 @@ public class CreatureSubject extends LivingSubject {
             customName = split[1];
         }
 
-        if (customName != null && !customName.isEmpty()) state += "~" + customName;
+        if (customName != null && customName.isEmpty())
+        	customName = "CoolLordsWayToEnsureNobodyUsesThisNameHAHA";
         
+        if (customName != null && !customName.isEmpty()) 
+        	state += "~" + customName;
         // replace comma with period is to support custom mobs (e.g. MyMod.Mob) due to
         // YAML interpreting the period in block headers differently.
         EntityType creature = CommonEntity.getCreatureEntityType(name.replaceAll("[,]", "."));
