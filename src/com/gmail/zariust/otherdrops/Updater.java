@@ -39,6 +39,15 @@ public class Updater {
                 Object[] update = { lastVersion, updateName };
                 return update;
             }
+            
+            if(Integer.parseInt(lastVersion.replaceAll("\\.","")) < Integer.parseInt(OtherDrops.plugin.getDescription().getVersion().replaceAll("\\.",""))) {
+                JSONArray updatesArray = (JSONArray) JSONValue.parseWithException(IOUtils.toString(new URL(String.valueOf(DESCRIPTION_URL)), "UTF-8"));
+                String updateName = ((JSONObject) updatesArray.get(updatesArray.size() - 1)).get("title").toString();
+                String wowzers = "Woah a beta version?";
+                Object[] update = { lastVersion, updateName, wowzers };
+                return update;
+            }
+            
         } catch (Exception exc) {
         	exc.printStackTrace();
             return new String[0];
@@ -57,6 +66,14 @@ public class Updater {
     		Log.logInfoNoVerbosity(ChatColor.RED + "What's changed: " + updates[1]);
     		Log.logInfoNoVerbosity(ChatColor.YELLOW + "Please download latest version from: " + ChatColor.GREEN + "https://www.spigotmc.org/resources/otherdrops-updated.51793/updates");
     	}
+    	
+    	if(updates.length == 3) {
+    		Log.logInfoNoVerbosity(ChatColor.GREEN + "Holy guacamole! Are you in kahoots with the Dev?");
+    		Log.logInfoNoVerbosity(ChatColor.GREEN + "Latest Version: " + updates[0]);
+    		Log.logInfoNoVerbosity(ChatColor.GREEN + "Your Version: " + OtherDrops.plugin.getDescription().getVersion());
+    		Log.logInfoNoVerbosity(ChatColor.GREEN + "You are running a BETA version! Please be careful.");
+    	}
+    	
     	else {
     		Log.logInfoNoVerbosity(ChatColor.GREEN + "Hooray! You are running the latest version!");
     	}
@@ -67,10 +84,14 @@ public class Updater {
     	
     	IChatBaseComponent updateLink = ChatSerializer.a("{\"text\":\" Download latest version here!\",\"color\":\"red\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.spigotmc.org/resources/otherdrops-updated.51793/updates\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to open Spigot page!\"}]}}}");
         PacketPlayOutChat ppoc = new PacketPlayOutChat(updateLink);
-        
+
     	if(updates.length == 2) {
     		player.sendMessage(ChatColor.GREEN + "[OtherDrops] " + ChatColor.RED + "Your current version of OtherDrops is outdated. Available version: " + ChatColor.GREEN + updates[0] + ChatColor.RED + " Current version: " + ChatColor.GREEN +  OtherDrops.plugin.getDescription().getVersion());
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(ppoc);
+    	}
+    	
+    	if(updates.length == 3) {
+    		player.sendMessage(ChatColor.GREEN + "[OtherDrops] " + ChatColor.RED + "Latest version: " + ChatColor.GREEN + updates[0] + ChatColor.RED + " Current version: " + ChatColor.GREEN +  OtherDrops.plugin.getDescription().getVersion() + ChatColor.RED + " BETA builds aren't always stable... Use with precaution!");
     	}
     }
 }
