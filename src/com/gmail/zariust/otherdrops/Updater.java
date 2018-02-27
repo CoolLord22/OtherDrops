@@ -67,7 +67,7 @@ public class Updater {
     		Log.logInfoNoVerbosity(ChatColor.YELLOW + "Please download latest version from: " + ChatColor.GREEN + "https://www.spigotmc.org/resources/otherdrops-updated.51793/updates");
     	}
     	
-    	if(updates.length == 3) {
+    	else if(updates.length == 3) {
     		Log.logInfoNoVerbosity(ChatColor.GREEN + "Holy guacamole! Are you in kahoots with the Dev?");
     		Log.logInfoNoVerbosity(ChatColor.GREEN + "Latest Version: " + updates[0]);
     		Log.logInfoNoVerbosity(ChatColor.GREEN + "Your Version: " + OtherDrops.plugin.getDescription().getVersion());

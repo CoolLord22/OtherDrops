@@ -13,6 +13,10 @@ money-precision: 2
 disable_metrics: false
 
 #######################
+# Should we check for updates? - set this to false if you don't want to be notified of new versions
+update_checker: true
+
+#######################
 # Restore standard config/include files if they are deleted
 restore_deleted_config_files: true
 
@@ -29,6 +33,12 @@ enchantments_ignore_level: false
 # Use unsafe: allow any enchantment on any item/tool (eg. DIRT@!DAMAGE_ALL#3)
 
 enchantments_use_unsafe: false
+
+# Restrict matching: when true, it will require enchantments to be exactly how they are configured in the drops file
+# (for example, A pickaxe defined with Fortune 3 will only let a Fortune 3 pickaxe perform the drop. To allow a
+# fortune 3, unbreaking 5, and efficiency 5 pickaxe to perform the drop, set this value to false.
+
+enchantments_restrict_matching: true
 ####
 
 

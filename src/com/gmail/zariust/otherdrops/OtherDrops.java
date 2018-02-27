@@ -89,7 +89,8 @@ public class OtherDrops extends JavaPlugin {
         if (OtherDropsConfig.exportEnumLists)
             exportEnumLists();
         Log.logInfo("OtherDrops loaded.");
-    	Updater.runUpdateCheck();
+        if (OtherDropsConfig.globalUpdateChecking)
+        	Updater.runUpdateCheck();
     }
 
     // Exports known enum lists to text files as this can assist in viewing what values are available to use and/or new values that have

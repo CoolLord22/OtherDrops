@@ -197,6 +197,7 @@ public class OtherDropsConfig {
     public static int                  moneyPrecision;
     public static boolean              enchantmentsUseUnsafe;
     public static boolean              enchantmentsIgnoreLevel;
+    public static boolean              enchantmentsRestrictMatching			 = true;
     public static boolean              spawnTriggerIgnoreOtherDropsSpawn     = true;
     private boolean                    globalLootOverridesDefault;
     private boolean                    globalMoneyOverridesDefault;
@@ -205,6 +206,7 @@ public class OtherDropsConfig {
     private boolean                    xpOverridesDefault;
     private boolean                    lootOverridesDefault;
     public static boolean              globalRedstonewireTriggersSurrounding = true;
+    public static boolean              globalUpdateChecking					 = true;
     public static boolean              globalDisableMetrics                  = false;
 
     public static boolean              globalOverrideExplosionCap            = false;
@@ -465,7 +467,7 @@ public class OtherDropsConfig {
         Log.logInfo(logMsg.substring(0, logMsg.length() - 2), Verbosity.HIGH);
         metrics.start();
     }
-
+    
     public void loadConfig() throws FileNotFoundException, IOException,
             InvalidConfigurationException {
         this.dropSections = 0; this.dropTargets = 0; this.dropFailed = 0; // initialise counts
@@ -484,7 +486,6 @@ public class OtherDropsConfig {
         File global = new File(parent.getDataFolder(), filename);
         YamlConfiguration globalConfig = YamlConfiguration
                 .loadConfiguration(global);
-
         // Make sure config file exists (even for reloads - it's possible this
         // did not create successfully or was deleted before reload)
         if (!global.exists()) {
@@ -501,7 +502,7 @@ public class OtherDropsConfig {
                         + ". Are the file permissions OK?");
             }
         }
-
+        
         // Load in the values from the configuration file
         globalConfig.load(global);
         String configKeys = globalConfig.getKeys(false).toString();
@@ -509,40 +510,29 @@ public class OtherDropsConfig {
         verbosity = getConfigVerbosity(globalConfig);
         enableBlockTo = globalConfig.getBoolean("enableblockto", false);
         moneyPrecision = globalConfig.getInt("money-precision", 2);
-        customDropsForExplosions = globalConfig.getBoolean(
-                "customdropsforexplosions", false);
+        customDropsForExplosions = globalConfig.getBoolean("customdropsforexplosions", false);
         defaultDropSpread = globalConfig.getBoolean("default_dropspread", true);
-        disableXpOnNonDefault = globalConfig.getBoolean(
-                "disable_xp_on_non_default", true);
-        enchantmentsIgnoreLevel = globalConfig.getBoolean(
-                "enchantments_ignore_level", false);
-        enchantmentsUseUnsafe = globalConfig.getBoolean(
-                "enchantments_use_unsafe", false);
+        disableXpOnNonDefault = globalConfig.getBoolean("disable_xp_on_non_default", true);
+        enchantmentsIgnoreLevel = globalConfig.getBoolean("enchantments_ignore_level", false);
+        enchantmentsUseUnsafe = globalConfig.getBoolean("enchantments_use_unsafe", false);
+        enchantmentsRestrictMatching = globalConfig.getBoolean("enchantments_restrict_matching", true);
 
         configKeysGetDeep = globalConfig.getBoolean("config_keys_get_deep", true);
 
-        spawnTriggerIgnoreOtherDropsSpawn = globalConfig.getBoolean(
-                "spawntrigger_ignores_otherdrops_spawn", true);
+        spawnTriggerIgnoreOtherDropsSpawn = globalConfig.getBoolean("spawntrigger_ignores_otherdrops_spawn", true);
 
-        globalLootOverridesDefault = globalConfig.getBoolean(
-                "loot_overrides_default", true);
-        globalMoneyOverridesDefault = globalConfig.getBoolean(
-                "money_overrides_default", false);
-        globalXpOverridesDefault = globalConfig.getBoolean(
-                "xp_overrides_default", false);
+        globalLootOverridesDefault = globalConfig.getBoolean("loot_overrides_default", true);
+        globalMoneyOverridesDefault = globalConfig.getBoolean("money_overrides_default", false);
+        globalXpOverridesDefault = globalConfig.getBoolean("xp_overrides_default", false);
 
         matchMobByNameOnly = globalConfig.getBoolean("match_mob_by_name_only", true);
 
-        exportEnumLists = globalConfig.getBoolean(
-                "export_enum_lists", true);
-        globalAllowAnyReplacementBlock = globalConfig.getBoolean(
-                "allow_any_replacementblock", false);
-        globalRedstonewireTriggersSurrounding = globalConfig.getBoolean(
-                "redstonewire_triggers_surrounding", true);
-        globalDisableMetrics = globalConfig
-                .getBoolean("disable_metrics", false);
-        globalOverrideExplosionCap = globalConfig.getBoolean(
-                "override_explosion_cap", false);
+        exportEnumLists = globalConfig.getBoolean("export_enum_lists", true);
+        globalAllowAnyReplacementBlock = globalConfig.getBoolean("allow_any_replacementblock", false);
+        globalRedstonewireTriggersSurrounding = globalConfig.getBoolean("redstonewire_triggers_surrounding", true);
+        globalUpdateChecking = globalConfig.getBoolean("update_checker", true);
+        globalDisableMetrics = globalConfig.getBoolean("disable_metrics", false);
+        globalOverrideExplosionCap = globalConfig.getBoolean("override_explosion_cap", false);
         globalCustomSpawnLimit = globalConfig.getInt("custom_spawn_limit", 150);
 
         gTimeFormat = globalConfig.getString("time_format", "HH:mm:ss");
