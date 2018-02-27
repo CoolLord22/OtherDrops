@@ -10,10 +10,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import net.minecraft.server.v1_12_R1.IChatBaseComponent;
-import net.minecraft.server.v1_12_R1.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_12_R1.PacketPlayOutChat;
-
 public class Updater {
     public static Updater uc;
 
@@ -81,13 +77,8 @@ public class Updater {
     
     public static void runPlayerUpdateCheck(Player player) throws InterruptedException {
     	Object[] updates = getLastUpdate();
-    	
-    	IChatBaseComponent updateLink = ChatSerializer.a("{\"text\":\" Download latest version here!\",\"color\":\"red\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.spigotmc.org/resources/otherdrops-updated.51793/updates\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to open Spigot page!\"}]}}}");
-        PacketPlayOutChat ppoc = new PacketPlayOutChat(updateLink);
-
     	if(updates.length == 2) {
     		player.sendMessage(ChatColor.GREEN + "[OtherDrops] " + ChatColor.RED + "Your current version of OtherDrops is outdated. Available version: " + ChatColor.GREEN + updates[0] + ChatColor.RED + " Current version: " + ChatColor.GREEN +  OtherDrops.plugin.getDescription().getVersion());
-            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(ppoc);
     	}
     	
     	if(updates.length == 3) {
