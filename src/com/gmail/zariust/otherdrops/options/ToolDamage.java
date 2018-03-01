@@ -20,6 +20,7 @@ import java.util.Random;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.enchantments.Enchantment;
 
 import com.gmail.zariust.common.CommonMaterial;
 import com.gmail.zariust.common.Verbosity;
@@ -50,13 +51,30 @@ public class ToolDamage {
         boolean fullyConsumed = false;
         short maxDurability = stack.getType().getMaxDurability();
         if (maxDurability > 0 && durabilityRange != null) {
+        	
             short durability = stack.getDurability();
             short damage = durabilityRange.getRandomIn(rng);
+            
             if (durability + damage >= maxDurability)
                 fullyConsumed = true;
-            else
+            else if (stack.containsEnchantment(Enchantment.DURABILITY)) {
+            	int durabilityLevel = (stack.getEnchantmentLevel(Enchantment.DURABILITY) + 1);
+            	
+            	Random rand = new Random();
+            	int n = rand.nextInt(100) + 1;
+            	
+            	double chanceOfDamage = 100/(durabilityLevel);
+            	boolean shouldDamage = (n < chanceOfDamage);
+            	
+            	if(shouldDamage) {
+                    stack.setDurability((short) (durability + damage));
+                    Log.logInfo("Tool with unbreaking damaged.", Verbosity.HIGH);
+            	}
+            }
+            else {
                 stack.setDurability((short) (durability + damage));
-            Log.logInfo("Tool damaged.", Verbosity.HIGH);
+                Log.logInfo("Tool damaged.", Verbosity.HIGH);
+            }
         }
         if (consumeRange != null && (fullyConsumed || durabilityRange == null)) {
             if (fullyConsumed) {
