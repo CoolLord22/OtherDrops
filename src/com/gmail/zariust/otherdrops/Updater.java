@@ -4,7 +4,6 @@ import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
