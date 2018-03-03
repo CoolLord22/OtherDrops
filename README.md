@@ -5,7 +5,7 @@ OtherDrops is a plugin for the Minecraft Bukkit API that lets you completely
 customize what blocks and dead mobs drop when they are destroyed. Apples from
 leaves, no more broken glass, and much, much more.
 
-Please see the project page for full details here: <http://dev.bukkit.org/server-mods/otherdrops/>
+OUTDATED: Please see the project page for full details here: <https://dev.bukkit.org/projects/otherdrops>
 
 Please see the spigot page for more download information here: <https://www.spigotmc.org/resources/otherdrops-updated.51793/>
 
@@ -24,5 +24,3 @@ Then build using your IDE or:
     $ ant jar
 
 Use `ant -p` to see a complete list of Ant tasks.
-
-Style guide and overview of coding structure is here: <https://github.com/Zarius/Bukkit-OtherBlocks/wiki/Coding-guide>.
