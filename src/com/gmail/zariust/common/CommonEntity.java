@@ -61,7 +61,9 @@ public final class CommonEntity {
                                                  // in mind below)
         name = name.replaceAll("[\\s-_]", ""); // remove spaces, dashes &
                                                // underscores
-
+        if(name.equalsIgnoreCase("tntprimed"))
+        	return EntityType.PRIMED_TNT;
+        
         boolean isEntity = false;
         if (name.matches("^entity.*"))
             isEntity = true;
