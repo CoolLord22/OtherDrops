@@ -208,6 +208,7 @@ public class OtherDropsConfig {
     public static boolean              globalRedstonewireTriggersSurrounding = true;
     public static boolean              globalUpdateChecking					 = true;
     public static boolean              globalDisableMetrics                  = false;
+    public static boolean              primedTNTEnabled		                 = false;
 
     public static boolean              globalOverrideExplosionCap            = false;
 
@@ -532,6 +533,7 @@ public class OtherDropsConfig {
         globalRedstonewireTriggersSurrounding = globalConfig.getBoolean("redstonewire_triggers_surrounding", true);
         globalUpdateChecking = globalConfig.getBoolean("update_checker", true);
         globalDisableMetrics = globalConfig.getBoolean("disable_metrics", false);
+        primedTNTEnabled = globalConfig.getBoolean("primed_tnt", false);
         globalOverrideExplosionCap = globalConfig.getBoolean("override_explosion_cap", false);
         globalCustomSpawnLimit = globalConfig.getInt("custom_spawn_limit", 150);
 
@@ -929,14 +931,11 @@ public class OtherDropsConfig {
         // know the target
         if (drop instanceof SimpleDrop) {
             if (((SimpleDrop) drop).getDropped() instanceof CreatureDrop) {
-                CreatureDrop cDrop = (CreatureDrop) ((SimpleDrop) drop)
-                        .getDropped();
+        		CreatureDrop cDrop = (CreatureDrop) ((SimpleDrop) drop).getDropped();
                 if (cDrop.getCreature() == EntityType.PRIMED_TNT) {
-                    if (!(target instanceof CreatureSubject)) {
+                    if (!(target instanceof CreatureSubject) || !(primedTNTEnabled)) {
                         ((SimpleDrop) drop).setDropped(null);
-                        Log.logWarning(
-                                "DANGER: primedtnt not allowed to drop from blocks (a chain reaction can kill your server), drop removed.",
-                                Verbosity.NORMAL);
+                        Log.logWarning("DANGER: primedtnt not allowed to drop from blocks (a chain reaction can kill your server), drop removed. To enable these, check the config!", Verbosity.LOW);
                     }
                 }
             }

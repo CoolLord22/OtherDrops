@@ -17,6 +17,13 @@ disable_metrics: false
 update_checker: true
 
 #######################
+# WARNING: ONLY CHANGE THIS IF YOU KNOW WHAT YOU ARE DOING!!!
+# Changing this to true will enable dropping Primed TNT to be dropped from blocks and items!
+# This could result in a chain of non-stop TNT, and may break the server!
+# Only experienced users should change this to true!!!
+primed_tnt: false
+
+#######################
 # Restore standard config/include files if they are deleted
 restore_deleted_config_files: true
 
