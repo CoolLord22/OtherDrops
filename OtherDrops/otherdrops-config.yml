@@ -18,8 +18,9 @@ update_checker: true
 
 #######################
 # WARNING: ONLY CHANGE THIS IF YOU KNOW WHAT YOU ARE DOING!!!
-# Changing this to true will enable dropping Primed TNT to be dropped from blocks and items!
-# This could result in a chain of non-stop TNT, and may break the server!
+# Changing this to true will enable dropping Primed TNT from blocks and items interactions.
+# Regularly, the plugin only permits dropping primed TNT from a monster/animal mob. Changing this
+# to true could result in a chain of non-stop TNT, and may end up breaking the server!
 # Only experienced users should change this to true!!!
 primed_tnt: false
 
