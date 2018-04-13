@@ -215,6 +215,15 @@ public class DropRunner implements Runnable {
     public boolean performDrop(Player who, Location location) {
         // Then the actual drop
         // May have unexpected effects when use with delay.
+    	double x;
+    	double z;
+    	x = location.getX();
+    	z = location.getZ();
+    	if((x % 1) == 0)
+    		location = location.add(0.5, 0, 0);
+    	if((z % 1) == 0)
+    		location = location.add(0, 0, 0.5);
+    	location = location.add(0.5, 0, 0.5);
         if (customDrop.getDropped() != null) {
             if (!customDrop.getDropped().toString().equalsIgnoreCase("DEFAULT")) {
                 Target target = currentEvent.getTarget();
