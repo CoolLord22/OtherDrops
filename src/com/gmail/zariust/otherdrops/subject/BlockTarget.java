@@ -197,7 +197,7 @@ public class BlockTarget implements Target {
         Material mat = null;
         if(name.matches("[0-9]+")) {
             Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped! Locating item ID...");
-        	Log.logWarning("Please replace the occurence of '" + name + "' with '" + "'" + Material.getMaterial(Integer.parseInt(name)).toString());
+        	Log.logWarning("Please replace the occurence of '" + name + "' with '" + Material.getMaterial(Integer.parseInt(name)).toString() + "'");
         }
         mat = Material.getMaterial(name.toUpperCase());
         if (mat == null) {

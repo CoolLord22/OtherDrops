@@ -239,7 +239,7 @@ public final class CommonMaterial {
         
         if (mat.matches("[0-9]+")) {
             Log.logWarning("Error while parsing: " + mat + ". Support for numerical IDs has been dropped! Locating item ID...");
-        	Log.logWarning("Please replace the occurence of '" + mat + "' with '" + "'" + Material.getMaterial(Integer.parseInt(mat)).toString());
+        	Log.logWarning("Please replace the occurence of '" + mat + "' with '" + Material.getMaterial(Integer.parseInt(mat)).toString() + "'");
         }
         // CommonMaterial material = enumValue(CommonMaterial.class, mat);
         mat = mat.toLowerCase().replaceAll("[\\s-_]", "");
