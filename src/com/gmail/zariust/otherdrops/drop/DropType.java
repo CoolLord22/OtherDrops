@@ -242,8 +242,6 @@ public abstract class DropType {
         
         DropResult dropResult = new DropResult();
         World in = where.getWorld();
-
-        Log.logWarning("Wow: " + type);
         
         Log.dMsg("DROP MOB: spawnreason: " + spawnReason);
         // if this drop is due to a natural spawn, ensure the OD mob limit is not exceeeded
