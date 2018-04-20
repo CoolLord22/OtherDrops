@@ -1025,7 +1025,8 @@ public class OtherDropsConfig {
         this.dropSections++;
 
         // Read drop
-        boolean deny = false;
+        @SuppressWarnings("unused")
+		boolean deny = false;
         String dropStr = node.getString("drop", "UNSPECIFIED"); // default value
                                                                 // should be
                                                                 // NOTHING
@@ -1203,14 +1204,13 @@ public class OtherDropsConfig {
         String name = split[0];
         String dataStr = split.length > 1 ? split[1] : "";
         Material mat = null;
-        try {
-            mat = Material.getMaterial(Integer.parseInt(name));
-        } 
-        catch (NumberFormatException e) {
-            mat = Material.getMaterial(name.toUpperCase());
-        }
-        if (mat == null)
+        if(name.contains("0") || name.contains("1") || name.contains("2") || name.contains("3") || name.contains("4") ||
+        		name.contains("5") || name.contains("6") || name.contains("7") || name.contains("8") || name.contains("9"))
+            Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped!");
+        mat = Material.getMaterial(name.toUpperCase());
+        if (mat == null) {
             return null;
+        }
         if (!mat.isBlock() && !(this.globalAllowAnyReplacementBlock)) {
             Log.logWarning("Error in 'replacementblock' - " + mat.toString()
                     + " is not a block-type.");
@@ -1240,8 +1240,7 @@ public class OtherDropsConfig {
     private Map<World, Boolean> parseWorldsFrom(ConfigurationNode node,
             Map<World, Boolean> def) {
         List<String> worlds = getMaybeList(node, "world", "worlds");
-        List<String> worldsExcept = getMaybeList(node, "worldexcept",
-                "worldsexcept");
+        List<String> worldsExcept = getMaybeList(node, "worldexcept", "worldsexcept");
         if (worlds.isEmpty() && worldsExcept.isEmpty())
             return def;
         Map<World, Boolean> result = new HashMap<World, Boolean>();
@@ -1270,8 +1269,7 @@ public class OtherDropsConfig {
         for (String name : worldsExcept) {
             World world = Bukkit.getServer().getWorld(name);
             if (world == null) {
-                Log.logWarning("Invalid world exception " + name
-                        + "; skipping...");
+                Log.logWarning("Invalid world exception " + name + "; skipping...");
                 continue;
             }
             result.put(null, true);

@@ -23,12 +23,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.block.Chest;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.inventory.InventoryHolder;
 
-import com.gmail.zariust.common.CommonMaterial;
 import com.gmail.zariust.common.MaterialGroup;
 import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.Log;
@@ -112,7 +110,8 @@ public class BlockTarget implements Target {
         this.customName = customName;
     }
 
-    private static Data getData(Block block) {
+    @SuppressWarnings("deprecation")
+	private static Data getData(Block block) {
         if (block == null)
             return new SimpleData();
         switch (block.getType()) {
@@ -136,7 +135,8 @@ public class BlockTarget implements Target {
         return id;
     }
 
-    public int getId() {
+    @SuppressWarnings("deprecation")
+	public int getId() {
         return id.getId();
     }
 
@@ -194,17 +194,13 @@ public class BlockTarget implements Target {
         name = name.toUpperCase();
         state = state.toUpperCase();
         Material mat = null;
-        try {
-            int id = Integer.parseInt(name);
-            // TODO: Need a way to accept non-standard items, but Material is an
-            // enum...
-            // Waiting on change to Bukkit API.
-            mat = Material.getMaterial(id);
-        } catch (NumberFormatException x) {
-            mat = CommonMaterial.matchMaterial(name);
-        }
-        if (mat == null)
+        if(name.contains("0") || name.contains("1") || name.contains("2") || name.contains("3") || name.contains("4") ||
+        		name.contains("5") || name.contains("6") || name.contains("7") || name.contains("8") || name.contains("9"))
+            Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped!");
+        mat = Material.getMaterial(name.toUpperCase());
+        if (mat == null) {
             return null;
+        }
         if (!mat.isBlock()) {
             // Only a very select few non-blocks are permitted as a target
             if (mat != Material.PAINTING && mat != Material.BOAT

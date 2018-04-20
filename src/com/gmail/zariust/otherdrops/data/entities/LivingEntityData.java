@@ -161,6 +161,7 @@ public class LivingEntityData extends CreatureData {
 
     public static CreatureData parseFromEntity(Entity entity) {
         if (entity instanceof LivingEntity) {
+            return new LivingEntityData(EntityWrapper.getMaxHealth((LivingEntity) entity).getValue(), CreatureEquipment.parseFromEntity(entity), ((LivingEntity) entity).getCustomName());
         } else {
             Log.logInfo("LivingEntityData: error, parseFromEntity given different creature - this shouldn't happen.");
             return null;
