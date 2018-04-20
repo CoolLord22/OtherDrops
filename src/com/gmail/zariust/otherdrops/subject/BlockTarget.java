@@ -190,13 +190,15 @@ public class BlockTarget implements Target {
         return match;
     }
 
-    public static Target parse(String name, String state, String customName) {        
+    @SuppressWarnings("deprecation")
+	public static Target parse(String name, String state, String customName) {        
         name = name.toUpperCase();
         state = state.toUpperCase();
         Material mat = null;
-        if(name.contains("0") || name.contains("1") || name.contains("2") || name.contains("3") || name.contains("4") ||
-        		name.contains("5") || name.contains("6") || name.contains("7") || name.contains("8") || name.contains("9"))
-            Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped!");
+        if(name.matches("[0-9]+")) {
+            Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped! Locating item ID...");
+        	Log.logWarning("Please replace the occurence of '" + name + "' with '" + "'" + Material.getMaterial(Integer.parseInt(name)).toString());
+        }
         mat = Material.getMaterial(name.toUpperCase());
         if (mat == null) {
             return null;

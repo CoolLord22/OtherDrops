@@ -1195,25 +1195,25 @@ public class OtherDropsConfig {
         return prop;
     }
 
-    private BlockTarget parseReplacement(ConfigurationNode node) {
-        String blockName = getStringFrom(node, "replacementblock",
-                "replaceblock", "replace");
+    @SuppressWarnings("deprecation")
+	private BlockTarget parseReplacement(ConfigurationNode node) {
+        String blockName = getStringFrom(node, "replacementblock", "replaceblock", "replace");
         if (blockName == null)
             return null;
         String[] split = blockName.split("@");
         String name = split[0];
         String dataStr = split.length > 1 ? split[1] : "";
         Material mat = null;
-        if(name.contains("0") || name.contains("1") || name.contains("2") || name.contains("3") || name.contains("4") ||
-        		name.contains("5") || name.contains("6") || name.contains("7") || name.contains("8") || name.contains("9"))
-            Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped!");
+        if(name.matches("[0-9]+")) {
+            Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped! Locating item ID...");
+        	Log.logWarning("Please replace the occurence of '" + name + "' with '" + "'" + Material.getMaterial(Integer.parseInt(name)).toString());
+        }
         mat = Material.getMaterial(name.toUpperCase());
         if (mat == null) {
             return null;
         }
         if (!mat.isBlock() && !(this.globalAllowAnyReplacementBlock)) {
-            Log.logWarning("Error in 'replacementblock' - " + mat.toString()
-                    + " is not a block-type.");
+            Log.logWarning("Error in 'replacementblock' - " + mat.toString() + " is not a block-type.");
             return null;
         }
 

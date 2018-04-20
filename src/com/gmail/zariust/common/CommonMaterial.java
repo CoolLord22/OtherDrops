@@ -185,7 +185,7 @@ public final class CommonMaterial {
         aMap.put("bucket of milk", "milk bucket");
 
         aMap.put("inksac", "inksack");
-
+        
         aMap.put("firecharge", "fireball");
 
         aMap.put("skull", "skull_item");
@@ -224,7 +224,8 @@ public final class CommonMaterial {
         ALIASES = Collections.unmodifiableMap(aMap);
     }
 
-    public static Material matchMaterial(String mat) {
+    @SuppressWarnings("deprecation")
+	public static Material matchMaterial(String mat) {
         // Aliases defined here override those in Material; the only example
         // here is WOODEN_DOOR
         // You can remove it if you prefer not to break the occasional config
@@ -237,7 +238,8 @@ public final class CommonMaterial {
         mat = split[0];
         
         if (mat.matches("[0-9]+")) {
-            Log.logWarning("Error while parsing: " + mat + ". Support for numerical IDs has been dropped!");
+            Log.logWarning("Error while parsing: " + mat + ". Support for numerical IDs has been dropped! Locating item ID...");
+        	Log.logWarning("Please replace the occurence of '" + mat + "' with '" + "'" + Material.getMaterial(Integer.parseInt(mat)).toString());
         }
         // CommonMaterial material = enumValue(CommonMaterial.class, mat);
         mat = mat.toLowerCase().replaceAll("[\\s-_]", "");
