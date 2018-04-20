@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.material.MaterialData;
 
 import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.Log;
@@ -26,11 +27,9 @@ public class OdRedstoneListener implements Listener {
         Log.logInfo("RedstoneEvent: before checks.", Verbosity.EXTREME);
 
         Block poweredBlock = event.getBlock();
-        int poweredBlockDataValue = poweredBlock.getTypeId();
-        byte poweredBlockMetaValue = poweredBlock.getData();
-        Log.dMsg("Block Type: " + poweredBlockDataValue + ":"
-                + poweredBlockMetaValue + " (current=" + event.getNewCurrent()
-                + ")");
+        Material poweredBlockDataValue = poweredBlock.getType();
+        MaterialData poweredBlockMetaValue = poweredBlock.getState().getData();
+        Log.dMsg("Block Type: " + poweredBlockDataValue + ":" + poweredBlockMetaValue + " (current=" + event.getNewCurrent() + ")");
 
         if (OtherDropsConfig.dropForRedstoneTrigger) {
             if ((event.getOldCurrent() - event.getNewCurrent()) > 0) { // POWER

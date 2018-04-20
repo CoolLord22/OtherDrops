@@ -100,7 +100,7 @@ public class ODItem {
         if (this.material == null) {
             try {
                 int dropInt = Integer.parseInt(this.name);
-                material = Material.getMaterial(dropInt);
+                Log.logWarning("Error while parsing material: " + dropInt + "");
             } catch (NumberFormatException e) {
                 material = CommonMaterial.matchMaterial(this.name);
             }

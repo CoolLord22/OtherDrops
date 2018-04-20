@@ -60,7 +60,8 @@ public class VillagerData extends CreatureData {
     public static CreatureData parseFromString(String state) {
         // state example: BLACK_CAT!BABY!WILD, or TAME!REDCAT!ADULT (order
         // doesn't matter)
-        Boolean adult = null;
+        @SuppressWarnings("unused")
+		Boolean adult = null;
         Profession thisProf = null;
         AgeableData ageData = (AgeableData) AgeableData.parseFromString(state);
 

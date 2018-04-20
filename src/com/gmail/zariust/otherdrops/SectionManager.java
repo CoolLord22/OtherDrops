@@ -100,20 +100,21 @@ public class SectionManager {
                 BlockTarget any = (BlockTarget) drop.getTarget();
                 if (any.except != null) {
                     Material compareTo = null;
+                    Material compareToOffhand = null;
                     if (occurence.getEvent() instanceof BlockBreakEvent) {
-                        compareTo = ((BlockBreakEvent) occurence.getEvent())
-                                .getBlock().getType();
-                    } else if (occurence.getEvent() instanceof PlayerInteractEvent) {
+                        compareTo = ((BlockBreakEvent) occurence.getEvent()).getBlock().getType();
+                    } 
+                    else if (occurence.getEvent() instanceof PlayerInteractEvent) {
                         compareTo = null;
-                        PlayerInteractEvent pie = (PlayerInteractEvent) occurence
-                                .getEvent();
+                        compareToOffhand = null;
+                        PlayerInteractEvent pie = (PlayerInteractEvent) occurence.getEvent();
                         if (pie.getPlayer() != null) {
-                            compareTo = pie.getPlayer().getItemInHand()
-                                    .getType();
+                            compareTo = pie.getPlayer().getInventory().getItemInMainHand().getType();
+                            compareToOffhand = pie.getPlayer().getInventory().getItemInOffHand().getType();
                         }
                     }
 
-                    if (any.except.contains(compareTo)) {
+                    if (any.except.contains(compareTo) || any.except.contains(compareToOffhand)) {
                         return;
                     }
                 }
@@ -275,7 +276,8 @@ public class SectionManager {
             eq.setChestplateDropChance(0);
             eq.setLeggingsDropChance(0);
             eq.setBootsDropChance(0);
-            eq.setItemInHandDropChance(0);
+            eq.setItemInMainHandDropChance(0);
+            eq.setItemInOffHandDropChance(0);
         }
 
     }

@@ -213,7 +213,8 @@ public class ProjectileAgent implements Agent {
         // drains arrows? But how to know which item?
         // Currently defaulting to the materials associated with each projectile
         // in CommonEntity
-        Inventory inven;
+        @SuppressWarnings("unused")
+		Inventory inven;
         if (agent.getShooter() == null) { // Dispenser!
             // TODO: How to retrieve the source dispenser?
             inven = null;
@@ -254,7 +255,8 @@ public class ProjectileAgent implements Agent {
 
         name = name.toUpperCase().replace("PROJECTILE_", "");
         Material mat;
-        String checkName = name.toUpperCase().replaceAll("[\\s-_]", "");
+        @SuppressWarnings("unused")
+		String checkName = name.toUpperCase().replaceAll("[\\s-_]", "");
         // TODO: parse by projectile names for future compatibility
         if (name.equals("FIRE") || name.equals("FIREBALL"))
             mat = Material.FIRE;

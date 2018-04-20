@@ -321,7 +321,8 @@ public class OtherDropsCommand implements CommandExecutor {
      * @param playerName
      * @param dsl
      */
-    public void getLocationFromDropString(CommandSender sender, String[] args, dropStringLoc dsl) {
+    @SuppressWarnings("deprecation")
+	public void getLocationFromDropString(CommandSender sender, String[] args, dropStringLoc dsl) {
         World world = null;
         String playerName = "unknown";
         if (sender instanceof Player) {
@@ -510,7 +511,7 @@ public class OtherDropsCommand implements CommandExecutor {
     private void cmdId(CommandSender sender, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            ItemStack playerItem = player.getItemInHand();
+            ItemStack playerItem = player.getInventory().getItemInMainHand();
 
             if (args.length > 0
                     && args[0].toLowerCase().matches("(mob|creature)")) {
@@ -533,7 +534,7 @@ public class OtherDropsCommand implements CommandExecutor {
                     sender.sendMessage("No living entity found.");
                 }
             } else {
-                String itemMsg = "Item in hand: " + playerItem.getTypeId()
+                String itemMsg = "Item in hand: " + playerItem.getType()
                         + "@" + playerItem.getDurability() + " maxdura:"
                         + playerItem.getType().getMaxDurability() + " dura%:"
                         + getDurabilityPercentage(playerItem) + " detail: "

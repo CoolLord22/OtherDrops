@@ -146,7 +146,8 @@ public class HorseData extends CreatureData {
         return new HorseData(thisColor, thisStyle, thisTamed, ageData);
     }
 
-    private static CreatureData getData(String state) {
+    @SuppressWarnings("unused")
+	private static CreatureData getData(String state) {
         return new HorseData(state);
 
     }

@@ -65,7 +65,8 @@ public class SimpleData implements Data, RangeableData {
         this(0);
     }
 
-    public SimpleData(Painting painting) {
+    @SuppressWarnings("deprecation")
+	public SimpleData(Painting painting) {
         Art art = painting.getArt();
         data = art.getId() << 4;
         switch (painting.getFacing()) {
@@ -95,7 +96,8 @@ public class SimpleData implements Data, RangeableData {
         return data == d.getData();
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void setOn(BlockState state) {
         MaterialData mat = new MaterialData(state.getType(), (byte) data);
         state.setData(mat);
@@ -108,7 +110,8 @@ public class SimpleData implements Data, RangeableData {
             return;
         }
         Painting painting = (Painting) entity;
-        Art art = Art.getById(data >> 4);
+        @SuppressWarnings("deprecation")
+		Art art = Art.getById(data >> 4);
         painting.setArt(art);
         switch (data & 7) {
         case 0:
@@ -129,7 +132,7 @@ public class SimpleData implements Data, RangeableData {
         return "";
     }
 
-    @SuppressWarnings("incomplete-switch")
+    @SuppressWarnings({ "incomplete-switch", "deprecation" })
     private String get(Material mat) {
         if (mat == null) {
             Log.logWarning(
@@ -301,7 +304,8 @@ public class SimpleData implements Data, RangeableData {
         return result;
     }
 
-    public static Data parse(Material mat, String state)
+    @SuppressWarnings("deprecation")
+	public static Data parse(Material mat, String state)
             throws IllegalArgumentException {
         if (state == null || state.isEmpty())
             return null;

@@ -55,6 +55,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.diddiz.LogBlock.Consumer;
 import de.diddiz.LogBlock.LogBlock;
 
+@SuppressWarnings("unused")
 public class Dependencies {
     // Plugin Dependencies
     private static LogBlock         logBlock        = null;
@@ -75,7 +76,7 @@ public class Dependencies {
     private static MoneyDrop        moneyDrop       = null; // for MoneyDrop
 
     private static Economy          vaultEcon       = null;
-    private static Permission       vaultPerms      = null;
+	private static Permission       vaultPerms      = null;
 
     static String                   foundPlugins;
     static String                   notFoundPlugins;
@@ -280,7 +281,8 @@ public class Dependencies {
 
     // If logblock plugin is available, inform it of the block destruction
     // before we change it
-    public static boolean queueBlockBreak(String playerName, Block block, BlockBreakEvent event) {
+    @SuppressWarnings("deprecation")
+	public static boolean queueBlockBreak(String playerName, Block block, BlockBreakEvent event) {
         if (block == null) {
             Log.logWarning(
                     "Queueblockbreak: block is null - this shouldn't happen (please advise developer).  Player = "
@@ -311,8 +313,7 @@ public class Dependencies {
 
         if (Dependencies.hasCoreProtect()) {
             Log.logInfo("Attempting to log to CoreProtect: " + message, HIGHEST);
-            Dependencies.getCoreProtect().logRemoval(playerName,
-                    block.getLocation(), block.getTypeId(), block.getData());
+            Dependencies.getCoreProtect().logRemoval(playerName, block.getLocation(), block.getType(), block.getData());
         }
 
         if (Dependencies.hasHawkEye()) {
@@ -323,27 +324,20 @@ public class Dependencies {
             // boolean result = HawkEyeAPI.addEntry(plugin, new
             // BlockEntry(playerName, DataType.BLOCK_BREAK, block));
 
-            boolean result = HawkEyeAPI.addCustomEntry(OtherDrops.plugin,
-                    "ODBlockBreak",
-                    OtherDrops.plugin.getServer().getPlayer(playerName),
-                    block.getLocation(), block.getType().toString());
+            boolean result = HawkEyeAPI.addCustomEntry(OtherDrops.plugin, "ODBlockBreak", OtherDrops.plugin.getServer().getPlayer(playerName), block.getLocation(), block.getType().toString());
             if (!result)
                 Log.logWarning("Warning: HawkEyeAPI logging failed.",
                         Verbosity.HIGH);
         }
 
         if (Dependencies.hasRegenBlock()) {
-            Log.logInfo("Attempting to send event to RegenBlock. (" + message
-                    + ")", HIGHEST);
-            Dependencies
-                    .getRegenBlock()
-                    .regenBlock(block.getLocation(), block.getType(), block.getData(), OtherDrops.plugin.getServer().getPlayer(playerName), true);
+            Log.logInfo("Attempting to send event to RegenBlock. (" + message + ")", HIGHEST);
+            Dependencies.getRegenBlock().regenBlock(block.getLocation(), block.getType(), block.getData(), OtherDrops.plugin.getServer().getPlayer(playerName), true);
         }
 
         if (hasPrism()) {
             Log.logInfo("Attempting to log to Prism (" + message + ")", HIGHEST);
-            Prism.actionsRecorder.addToQueue(ActionFactory.create(
-                    "block-break", block, playerName));
+            Prism.actionsRecorder.addToQueue(ActionFactory.create("block-break", block, playerName));
         }
         return true;
     }

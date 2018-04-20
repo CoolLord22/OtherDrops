@@ -175,7 +175,8 @@ public class ItemDrop extends DropType {
      * @param source
      * @return data as a short (for use in an ItemStack)
      */
-    private short processTHISdata(Target source) {
+    @SuppressWarnings("deprecation")
+	private short processTHISdata(Target source) {
         int itemData = durability.getData();
         if (itemData == -1) { // ie. itemData = THIS
             if (source == null)

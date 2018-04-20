@@ -5,7 +5,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mule;
 import org.bukkit.entity.Player;
 
-import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.OtherDropsConfig;
 import com.gmail.zariust.otherdrops.data.CreatureData;
@@ -21,7 +20,6 @@ public class MuleData extends CreatureData {
     }
 
     public MuleData(String state) {
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -89,9 +87,9 @@ public class MuleData extends CreatureData {
         return new MuleData(thisTamed, ageData);
     }
 
-    private static CreatureData getData(String state) {
+    @SuppressWarnings("unused")
+	private static CreatureData getData(String state) {
         return new MuleData(state);
-
     }
 
     @Override

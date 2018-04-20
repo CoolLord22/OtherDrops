@@ -58,9 +58,7 @@ public class ZombieVillagerData extends CreatureData {
 
     public static CreatureData parseFromEntity(Entity entity) {
         if (entity instanceof ZombieVillager) {
-            return new ZombieVillagerData(((ZombieVillager) entity).isVillager(),
-                    (!((ZombieVillager) entity).isBaby()),
-                    (LivingEntityData) LivingEntityData.parseFromEntity(entity));
+            return new ZombieVillagerData(true, (!((ZombieVillager) entity).isBaby()), (LivingEntityData) LivingEntityData.parseFromEntity(entity));
         } else {
             Log.logInfo("ZombieVillager: error, parseFromEntity given different creature - this shouldn't happen.");
             return null;

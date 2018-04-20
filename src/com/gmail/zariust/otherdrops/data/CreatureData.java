@@ -56,13 +56,13 @@ import com.gmail.zariust.otherdrops.data.entities.*;
 public class CreatureData implements Data, RangeableData {
 
     // Create a map of entity types against data objects
-    private static final Map<EntityType, Class> DATAMAP;
+	private static final Map<EntityType, Class<?>> DATAMAP;
 
     // Map of EntityTypes to new class based creature data, for ease of lookup
     // later on
     // note: there should be only one line per entity, or things could get messy
     static {
-        Map<EntityType, Class> aMap = new HashMap<EntityType, Class>();
+		Map<EntityType, Class<?>> aMap = new HashMap<EntityType, Class<?>>();
 
         // Note: due to difficulties with alternate coding all specific data
         // classes need to manually include a call to either LivingEntityData or
@@ -97,7 +97,7 @@ public class CreatureData implements Data, RangeableData {
         // then check if it's an Ageable or LivingEntity and assign a mapping
         for (EntityType type : EntityType.values()) {
             if (aMap.get(type) == null) {
-                Class typeClass = type.getEntityClass();
+                Class<?> typeClass = type.getEntityClass();
                 if (typeClass != null) {
                     if (Ageable.class.isAssignableFrom(type.getEntityClass())) {
                         aMap.put(type, AgeableData.class);
@@ -114,7 +114,8 @@ public class CreatureData implements Data, RangeableData {
     }
     public int                                  data;
     private Boolean                             sheared;
-    private List<CreatureData>                  subData;
+    @SuppressWarnings("unused")
+	private List<CreatureData>                  subData;
 
     public CreatureData(int mobData) {
         this(mobData, null);
@@ -200,7 +201,6 @@ public class CreatureData implements Data, RangeableData {
     public void setOn(BlockState state) {
     }
 
-    @SuppressWarnings("incomplete-switch")
     public static Data parse(EntityType creature, String state) {
         // state = state.toUpperCase().replaceAll("[ _-]", "");
 
@@ -211,19 +211,19 @@ public class CreatureData implements Data, RangeableData {
                         .getMethod("parseFromString", String.class)
                         .invoke(null, state);
             } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
+                
                 e.printStackTrace();
             } catch (SecurityException e) {
-                // TODO Auto-generated catch block
+                
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
+                
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
+                
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
+                
                 e.printStackTrace();
             }
             ;
@@ -275,8 +275,7 @@ public class CreatureData implements Data, RangeableData {
     public String toString() {
         // TODO: Should probably make sure this is not used, and always use the
         // get method instead
-        Log.logWarning("CreatureData.toString() was called! Is this right?",
-                EXTREME);
+        Log.logWarning("CreatureData.toString() was called! Is this right?", EXTREME);
         Log.stackTrace();
         return String.valueOf(data);
     }
@@ -300,19 +299,14 @@ public class CreatureData implements Data, RangeableData {
                         .getMethod("parseFromEntity", Entity.class)
                         .invoke(null, entity);
             } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (SecurityException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             ;

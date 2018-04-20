@@ -33,7 +33,10 @@ public class McmmoCondition extends Condition {
         matches.put("swords", Type.SWORDS);
     }
 
-    private final Type               type;
+    @SuppressWarnings("unused")
+	private final Type               type;
+
+    @SuppressWarnings("unused")
     private final String             parameterValue;
 
     public McmmoCondition(Object toParse, Type type) {

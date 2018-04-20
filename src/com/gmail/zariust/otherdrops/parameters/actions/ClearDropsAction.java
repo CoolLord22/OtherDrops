@@ -15,7 +15,8 @@ public class ClearDropsAction extends Action {
         XP, DROP, EQUIPMENT
     }
 
-    private final ClearType clearType;
+    @SuppressWarnings("unused")
+	private final ClearType clearType;
 
     public ClearDropsAction(ClearType cType) {
         this.clearType = cType;

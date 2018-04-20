@@ -37,7 +37,8 @@ public class DyeEvent extends SpecialResult {
         super("DYE", source);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void executeAt(OccurredEvent event) {
         DyeColor dye = DyeColor.PINK;
         if (colour == null) {

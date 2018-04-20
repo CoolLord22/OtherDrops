@@ -45,7 +45,7 @@ public class LoreNameCheck extends Condition {
     }
 
     private boolean checkLoreName(PlayerSubject player, String parsedLorename) {
-        ItemStack item = player.getPlayer().getItemInHand();
+        ItemStack item = player.getPlayer().getInventory().getItemInMainHand();
         if (item == null)
             return false; // not sure when item would be null but it can be
 

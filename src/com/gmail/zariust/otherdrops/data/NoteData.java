@@ -37,7 +37,8 @@ public class NoteData implements Data, RangeableData {
         note = tone;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int getData() {
         return note.getId();
     }
@@ -99,7 +100,8 @@ public class NoteData implements Data, RangeableData {
         return new NoteData(note);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int hashCode() {
         // Note doesn't define a hashCode() and is not an enum, so use the note
         // ID instead

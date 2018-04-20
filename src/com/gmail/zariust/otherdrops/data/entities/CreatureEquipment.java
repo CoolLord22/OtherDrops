@@ -12,8 +12,10 @@ public class CreatureEquipment {
     public Float     chestChance = 10F;
     public ItemStack legs;
     public Float     legsChance  = 10F;
-    public ItemStack hands;
-    public Float     handsChance = 10F;
+    public ItemStack handsMain;
+    public ItemStack handsOff;
+    public Float     handsMainChance = 10F;
+    public Float     handsOffChance = 10F;
     public ItemStack boots;
     public Float     bootsChance = 10F;
 
@@ -24,8 +26,10 @@ public class CreatureEquipment {
     public CreatureEquipment(EntityEquipment eq) {
         if (eq.getHelmet() != null)
             this.head = eq.getHelmet();
-        if (eq.getItemInHand() != null)
-            this.hands = eq.getItemInHand();
+        if (eq.getItemInMainHand() != null)
+            this.handsMain = eq.getItemInMainHand();
+        if (eq.getItemInOffHand() != null)
+            this.handsOff = eq.getItemInOffHand();
         if (eq.getChestplate() != null)
             this.chest = eq.getChestplate();
         if (eq.getLeggings() != null)
@@ -44,8 +48,10 @@ public class CreatureEquipment {
             msg += "!!" + chest.toString() + "%" + chestChance.toString() + "%";
         if (legs != null)
             msg += "!!" + legs.toString() + "%" + legsChance.toString() + "%";
-        if (hands != null)
-            msg += "!!" + hands.toString() + "%" + handsChance.toString() + "%";
+        if (handsMain != null)
+            msg += "!!" + handsMain.toString() + "%" + handsMainChance.toString() + "%";
+        if (handsOff != null)
+            msg += "!!" + handsOff.toString() + "%" + handsOffChance.toString() + "%";
         if (boots != null)
             msg += "!!" + boots.toString() + "%" + bootsChance.toString() + "%";
 
@@ -67,8 +73,11 @@ public class CreatureEquipment {
         if (legs != null)
             if (legs.getType() != equip.legs.getType())
                 return false;
-        if (hands != null)
-            if (hands.getType() != equip.hands.getType())
+        if (handsMain != null)
+            if (handsMain.getType() != equip.handsMain.getType())
+                return false;
+        if (handsOff != null)
+            if (handsOff.getType() != equip.handsOff.getType())
                 return false;
         if (boots != null)
             if (boots.getType() != equip.boots.getType())

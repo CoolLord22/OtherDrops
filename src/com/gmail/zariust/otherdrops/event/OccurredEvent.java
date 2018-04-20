@@ -135,7 +135,8 @@ public class OccurredEvent extends AbstractDropEvent implements Cancellable {
         setRealEvent(evt);
         event = new Cancellable() {
             // Storing as an array is a crude way to get a copy
-            private final ItemStack[] drops = evt.getDrops().toArray(
+            @SuppressWarnings("unused")
+			private final ItemStack[] drops = evt.getDrops().toArray(
                                                     new ItemStack[0]);
 
             @Override
@@ -727,7 +728,8 @@ public class OccurredEvent extends AbstractDropEvent implements Cancellable {
     }
 
 
-    public OccurredEvent(BlockGrowEvent evt) {
+    @SuppressWarnings("deprecation")
+	public OccurredEvent(BlockGrowEvent evt) {
         super(new BlockTarget(evt.getNewState().getType(), evt.getBlock().getLocation(), evt.getNewState().getRawData()), Trigger.BLOCK_GROW);
         event = evt;
         setLocationWorldBiomeLight(evt.getBlock());
@@ -800,8 +802,7 @@ public class OccurredEvent extends AbstractDropEvent implements Cancellable {
         regions = new HashSet<String>();
         if (!Dependencies.hasWorldGuard())
             return;
-        Map<String, ProtectedRegion> regionMap = Dependencies.getWorldGuard()
-                .getGlobalRegionManager().get(world).getRegions();
+        Map<String, ProtectedRegion> regionMap = Dependencies.getWorldGuard().getRegionContainer().get(world).getRegions();
         Vector vec = new Vector(location.getX(), location.getY(),
                 location.getZ());
         for (String region : regionMap.keySet()) {

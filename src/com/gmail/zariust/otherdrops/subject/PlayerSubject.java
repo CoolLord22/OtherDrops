@@ -48,7 +48,7 @@ public class PlayerSubject extends LivingSubject {
     }
 
     public PlayerSubject(Player attacker) {
-        this(attacker.getItemInHand(), attacker.getName(), attacker);
+        this(attacker.getInventory().getItemInMainHand(), attacker.getName(), attacker);
     }
 
     public PlayerSubject(ItemStack item, String attacker) {
@@ -112,7 +112,8 @@ public class PlayerSubject extends LivingSubject {
         return tool.getMaterial();
     }
 
-    public Player getPlayer() {
+    @SuppressWarnings("deprecation")
+	public Player getPlayer() {
         if (name == null)
             return null;
         if (agent == null)
@@ -120,16 +121,16 @@ public class PlayerSubject extends LivingSubject {
         return agent;
     }
 
-    @Override
     @SuppressWarnings("deprecation")
+	@Override
     public void damageTool(ToolDamage damage, Random rng) {
         if (damage == null)
             return;
-        ItemStack stack = agent.getItemInHand();
+        ItemStack stack = agent.getInventory().getItemInMainHand();
         if (stack == null)
             return;
         if (damage.apply(stack, rng))
-            agent.setItemInHand(null);
+            agent.getInventory().setItemInMainHand(null);
         else
             agent.updateInventory(); // because we've edited the stack directly
         // TODO: Option of failure if damage is greater that the amount

@@ -88,7 +88,8 @@ public class DonkeyData extends CreatureData {
         return new DonkeyData(thisTamed, ageData);
     }
 
-    private static CreatureData getData(String state) {
+    @SuppressWarnings("unused")
+	private static CreatureData getData(String state) {
         return new DonkeyData(state);
     }
 

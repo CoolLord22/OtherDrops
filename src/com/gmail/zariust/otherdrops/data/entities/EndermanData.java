@@ -27,7 +27,8 @@ public class EndermanData extends CreatureData {
         this.leData = leData;
     }
 
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public void setOn(Entity mob, Player owner) {
         if (mob instanceof Enderman) {
             Enderman z = (Enderman) mob;
@@ -72,7 +73,8 @@ public class EndermanData extends CreatureData {
 
     }
 
-    public static CreatureData parseFromString(String state) {
+    @SuppressWarnings("deprecation")
+	public static CreatureData parseFromString(String state) {
 
         Log.logInfo("EndermanData: parsing from string.", Verbosity.HIGHEST);
         MaterialData materialData = null;
@@ -105,8 +107,7 @@ public class EndermanData extends CreatureData {
                     if (material != null && data == null)
                         materialData = material.getNewData((byte) 0);
                     else if (material != null)
-                        materialData = material.getNewData((byte) data
-                                .getData());
+                        materialData = material.getNewData((byte) data.getData());
 
                 }
             }
@@ -125,7 +126,8 @@ public class EndermanData extends CreatureData {
      * CreatureData(md);
      */
 
-    @Override
+	@SuppressWarnings("deprecation")
+	@Override
     public String toString() {
         String val = "";
         if (md != null) {

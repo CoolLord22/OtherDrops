@@ -1,5 +1,7 @@
 package com.gmail.zariust.otherdrops;
 
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
 
 /**
@@ -25,8 +27,8 @@ public class EntityWrapper {
         ent.setHealth(health);
     }
 
-    public static Double getMaxHealth(LivingEntity entity) {
-        return entity.getMaxHealth();
+    public static AttributeInstance getMaxHealth(LivingEntity entity) {
+        return entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
     }
 
     public static void damage(LivingEntity ent, Double damageVal, LivingEntity attacker) {

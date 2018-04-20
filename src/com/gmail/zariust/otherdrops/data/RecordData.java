@@ -47,7 +47,8 @@ public class RecordData extends EffectData {
         }
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int getData() {
         Integer discId = null;
         if (disc == null) {
@@ -70,7 +71,8 @@ public class RecordData extends EffectData {
         return discId;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void setData(int d) {
         disc = Material.getMaterial(d);
     }
@@ -108,7 +110,8 @@ public class RecordData extends EffectData {
     public void setOn(Entity entity, Player witness) {
     }
 
-    public static RecordData parse(String state) {
+    @SuppressWarnings("deprecation")
+	public static RecordData parse(String state) {
         if (state == null || state.isEmpty())
             return new RecordData((Material) null);
         Material mat = CommonMaterial.matchMaterial(state);

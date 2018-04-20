@@ -235,9 +235,9 @@ public final class CommonMaterial {
         // remove any trailing data (eg. from tool [item]/[quantity])
         String[] split = mat.split("/");
         mat = split[0];
-
+        
         if (mat.matches("[0-9]+")) {
-            return Material.getMaterial(Integer.valueOf(mat));
+            Log.logWarning("Error while parsing: " + mat + ". Support for numerical IDs has been dropped!");
         }
         // CommonMaterial material = enumValue(CommonMaterial.class, mat);
         mat = mat.toLowerCase().replaceAll("[\\s-_]", "");
@@ -271,15 +271,17 @@ public final class CommonMaterial {
     }
 
     // Colors
-    public static int getWoolColor(DyeColor color) {
+    @SuppressWarnings("deprecation")
+	public static int getWoolColor(DyeColor color) {
         return color.getWoolData();
     }
 
-    public static int getDyeColor(DyeColor color) {
+    @SuppressWarnings("deprecation")
+	public static int getDyeColor(DyeColor color) {
         return color.getDyeData();
     }
 
-    @SuppressWarnings("incomplete-switch")
+    @SuppressWarnings({ "incomplete-switch", "deprecation" })
     public static Integer parseBlockOrItemData(Material mat, String state)
             throws IllegalArgumentException {
         Log.logInfo("Checking block data for " + mat.toString() + "@" + state,
@@ -402,7 +404,7 @@ public final class CommonMaterial {
         return null;
     }
 
-    @SuppressWarnings("incomplete-switch")
+    @SuppressWarnings({ "incomplete-switch", "deprecation" })
     public static String getBlockOrItemData(Material mat, int data) {
         try {
             switch (mat) {
