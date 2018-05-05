@@ -16,6 +16,10 @@
 
 package com.gmail.zariust.otherdrops;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +47,6 @@ import think.rpgitems.data.Locale;
 import think.rpgitems.item.ItemManager;
 import think.rpgitems.item.RPGItem;
 
-import com.gmail.zariust.common.CMEnchantment;
 import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.data.CreatureData;
 import com.gmail.zariust.otherdrops.drop.DropResult;
@@ -72,7 +75,8 @@ public class OtherDropsCommand implements CommandExecutor {
         HEROESTEST("heroestest", "ht", ""),
         RPGTEST("rpg", "", ""),
         DROP("drop", "d,o", "otherdrops.admin.drop"),
-        TRIGGERS("triggers", "t", "otherdrops.admin.triggers");
+        TRIGGERS("triggers", "t", "otherdrops.admin.triggers"),
+    	WRITE("write", "wf", "otherdrops.admin.id");
 
         private String cmdName;
         private String cmdShort;
@@ -183,6 +187,9 @@ public class OtherDropsCommand implements CommandExecutor {
             break;
         case RPGTEST:
             cmdRpgTest(sender, args);
+            break;
+        case WRITE:
+        	cmdWriteFile(sender);
             break;
         case TRIGGERS:
             String triggers = "";
@@ -535,16 +542,16 @@ public class OtherDropsCommand implements CommandExecutor {
                     sender.sendMessage("No living entity found.");
                 }
             } else {
-                String itemMsg = "Item in hand: " + playerItem.getType()
-                        + "@" + playerItem.getDurability() + " maxdura:"
-                        + playerItem.getType().getMaxDurability() + " dura%:"
-                        + getDurabilityPercentage(playerItem) + " detail: "
-                        + playerItem.toString();
+                String itemMsg = playerItem.getType() + "@" + playerItem.getDurability() + " maxdura:" + playerItem.getType().getMaxDurability() +
+                		" dura%:" + getDurabilityPercentage(playerItem) + " detail: " + playerItem.toString();
                 if (playerItem.getItemMeta() != null && playerItem.getItemMeta().getDisplayName() != null)
-                    itemMsg += " lorename: \"" + playerItem.getItemMeta().getDisplayName().replaceAll(" §", "&") + "\"";
-                sender.sendMessage(itemMsg);
+                    itemMsg += " name: \"" + playerItem.getItemMeta().getDisplayName().replaceAll(" §", "&") + "\"";
+               
+                ((Player) sender).sendRawMessage(ChatColor.GREEN + "Item in hand: " + ChatColor.WHITE + itemMsg.replaceAll("§", "&"));
+                sender.sendMessage("");
+                
                 Block block = player.getTargetBlock(new HashSet<Material>(), 100);
-                sender.sendMessage("Block looked at is " + block.toString()
+                ((Player) sender).sendRawMessage(ChatColor.GREEN + "Block looked at is " + ChatColor.WHITE + block.toString()
                         + " mat: " + block.getType().toString()
                         + " lightlevel: " + block.getLightLevel()
                         + " lightfromsky: " + block.getLightFromSky()
@@ -572,13 +579,56 @@ public class OtherDropsCommand implements CommandExecutor {
             		}
             	}
             }
-            
             sender.sendMessage("");
             ((Player) sender).sendRawMessage(ChatColor.GREEN + "The item config is:§r " + ChatColor.WHITE + itemFinalWriteData.replaceAll("§", "&"));
-            
         }
     }
+    
+    private void cmdWriteFile(CommandSender sender) {
+    	if (sender instanceof Player) {
+            File folder = new File("plugins" + File.separator + "OtherDrops");
+            BufferedWriter out = null;
+            
+            Player player = (Player) sender;
+            ItemStack playerItem = player.getInventory().getItemInMainHand();
 
+            String itemFinalWriteData = "";
+            
+            itemFinalWriteData += playerItem.getType();
+            itemFinalWriteData += "@" + playerItem.getDurability();
+            if(!playerItem.getEnchantments().isEmpty()) {
+            	itemFinalWriteData += "!";
+            	for(Enchantment enchInMap : playerItem.getEnchantments().keySet()) {
+            		itemFinalWriteData += enchInMap.getName() + "#" + playerItem.getEnchantmentLevel(enchInMap) + "!";
+            	}
+            }
+            
+            if(playerItem.getItemMeta() != null) {
+            	if(playerItem.getItemMeta().getDisplayName() != null) {
+                	itemFinalWriteData += "~" + playerItem.getItemMeta().getDisplayName();
+            	}
+            	if(playerItem.getItemMeta().getLore() != null) {
+            		List<String> loreList = playerItem.getItemMeta().getLore();
+            		for(String loreLine : loreList) {
+                		itemFinalWriteData += ";" + loreLine;
+            		}
+            	}
+            }
+
+            try {
+                File configFile = new File(folder.getAbsolutePath() + File.separator + "ItemOutput" + ".txt");
+                configFile.getParentFile().mkdirs();
+                configFile.createNewFile();
+                out = new BufferedWriter(new FileWriter(configFile));
+                out.write(itemFinalWriteData + "\n");
+                out.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            
+            ((Player) sender).sendRawMessage(ChatColor.GREEN + "The item config is:§r " + ChatColor.WHITE + itemFinalWriteData.replaceAll("§", "&"));
+        }
+    }
     /*
      * "/od show" command - shows conditions and triggers for the specified
      * block
