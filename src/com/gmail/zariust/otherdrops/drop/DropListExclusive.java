@@ -127,11 +127,17 @@ public class DropListExclusive extends DropType {
             else if (drop.equals("ANY_VEHICLE_SPAWN"))
                 return new DropListExclusive(new DropType[] {
                         new VehicleDrop(amount, Material.MINECART, chance),
-                        new VehicleDrop(amount, Material.POWERED_MINECART,
-                                chance),
-                        new VehicleDrop(amount, Material.STORAGE_MINECART,
-                                chance),
-                        new VehicleDrop(amount, Material.BOAT, chance) });
+                        new VehicleDrop(amount, Material.COMMAND_MINECART, chance),
+                        new VehicleDrop(amount, Material.EXPLOSIVE_MINECART, chance),
+                        new VehicleDrop(amount, Material.POWERED_MINECART, chance),
+                        new VehicleDrop(amount, Material.HOPPER_MINECART, chance),
+                        new VehicleDrop(amount, Material.STORAGE_MINECART, chance),
+                        new VehicleDrop(amount, Material.BOAT, chance),
+                        new VehicleDrop(amount, Material.BOAT_ACACIA, chance),
+                        new VehicleDrop(amount, Material.BOAT_BIRCH, chance),
+                        new VehicleDrop(amount, Material.BOAT_DARK_OAK, chance),
+                        new VehicleDrop(amount, Material.BOAT_JUNGLE, chance),
+                        new VehicleDrop(amount, Material.BOAT_SPRUCE, chance)});
             else {
                 drop = drop.replace("^ANY_", "^");
                 CreatureGroup cgroup = CreatureGroup.get(drop.substring(1));

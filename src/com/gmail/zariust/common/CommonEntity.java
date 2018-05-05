@@ -36,6 +36,9 @@ import org.bukkit.entity.ThrownExpBottle;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.TippedArrow;
 import org.bukkit.entity.WitherSkull;
+import org.bukkit.entity.minecart.CommandMinecart;
+import org.bukkit.entity.minecart.ExplosiveMinecart;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.PoweredMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 
@@ -107,12 +110,18 @@ public final class CommonEntity {
     public static Material getVehicleType(Entity e) {
         if (e instanceof Boat)
             return Material.BOAT;
-        if (e instanceof PoweredMinecart)
-            return Material.POWERED_MINECART;
-        if (e instanceof StorageMinecart)
-            return Material.STORAGE_MINECART;
         if (e instanceof Minecart)
             return Material.MINECART;
+        if (e instanceof CommandMinecart)
+            return Material.COMMAND_MINECART;
+        if (e instanceof ExplosiveMinecart)
+        	return Material.EXPLOSIVE_MINECART;
+        if (e instanceof HopperMinecart)
+        	return Material.HOPPER_MINECART;
+        if (e instanceof PoweredMinecart)
+        	return Material.POWERED_MINECART;
+        if (e instanceof StorageMinecart)
+        	return Material.STORAGE_MINECART;
         return null;
     }
 

@@ -588,9 +588,17 @@ public class SimpleData implements Data, RangeableData {
                 }
             break;
         case BOAT:
+        case BOAT_SPRUCE:
+        case BOAT_BIRCH:
+        case BOAT_JUNGLE:
+        case BOAT_ACACIA:
+        case BOAT_DARK_OAK:
         case MINECART:
+        case COMMAND_MINECART:
+        case EXPLOSIVE_MINECART:
         case POWERED_MINECART:
             return VehicleData.parse(mat, state);
+        case HOPPER_MINECART:
         case STORAGE_MINECART:
             return ContainerData.parse(mat, state);
         default:

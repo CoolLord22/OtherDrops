@@ -31,6 +31,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -42,6 +43,7 @@ import think.rpgitems.data.Locale;
 import think.rpgitems.item.ItemManager;
 import think.rpgitems.item.RPGItem;
 
+import com.gmail.zariust.common.CMEnchantment;
 import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.data.CreatureData;
 import com.gmail.zariust.otherdrops.drop.DropResult;
@@ -513,8 +515,7 @@ public class OtherDropsCommand implements CommandExecutor {
             Player player = (Player) sender;
             ItemStack playerItem = player.getInventory().getItemInMainHand();
 
-            if (args.length > 0
-                    && args[0].toLowerCase().matches("(mob|creature)")) {
+            if (args.length > 0 && args[0].toLowerCase().matches("(mob|creature)")) {
                 Entity mob = getTarget(player);
                 if (mob instanceof LivingEntity) {
                     LivingEntity le = (LivingEntity) mob;
@@ -539,11 +540,8 @@ public class OtherDropsCommand implements CommandExecutor {
                         + playerItem.getType().getMaxDurability() + " dura%:"
                         + getDurabilityPercentage(playerItem) + " detail: "
                         + playerItem.toString();
-                if (playerItem.getItemMeta() != null
-                        && playerItem.getItemMeta().getDisplayName() != null)
-                    itemMsg += " lorename: \""
-                            + playerItem.getItemMeta().getDisplayName()
-                                    .replaceAll("Â§", "&") + "\"";
+                if (playerItem.getItemMeta() != null && playerItem.getItemMeta().getDisplayName() != null)
+                    itemMsg += " lorename: \"" + playerItem.getItemMeta().getDisplayName().replaceAll(" §", "&") + "\"";
                 sender.sendMessage(itemMsg);
                 Block block = player.getTargetBlock(new HashSet<Material>(), 100);
                 sender.sendMessage("Block looked at is " + block.toString()
@@ -552,6 +550,32 @@ public class OtherDropsCommand implements CommandExecutor {
                         + " lightfromsky: " + block.getLightFromSky()
                         + " biome: " + block.getBiome().toString());
             }
+
+            String itemFinalWriteData = "";
+            
+            itemFinalWriteData += playerItem.getType();
+            itemFinalWriteData += "@" + playerItem.getDurability();
+            if(!playerItem.getEnchantments().isEmpty()) {
+            	itemFinalWriteData += "!";
+            	for(Enchantment enchInMap : playerItem.getEnchantments().keySet()) {
+            		itemFinalWriteData += enchInMap.getName() + "#" + playerItem.getEnchantmentLevel(enchInMap) + "!";
+            	}
+            }
+            if(playerItem.getItemMeta() != null) {
+            	if(playerItem.getItemMeta().getDisplayName() != null) {
+                	itemFinalWriteData += "~" + playerItem.getItemMeta().getDisplayName();
+            	}
+            	if(playerItem.getItemMeta().getLore() != null) {
+            		List<String> loreList = playerItem.getItemMeta().getLore();
+            		for(String loreLine : loreList) {
+                		itemFinalWriteData += ";" + loreLine;
+            		}
+            	}
+            }
+            
+            sender.sendMessage("");
+            ((Player) sender).sendRawMessage(ChatColor.GREEN + "The item config is:§r " + ChatColor.WHITE + itemFinalWriteData.replaceAll("§", "&"));
+            
         }
     }
 
@@ -568,7 +592,7 @@ public class OtherDropsCommand implements CommandExecutor {
     public void showBlockInfo(CommandSender sender, Trigger trigger,
             Target block) {
         StringBuilder message = new StringBuilder();
-        message.append("Block " + block + " (" + trigger + "):");
+        message.append("Block §a" + block + "§f (" + trigger + "):");
 
         DropsList dropGroups = otherdrops.config.blocksHash.getList(trigger,
                 block);
@@ -577,12 +601,13 @@ public class OtherDropsCommand implements CommandExecutor {
         if (dropGroups != null) {
             for (CustomDrop drop : dropGroups) {
                 if (drop != null) {
-                    message.append(" (" + i++ + ")");
+                    message.append("\n §fDrop Number: §a" + i++);
                     if (drop instanceof GroupDropEvent)
                         addDropInfo(message, (GroupDropEvent) drop);
                     else
                         addDropInfo(message, (SimpleDrop) drop);
                 }
+                message.append("\n ");
             }
             sender.sendMessage(message.toString());
         } else
@@ -616,8 +641,7 @@ public class OtherDropsCommand implements CommandExecutor {
 
         for (Entry<String, String> entry : messageMap.entrySet()) {
             if (entry.getValue() != null) {
-                message.append("\n  Â§7" + entry.getKey() + ":Â§r "
-                        + entry.getValue());
+                message.append("\n  §7" + entry.getKey() + ": §f" + entry.getValue());
             }
         }
     }
@@ -635,12 +659,10 @@ public class OtherDropsCommand implements CommandExecutor {
                                                                            // if
                                                                            // 1
                                                                            // (Default)
-        messageMap.put("Attacker damage",
-                stringHelper(drop.getAttackerDamageRange()));
+        messageMap.put("Attacker damage", stringHelper(drop.getAttackerDamageRange()));
         messageMap.put("Tool damage", stringHelper(drop.getToolDamage()));
         messageMap.put("Drop spread", drop.getDropSpreadChance() + "% chance");
-        messageMap
-                .put("Replacement block", stringHelper(drop.getReplacement()));
+        messageMap.put("Replacement block", stringHelper(drop.getReplacement()));
         messageMap.put("Commands", stringHelper(drop.getCommands())); // make
                                                                       // null if
                                                                       // empty
@@ -651,11 +673,9 @@ public class OtherDropsCommand implements CommandExecutor {
 
         for (Entry<String, String> entry : messageMap.entrySet()) {
             if (entry.getValue() != null) {
-                message.append("\n  Â§7" + entry.getKey() + ":Â§r "
-                        + entry.getValue());
+                message.append("\n  §7" + entry.getKey() + ":§f " + entry.getValue());
             }
         }
-
     }
 
     private String stringHelper(Object object) {
@@ -670,7 +690,7 @@ public class OtherDropsCommand implements CommandExecutor {
         message.append(" Drop group: " + group.getName());
         char j = 'A';
         for (CustomDrop subDrop : group.getDrops()) {
-            message.append(" (" + j++ + ")");
+            message.append("\n §fNumber: §a" + j++);
             if (j > 'Z')
                 j = 'a';
             if (subDrop instanceof GroupDropEvent)

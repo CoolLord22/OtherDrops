@@ -29,6 +29,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Furnace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -64,6 +65,17 @@ public class ContainerData implements Data {
     }
 
     public ContainerData(StorageMinecart vehicle) {
+        Inventory inventory = vehicle.getInventory();
+        if (inventory != null) {
+            ItemStack[] contents = inventory.getContents();
+            for (ItemStack stack : contents) {
+                if (stack == null)
+                    continue;
+                inven.add(stack.getType());
+            }
+        }
+    }
+    public ContainerData(HopperMinecart vehicle) {
         Inventory inventory = vehicle.getInventory();
         if (inventory != null) {
             ItemStack[] contents = inventory.getContents();

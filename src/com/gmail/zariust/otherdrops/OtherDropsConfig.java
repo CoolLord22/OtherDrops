@@ -1538,7 +1538,7 @@ public class OtherDropsConfig {
         else if (upperName.startsWith("ANY") || upperName.equals("ALL"))
             return AnySubject.parseTarget(upperName);
         else if (upperName.startsWith("VEHICLE")
-                || upperName.matches("BOAT|MINECART"))
+                || upperName.matches("BOAT|MINECART|BOAT_SPRUCE|BOAT_JUNGLE|BOAT_BIRCH|BOAT_ACACIA|BOAT_DARK_OAk"))
             return VehicleTarget.parse(
                     Material.getMaterial(upperName.replaceAll("VEHICLE_", "")),
                     data);

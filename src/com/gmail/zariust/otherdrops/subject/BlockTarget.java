@@ -207,8 +207,17 @@ public class BlockTarget implements Target {
             // Only a very select few non-blocks are permitted as a target
             if (mat != Material.PAINTING && mat != Material.BOAT
                     && mat != Material.MINECART
+                    && mat != Material.COMMAND_MINECART
+                    && mat != Material.EXPLOSIVE_MINECART
+                    && mat != Material.HOPPER_MINECART
                     && mat != Material.POWERED_MINECART
-                    && mat != Material.STORAGE_MINECART)
+                    && mat != Material.STORAGE_MINECART
+                    && mat != Material.BOAT
+                    && mat != Material.BOAT_ACACIA
+                    && mat != Material.BOAT_BIRCH
+                    && mat != Material.BOAT_DARK_OAK
+                    && mat != Material.BOAT_JUNGLE
+                    && mat != Material.BOAT_SPRUCE)
                 return null;
             else
                 return VehicleTarget.parse(mat, state);

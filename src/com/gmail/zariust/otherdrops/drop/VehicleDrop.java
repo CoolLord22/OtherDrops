@@ -30,6 +30,9 @@ import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Painting;
+import org.bukkit.entity.minecart.CommandMinecart;
+import org.bukkit.entity.minecart.ExplosiveMinecart;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.PoweredMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 
@@ -78,14 +81,23 @@ public class VehicleDrop extends DropType {
             case BOAT:
                 entity = world.spawn(where, Boat.class);
                 break;
+            case MINECART:
+                entity = world.spawn(where, Minecart.class);
+                break;
+            case HOPPER_MINECART:
+                entity = world.spawn(where, HopperMinecart.class);
+                break;
+            case EXPLOSIVE_MINECART:
+                entity = world.spawn(where, ExplosiveMinecart.class);
+                break;
+            case COMMAND_MINECART:
+                entity = world.spawn(where, CommandMinecart.class);
+                break;
             case POWERED_MINECART:
                 entity = world.spawn(where, PoweredMinecart.class);
                 break;
             case STORAGE_MINECART:
                 entity = world.spawn(where, StorageMinecart.class);
-                break;
-            case MINECART:
-                entity = world.spawn(where, Minecart.class);
                 break;
             case PAINTING: // Probably won't actually work
                 entity = world.spawn(where, Painting.class);
