@@ -66,6 +66,7 @@ import org.bukkit.Material;
 public class OtherDropsCommand implements CommandExecutor {
     private enum OBCommand {
         ID("id", "i", "otherdrops.admin.id"),
+        WRITE("write", "w", "otherdrops.admin.id"),
         RELOAD("reload", "r", "otherdrops.admin.reloadconfig"),
         SHOW("show", "s", "otherdrops.admin.show"),
         CUSTOMSPAWN("customspawn", "c", "otherdrops.admin.customspawn"),
@@ -75,8 +76,7 @@ public class OtherDropsCommand implements CommandExecutor {
         HEROESTEST("heroestest", "ht", ""),
         RPGTEST("rpg", "", ""),
         DROP("drop", "d,o", "otherdrops.admin.drop"),
-        TRIGGERS("triggers", "t", "otherdrops.admin.triggers"),
-    	WRITE("write", "wf", "otherdrops.admin.id");
+        TRIGGERS("triggers", "t", "otherdrops.admin.triggers");
 
         private String cmdName;
         private String cmdShort;
@@ -237,8 +237,7 @@ public class OtherDropsCommand implements CommandExecutor {
      * @param args
      * @param cmd
      */
-    private boolean checkCommandPermissions(CommandSender sender,
-            String[] args, OBCommand cmd) {
+    private boolean checkCommandPermissions(CommandSender sender, String[] args, OBCommand cmd) {
         boolean pass = false;
         if (cmd.perm.isEmpty())
             pass = true;
@@ -292,7 +291,6 @@ public class OtherDropsCommand implements CommandExecutor {
      */
     private void cmdDrop(CommandSender sender, String[] args) {
         if (args.length > 0) {
-
 
             dropStringLoc dsl = new dropStringLoc("", null, null);
             getLocationFromDropString(sender, args, dsl);
