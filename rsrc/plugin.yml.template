@@ -7,17 +7,17 @@ website: http://dev.bukkit.org/server-mods/otherdrops/
 commands:
     od:
         description: Administrate the OtherDrops plugin
-        aliases: [otherdrops, odreload, odr, odshow, ods, ode, o, odd, odi, odst, odt, odc]
+        aliases: [otherdrops, odreload, odr, odshow, ods, ode, o, odd, odi, odst, odt, odc, odw]
         usage: |
-            OtherDrops (configure anything to drop anything) 
-            §7version: <Version> - <Name>
-
-            (/odr) /od reload - reload config
-            (/odi) /od id - show data values for item held in hand
-            (/odd) /od drop <string> - parse the string and drop relevant item/mob
-            /od (enable|disable) - turn OtherDrops on or off (will reset on server reload)
-            /od show <block> - show custom drops for particular blocktype
-            /od settings - show current global settings
+            Â§aOtherDrops Â§7(configure anything to drop anything) 
+            Â§7Version: 3.2.5-Beta
+            Â§7(Â§a/odrÂ§7) Â§a/od reload Â§7- reload config
+            Â§7(Â§a/odiÂ§7) Â§a/od id Â§7- show data values for item held in hand
+            Â§7(Â§a/odwÂ§7) Â§a/od write Â§7- writes data values for item held in hand to ItemOutput.txt file
+            Â§7(Â§a/oddÂ§7) Â§a/od drop <string> Â§7- parse the string and drop relevant item/mob
+            Â§a/od Â§7(Â§aenableÂ§7|Â§adisableÂ§7) - turn OtherDrops on or off (will reset on server reload)
+            Â§a/od show <block> Â§7- show custom drops for particular blocktype
+            Â§a/od settings Â§7- show current global settings
 
 softdepend:
   - BigBrother
@@ -30,7 +30,7 @@ softdepend:
 permissions:
     otherdrops.admin.id:
         default: op
-        description: Gives permission to ID items (show name@data).
+        description: Gives permission to ID items (show name@data) and write the item data to the output file.
     otherdrops.admin.reloadconfig:
         default: op
         description: Gives permission to reload the config files for OtherDrops.
@@ -43,4 +43,3 @@ permissions:
     otherdrops.admin.enabledisable:
         default: op
         description: Gives permission to turn OtherDrops on and off.
-        
