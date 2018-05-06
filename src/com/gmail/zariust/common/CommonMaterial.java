@@ -504,7 +504,7 @@ public final class CommonMaterial {
         a2Map.put("CREEPERHEAD", "SKULL_ITEM@4");
         a2Map.put("HEAD", "SKULL_ITEM@3");
 
-        a2Map.put("WITHERSKELETON", "SKELETON@WITHER");
+        a2Map.put("WITHERSKELETON", "WITHER_SKELETON");
 
         String tmpDrop = drop.toUpperCase().replaceAll("[ _-]", "");
         for (String alias : a2Map.keySet()) {
