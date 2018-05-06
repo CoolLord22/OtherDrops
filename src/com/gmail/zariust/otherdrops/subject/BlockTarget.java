@@ -27,6 +27,7 @@ import org.bukkit.block.CommandBlock;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.inventory.InventoryHolder;
 
+import com.gmail.zariust.common.CommonMaterial;
 import com.gmail.zariust.common.MaterialGroup;
 import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.Log;
@@ -199,7 +200,13 @@ public class BlockTarget implements Target {
             Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped! Locating item ID...");
         	Log.logWarning("Please replace the occurence of '" + name + "' with '" + Material.getMaterial(Integer.parseInt(name)).toString() + "'");
         }
+        
         mat = Material.getMaterial(name.toUpperCase());
+        
+        if(mat == null) {
+            mat = CommonMaterial.matchMaterial(name);
+        }
+        
         if (mat == null) {
             return null;
         }

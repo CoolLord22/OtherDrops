@@ -203,7 +203,6 @@ public abstract class DropType {
      *            - used in MoneyDrop's override of this function
      * @return
      */
-    @SuppressWarnings("unused")
     protected int calculateQuantity(double amount, Random rng) {
         int intPart = (int) amount;
         // (int) discards the decimal place - round up if neccessary

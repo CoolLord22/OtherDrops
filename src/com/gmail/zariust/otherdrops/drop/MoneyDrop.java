@@ -170,7 +170,6 @@ public class MoneyDrop extends DropType {
         return dropResult;
     }
 
-    @SuppressWarnings("unused")
     protected void dropMoney(Target source, Location where, DropFlags flags,
             double amount) {
         if (Dependencies.hasVaultEcon()) {
