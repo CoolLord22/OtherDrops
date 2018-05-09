@@ -34,7 +34,6 @@ import com.gmail.zariust.otherdrops.parameters.actions.MessageAction;
 import com.gmail.zariust.otherdrops.special.SpecialResult;
 import com.gmail.zariust.otherdrops.subject.Agent;
 import com.gmail.zariust.otherdrops.subject.BlockTarget;
-import com.gmail.zariust.otherdrops.subject.BlocksTarget;
 import com.gmail.zariust.otherdrops.subject.LivingSubject;
 import com.gmail.zariust.otherdrops.subject.PlayerSubject;
 import com.gmail.zariust.otherdrops.subject.ProjectileAgent;
@@ -221,12 +220,13 @@ public class DropRunner implements Runnable {
     	double z;
     	x = location.getX();
     	z = location.getZ();
-    	if(customDrop.getTarget() instanceof BlockTarget || customDrop.getTarget() instanceof BlocksTarget) {
-        	if((x % 1) == 0)
-        		location = location.add(0.5, 0, 0);
-        	if((z % 1) == 0)
-        		location = location.add(0, 0, 0.5);
-    	}
+    	y = location.getY();
+    	if((x % 1) == 0)
+        	location = location.add(0.5, 0, 0);
+        if((z % 1) == 0)
+        	location = location.add(0, 0, 0.5);
+        if((y % 1) == 0)
+        	location = location.add(0, 0.5, 0);
         if (customDrop.getDropped() != null) {
             if (!customDrop.getDropped().toString().equalsIgnoreCase("DEFAULT")) {
                 Target target = currentEvent.getTarget();
