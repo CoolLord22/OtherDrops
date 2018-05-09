@@ -218,6 +218,7 @@ public class DropRunner implements Runnable {
         // May have unexpected effects when use with delay.
     	double x;
     	double z;
+    	double y;
     	x = location.getX();
     	z = location.getZ();
     	y = location.getY();
