@@ -10,7 +10,7 @@ import org.bukkit.Material;
 
 import com.gmail.zariust.common.CMEnchantment;
 import com.gmail.zariust.common.CommonEnchantments;
-import com.gmail.zariust.common.CommonMaterial;
+import com.gmail.zariust.otherdrops.ItemIDReplacer;
 import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.data.Data;
 import com.gmail.zariust.otherdrops.data.ItemData;
@@ -19,9 +19,9 @@ public class ODItem {
     public String               name;
     private String              dataString;
     public String               enchantmentString;
-    public List<CMEnchantment> enchantments = new ArrayList<CMEnchantment>();
-    public String              displayname;
-    public final List<String>  lore         = new ArrayList<String>();
+    public List<CMEnchantment>  enchantments = new ArrayList<CMEnchantment>();
+    public String               displayname;
+    public final List<String>   lore         = new ArrayList<String>();
     private Material            material;
     private Data                data;
 
@@ -96,14 +96,15 @@ public class ODItem {
      * @param name
      * @return
      */
-    public Material getMaterial() {
+    @SuppressWarnings("deprecation")
+	public Material getMaterial() {
         if (this.material == null) {
-            try {
-                int dropInt = Integer.parseInt(this.name);
-                Log.logWarning("Error while parsing material: " + dropInt + "");
-            } catch (NumberFormatException e) {
-                material = CommonMaterial.matchMaterial(this.name);
-            }
+        	if(this.name.matches("[0-9]+")) {
+                Log.logWarning("Error while parsing: " + this.name + ". Support for numerical IDs has been dropped! Locating item ID...");
+            	Log.logWarning("Please replace the occurence of '" + this.name + "' with '" + Material.getMaterial(Integer.parseInt(this.name)).toString() + "'");
+            	ItemIDReplacer.replaceFile(Integer.parseInt(name), Material.getMaterial(Integer.parseInt(name)).toString());
+            	Log.logWarning("The drop has been disabled to prevent issues!");
+        	}
         }
         return this.material;
     }

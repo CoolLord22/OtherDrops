@@ -27,6 +27,7 @@ import org.bukkit.SandstoneType;
 import org.bukkit.TreeSpecies;
 import org.bukkit.material.Step;
 
+import com.gmail.zariust.otherdrops.ItemIDReplacer;
 import com.gmail.zariust.otherdrops.Log;
 
 public final class CommonMaterial {
@@ -240,21 +241,19 @@ public final class CommonMaterial {
         if (mat.matches("[0-9]+")) {
             Log.logWarning("Error while parsing: " + mat + ". Support for numerical IDs has been dropped! Locating item ID...");
         	Log.logWarning("Please replace the occurence of '" + mat + "' with '" + Material.getMaterial(Integer.parseInt(mat)).toString() + "'");
+        	ItemIDReplacer.replaceFile(Integer.parseInt(mat), Material.getMaterial(Integer.parseInt(mat)).toString());
         }
         // CommonMaterial material = enumValue(CommonMaterial.class, mat);
         mat = mat.toLowerCase().replaceAll("[\\s-_]", "");
 
         for (String loopAlias : ALIASES.keySet()) {
-            if (mat.equalsIgnoreCase(loopAlias.toLowerCase().replaceAll(
-                    "[\\s-_]", "")))
-                mat = ALIASES.get(loopAlias).toLowerCase()
-                        .replaceAll("[\\s-_]", "");
+            if (mat.equalsIgnoreCase(loopAlias.toLowerCase().replaceAll("[\\s-_]", "")))
+                mat = ALIASES.get(loopAlias).toLowerCase().replaceAll("[\\s-_]", "");
         }
 
         Material matchedMat = null;
         for (Material loopMat : Material.values()) {
-            if (mat.equalsIgnoreCase(loopMat.name().toLowerCase()
-                    .replaceAll("[\\s-_]", "")))
+            if (mat.equalsIgnoreCase(loopMat.name().toLowerCase().replaceAll("[\\s-_]", "")))
                 matchedMat = loopMat;
         }
 

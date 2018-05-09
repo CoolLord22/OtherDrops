@@ -677,10 +677,7 @@ public class OtherDropsConfig {
                 blockName = blockNameObj.toString();
 
                 if (blockNameObj instanceof Integer) {
-                    Log.logWarning("Integer target: "
-                            + blockName
-                            + " (cannot process - please enclose in quotation marks eg. \""
-                            + blockName + "\")");
+                    Log.logWarning("Integer target: " + blockName + " (cannot process - please enclose in quotation marks eg. \"" + blockName + "\")");
                     this.dropFailed++;
                     continue;
                 }
@@ -915,8 +912,7 @@ public class OtherDropsConfig {
         }
     }
 
-    private CustomDrop loadDrop(ConfigurationNode dropNode, Target target,
-            Trigger trigger, boolean isGroup) {
+    private CustomDrop loadDrop(ConfigurationNode dropNode, Target target, Trigger trigger, boolean isGroup) {
         CustomDrop drop = isGroup ? new GroupDropEvent(target, trigger)
                 : new SimpleDrop(target, trigger);
         loadConditions(dropNode, drop);
@@ -1094,13 +1090,7 @@ public class OtherDropsConfig {
         // Random location multiplier
         drop.setRandomLocMult(parseLocationFrom(node, "randomise", 0, 0, 0));
         // Location offset
-        if (drop.getDropped() instanceof CreatureDrop
-                && drop.getTarget() instanceof BlockTarget)
-            // Drop creature in the centre of the block, not on the corner
-            drop.setLocationOffset(parseLocationFrom(node, "offset", 0.5, 1,
-                    0.5));
-        else
-            drop.setLocationOffset(parseLocationFrom(node, "offset", 0, 0, 0));
+        drop.setLocationOffset(parseLocationFrom(node, "offset", 0, 0, 0));
         // Commands, messages, sound effects
         drop.setCommands(getMaybeList(node, "command", "commands"));
         drop.setMessages(getMaybeList(node, "message", "messages"));
@@ -1207,6 +1197,7 @@ public class OtherDropsConfig {
         if(name.matches("[0-9]+")) {
             Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped! Locating item ID...");
         	Log.logWarning("Please replace the occurence of '" + name + "' with '" + Material.getMaterial(Integer.parseInt(name)).toString() + "'");
+        	ItemIDReplacer.replaceFile(Integer.parseInt(name), Material.getMaterial(Integer.parseInt(name)).toString());
         }
         mat = Material.getMaterial(name.toUpperCase());
         if (mat == null) {
