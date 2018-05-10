@@ -14,6 +14,7 @@ import com.gmail.zariust.otherdrops.ItemIDReplacer;
 import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.data.Data;
 import com.gmail.zariust.otherdrops.data.ItemData;
+import com.gmail.zariust.common.CommonMaterial;
 
 public class ODItem {
     public String               name;
@@ -104,6 +105,9 @@ public class ODItem {
             	Log.logWarning("Please replace the occurence of '" + this.name + "' with '" + Material.getMaterial(Integer.parseInt(this.name)).toString() + "'");
             	ItemIDReplacer.replaceFile(Integer.parseInt(name), Material.getMaterial(Integer.parseInt(name)).toString());
             	Log.logWarning("The drop has been disabled to prevent issues!");
+        	}
+        	else {
+        		material = CommonMaterial.matchMaterial(this.name);
         	}
         }
         return this.material;

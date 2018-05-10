@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -142,9 +143,7 @@ public class SectionManager {
                 defaultDrop = true;
                 occurence.setOverrideDefault(false); // DEFAULT drop
             }
-            if (simpleDrop.getDropped() != null
-                    && simpleDrop.getDropped().toString()
-                            .equalsIgnoreCase("AIR"))
+            if (simpleDrop.getDropped() != null && simpleDrop.getDropped().toString().equalsIgnoreCase("AIR"))
                 occurence.setOverrideDefault(true); // NOTHING drop
         }
 
@@ -168,8 +167,7 @@ public class SectionManager {
         }
         if (occurence.getRealEvent() != null) {
             if (occurence.getRealEvent() instanceof EntityDeathEvent) {
-                EntityDeathEvent evt = (EntityDeathEvent) occurence
-                        .getRealEvent();
+                EntityDeathEvent evt = (EntityDeathEvent) occurence.getRealEvent();
                 if (occurence.isOverrideDefaultXp()) {
                     Log.logInfo(
                             "PerformDrop: entitydeath - isOverrideDefaultXP=true, clearing xp drop.",
@@ -177,6 +175,12 @@ public class SectionManager {
                     evt.setDroppedExp(0);
                 }
             }
+        }
+        
+        if (occurence.getTrigger() == Trigger.HIT) {
+        	if(occurence.getEvent() instanceof EntityDamageByEntityEvent) {
+        		occurence.setCancelled(false);
+        	}
         }
 
         if (occurence.getReplaceBlockWith() != null)
