@@ -127,8 +127,7 @@ public class ItemDrop extends DropType {
     }
 
     @Override
-    protected DropResult performDrop(Target source, Location where,
-            DropFlags flags) {
+    protected DropResult performDrop(Target source, Location where, DropFlags flags) {
         DropResult dropResult = DropResult
                 .getFromOverrideDefault(this.overrideDefault);
         if (material == null || quantity.getMax() == 0)

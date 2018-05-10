@@ -178,9 +178,7 @@ public class OccurredEvent extends AbstractDropEvent implements Cancellable {
             EntityDamageByEntityEvent evt2 = (EntityDamageByEntityEvent) evt;
             setTool(evt2.getDamager());
             if (tool != null)
-                attackRange = measureRange(location, evt2.getDamager()
-                        .getLocation(), "Entity '" + e.toString()
-                        + "' damaged by '" + tool.toString() + "'");
+                attackRange = measureRange(location, evt2.getDamager().getLocation(), "Entity '" + e.toString()+ "' damaged by '" + tool.toString() + "'");
         } else
             setTool(evt.getCause());
         setRegions();
@@ -1034,8 +1032,7 @@ public class OccurredEvent extends AbstractDropEvent implements Cancellable {
         return this.event;
     }
 
-    private static double measureRange(Location fromLoc, Location toLoc,
-            String onError) {
+    private static double measureRange(Location fromLoc, Location toLoc, String onError) {
         if (toLoc == null)
             return 0;
         if (fromLoc == null) {
