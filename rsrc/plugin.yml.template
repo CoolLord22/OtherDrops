@@ -22,6 +22,9 @@ commands:
 softdepend:
   - BigBrother
   - WorldGuard
+  - Towny
+  - NoCheatPlus
+  - GriefPrevention
   - LogBlock
   - HawkEye
   - Vault

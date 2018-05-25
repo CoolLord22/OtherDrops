@@ -25,6 +25,7 @@ import java.io.IOException;
 import me.botsko.prism.Prism;
 import me.botsko.prism.actionlibs.ActionFactory;
 import me.drakespirit.plugins.moneydrop.MoneyDrop;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import me.taylorkelly.bigbrother.BigBrother;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
@@ -51,9 +52,11 @@ import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.metrics.Metrics;
 import com.herocraftonline.heroes.Heroes;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.palmergames.bukkit.towny.Towny;
 
 import de.diddiz.LogBlock.Consumer;
 import de.diddiz.LogBlock.LogBlock;
+import fr.neatmonster.nocheatplus.NoCheatPlus;
 
 @SuppressWarnings("unused")
 public class Dependencies {
@@ -67,14 +70,19 @@ public class Dependencies {
                                                              // support
     private static WorldGuardPlugin worldGuard      = null; // for WorldGuard
                                                              // support
+    private static Towny	 		towny 			= null;
+    private static NoCheatPlus		ncp 			= null;
+    private static GriefPrevention  gp 				= null;
+    
     private static HawkEye          hawkEye         = null;
-    private final boolean           usingHawkEye    = false; // for HawkEye
+    private final  boolean          usingHawkEye    = false; // for HawkEye
                                                              // support
     boolean                         enabled;
     private static MobArena         mobArena        = null;
     private static MobArenaHandler  mobArenaHandler = null; // for MobArena
     private static MoneyDrop        moneyDrop       = null; // for MoneyDrop
 
+    
     private static Economy          vaultEcon       = null;
 	private static Permission       vaultPerms      = null;
 
@@ -109,6 +117,9 @@ public class Dependencies {
             e.printStackTrace();
         }
         try {
+        	towny = (Towny) getPlugin("Towny");
+        	gp = (GriefPrevention) getPlugin("GriefPrevention");
+        	ncp = (NoCheatPlus) getPlugin("NoCheatPlus");
             hawkEye = (HawkEye) getPlugin("HawkEye");
             mobArena = (MobArena) getPlugin("MobArena");
             moneyDrop = (MoneyDrop) getPlugin("MoneyDrop");
@@ -356,6 +367,30 @@ public class Dependencies {
 
     private static boolean hasLogBlock() {
         return Dependencies.lbconsumer != null;
+    }
+
+    public static boolean hasTowny() {
+        return Dependencies.towny != null;
+    }
+    
+    public static Towny getTowny() {
+        return Dependencies.towny;
+    }
+
+    public static boolean hasGriefPrevention() {
+        return Dependencies.gp != null;
+    }
+    
+    public static GriefPrevention getGriefPrevention() {
+        return Dependencies.gp;
+    }
+
+    public static boolean hasNCP() {
+        return Dependencies.ncp != null;
+    }
+    
+    public static NoCheatPlus getNCP() {
+        return Dependencies.ncp;
     }
 
     private static Consumer getLogBlock() {
