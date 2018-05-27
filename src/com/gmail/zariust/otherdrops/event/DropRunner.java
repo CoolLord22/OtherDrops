@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.util.Vector;
 
 import com.gmail.zariust.common.Verbosity;
+import com.gmail.zariust.otherdrops.Dependencies;
 import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.OtherDrops;
 import com.gmail.zariust.otherdrops.OtherDropsConfig;
@@ -39,6 +40,12 @@ import com.gmail.zariust.otherdrops.subject.PlayerSubject;
 import com.gmail.zariust.otherdrops.subject.ProjectileAgent;
 import com.gmail.zariust.otherdrops.subject.Target;
 import com.gmail.zariust.otherdrops.subject.VehicleTarget;
+import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
+import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
+
+import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import me.ryanhamshire.GriefPrevention.PlayerData;
 
 public class DropRunner implements Runnable {
     @SuppressWarnings("unused")
@@ -65,8 +72,7 @@ public class DropRunner implements Runnable {
     }
 
     public DropRunner(OtherDrops plugin2, OccurredEvent evt,
-            CustomDrop customDrop2, Player player2, Location playerLoc2,
-            boolean defaultDrop) {
+            CustomDrop customDrop2, Player player2, Location playerLoc2, boolean defaultDrop) {
         this.plugin = plugin2;
         this.currentEvent = evt;
         if (customDrop2 instanceof SimpleDrop)
@@ -85,6 +91,10 @@ public class DropRunner implements Runnable {
         Log.logInfo("Starting SimpleDrop...", Verbosity.EXTREME);
         Player who = getPlayer();
         Location location = getLocation();
+        
+        if(who != null && !checkIfNoPerms(who, location, currentEvent))
+        	return;
+		
         checkIfDenied();
 
         if (!performDrop(who, location))
@@ -216,95 +226,93 @@ public class DropRunner implements Runnable {
     public boolean performDrop(Player who, Location location) {
         // Then the actual drop
         // May have unexpected effects when use with delay.
-    	double x;
-    	double z;
-    	double y;
-    	x = location.getX();
-    	z = location.getZ();
-    	y = location.getY();
-    	if((x % 1) == 0)
-        	location = location.add(0.5, 0, 0);
-        if((z % 1) == 0)
-        	location = location.add(0, 0, 0.5);
-        if((y % 1) == 0)
-        	location = location.add(0, 0.5, 0);
-        if (customDrop.getDropped() != null) {
-            if (!customDrop.getDropped().toString().equalsIgnoreCase("DEFAULT")) {
-                Target target = currentEvent.getTarget();
-                boolean dropNaturally = true; // TODO: How to make this
-                                              // specifiable in the config?
-                boolean spreadDrop = customDrop.getDropSpread();
-                amount = customDrop.quantity.getRandomIn(customDrop.rng);
-                String eventName = getEventName();
-                DropFlags flags = DropType.flags(who, currentEvent.getTool(),
-                        dropNaturally, spreadDrop, customDrop.rng, eventName, currentEvent.getSpawnedReason(), currentEvent.getVictimName()); // TODO:
-                                                                               // add
-                                                                               // tool
-                DropResult dropResult = customDrop.getDropped().drop(location,
-                        target, customDrop.getOffset(), amount, flags);
-                droppedQuantity = dropResult.getQuantity();
-                Log.logInfo(
-                        "Override default is: "
-                                + dropResult.getOverrideDefault(), HIGHEST);
-                if (dropResult.getOverrideDefault())
-                    currentEvent.setOverrideDefault(true);
-                currentEvent.setOverrideDefaultXp(dropResult
-                        .getOverrideDefaultXp());
+        	double x, z, y;
+        	x = location.getX();
+        	z = location.getZ();
+        	y = location.getY();
+        	if((x % 1) == 0)
+            	location = location.add(0.5, 0, 0);
+            if((z % 1) == 0)
+            	location = location.add(0, 0, 0.5);
+            if((y % 1) == 0)
+            	location = location.add(0, 0.5, 0);
+            if (customDrop.getDropped() != null) {
+                if (!customDrop.getDropped().toString().equalsIgnoreCase("DEFAULT")) {
+                    Target target = currentEvent.getTarget();
+                    boolean dropNaturally = true; // TODO: How to make this
+                                                  // specifiable in the config?
+                    boolean spreadDrop = customDrop.getDropSpread();
+                    amount = customDrop.quantity.getRandomIn(customDrop.rng);
+                    String eventName = getEventName();
+                    DropFlags flags = DropType.flags(who, currentEvent.getTool(),
+                            dropNaturally, spreadDrop, customDrop.rng, eventName, currentEvent.getSpawnedReason(), currentEvent.getVictimName()); // TODO:
+                                                                                   // add
+                                                                                   // tool
+                    DropResult dropResult = customDrop.getDropped().drop(location,
+                            target, customDrop.getOffset(), amount, flags);
+                    droppedQuantity = dropResult.getQuantity();
+                    Log.logInfo(
+                            "Override default is: "
+                                    + dropResult.getOverrideDefault(), HIGHEST);
+                    if (dropResult.getOverrideDefault())
+                        currentEvent.setOverrideDefault(true);
+                    currentEvent.setOverrideDefaultXp(dropResult
+                            .getOverrideDefaultXp());
 
-                Log.logInfo("SimpleDrop: dropped "
-                        + customDrop.getDropped().toString() + " x " + amount
-                        + " (dropped: " + droppedQuantity + ")", HIGHEST);
-                if (droppedQuantity < 0) { // If the embedded chance roll fails,
-                                           // assume default and bail out!
-                    Log.logInfo("Drop failed... setting cancelled to false",
+                    Log.logInfo("SimpleDrop: dropped "
+                            + customDrop.getDropped().toString() + " x " + amount
+                            + " (dropped: " + droppedQuantity + ")", HIGHEST);
+                    if (droppedQuantity < 0) { // If the embedded chance roll fails,
+                                               // assume default and bail out!
+                        Log.logInfo("Drop failed... setting cancelled to false",
+                                Verbosity.HIGHEST);
+                        currentEvent.setCancelled(false);
+                        return false;
+                    }
+                    
+                    // If the drop chance was 100% and no replacement block is
+                    // specified, make it air
+                    double chance = max(customDrop.getChance(), customDrop
+                            .getDropped().getChance());
+                    if (customDrop.getReplacementBlock() == null && chance >= 100.0
+                            && target.overrideOn100Percent()) {
+                        if (target instanceof LivingSubject) { // need to be careful
+                                                               // not to replace
+                                                               // creatures with air
+                                                               // - this kills the
+                                                               // death animation
+                            currentEvent.setCancelled(true);
+                        } else if (target instanceof VehicleTarget) {
+                            currentEvent.setCancelled(true);
+                            ((VehicleTarget) target).getVehicle().remove();
+                        } else if (currentEvent.getTrigger() == Trigger.BREAK) {
+                            if (currentEvent.isOverrideDefault() && !defaultDrop)
+                                currentEvent.setReplaceBlockWith(new BlockTarget(
+                                        Material.AIR));
+                            currentEvent.setCancelled(false);
+                        }
+                    }
+                    amount *= customDrop.getDropped().getAmount();
+                    if (customDrop.getDropped() instanceof com.gmail.zariust.otherdrops.drop.MoneyDrop) {
+                        amount = customDrop.getDropped().total;
+                    }
+                    currentEvent.setCustomDropAmount(amount);
+
+                    setFishingDropVelocity(who, dropResult);
+                } else {
+                    // DEFAULT event - set cancelled to false
+                    Log.logInfo(
+                            "Performdrop: DEFAULT, so undo event cancellation.",
                             Verbosity.HIGHEST);
                     currentEvent.setCancelled(false);
-                    return false;
+                    // TODO: some way of setting it so that if we've set false here
+                    // we don't set true on the same occureddrop?
+                    // this could save us from checking the DEFAULT drop outside the
+                    // loop in OtherDrops.performDrop()
                 }
-
-                // If the drop chance was 100% and no replacement block is
-                // specified, make it air
-                double chance = max(customDrop.getChance(), customDrop
-                        .getDropped().getChance());
-                if (customDrop.getReplacementBlock() == null && chance >= 100.0
-                        && target.overrideOn100Percent()) {
-                    if (target instanceof LivingSubject) { // need to be careful
-                                                           // not to replace
-                                                           // creatures with air
-                                                           // - this kills the
-                                                           // death animation
-                        currentEvent.setCancelled(true);
-                    } else if (target instanceof VehicleTarget) {
-                        currentEvent.setCancelled(true);
-                        ((VehicleTarget) target).getVehicle().remove();
-                    } else if (currentEvent.getTrigger() == Trigger.BREAK) {
-                        if (currentEvent.isOverrideDefault() && !defaultDrop)
-                            currentEvent.setReplaceBlockWith(new BlockTarget(
-                                    Material.AIR));
-                        currentEvent.setCancelled(false);
-                    }
-                }
-                amount *= customDrop.getDropped().getAmount();
-                if (customDrop.getDropped() instanceof com.gmail.zariust.otherdrops.drop.MoneyDrop) {
-                    amount = customDrop.getDropped().total;
-                }
-                currentEvent.setCustomDropAmount(amount);
-
-                setFishingDropVelocity(who, dropResult);
-            } else {
-                // DEFAULT event - set cancelled to false
-                Log.logInfo(
-                        "Performdrop: DEFAULT, so undo event cancellation.",
-                        Verbosity.HIGHEST);
-                currentEvent.setCancelled(false);
-                // TODO: some way of setting it so that if we've set false here
-                // we don't set true on the same occureddrop?
-                // this could save us from checking the DEFAULT drop outside the
-                // loop in OtherDrops.performDrop()
             }
-        }
+		return true;
 
-        return true;
     }
 
     /**
@@ -355,6 +363,32 @@ public class DropRunner implements Runnable {
                 }
             }
         }
+    }
+    
+	public boolean checkIfNoPerms(Player who, Location location, OccurredEvent theEvent) {
+    	boolean canBuild = true;
+
+    	if(Dependencies.hasWorldGuard()) 
+			if(!Dependencies.getWorldGuard().canBuild(who, location))
+				canBuild = false;
+		
+		if(Dependencies.hasTowny())
+			if(!PlayerCacheUtil.getCachePermission(who, location, 3, ActionType.DESTROY) || !PlayerCacheUtil.getCachePermission(who, location, 3, ActionType.SWITCH) 
+					|| !PlayerCacheUtil.getCachePermission(who, location, 3, ActionType.ITEM_USE) || !PlayerCacheUtil.getCachePermission(who, location, 3, ActionType.BUILD))
+				canBuild = false;
+		
+		if(Dependencies.hasGriefPrevention()) {
+			Dependencies.getGriefPrevention();
+			PlayerData playerData = GriefPrevention.instance.dataStore.getPlayerData(who.getUniqueId());
+			Claim claim = null;
+			if(GriefPrevention.instance.dataStore.getClaimAt(location, true, playerData.lastClaim) != null)
+				claim = GriefPrevention.instance.dataStore.getClaimAt(location, true, playerData.lastClaim);
+			if(claim != null && claim.allowAccess(who) == null)
+				canBuild = true;
+			else if (claim != null && claim.allowAccess(who) != null)
+				canBuild = false;
+		}
+    	return canBuild;
     }
 
     /**
