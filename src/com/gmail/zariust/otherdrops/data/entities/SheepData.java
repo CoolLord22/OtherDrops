@@ -17,7 +17,8 @@ public class SheepData extends CreatureData {
     DyeColor    color   = null;
     Boolean     adult = null;
 
-    public SheepData(Boolean sheared, DyeColor color, Boolean adult) {
+    @SuppressWarnings("deprecation")
+	public SheepData(Boolean sheared, DyeColor color, Boolean adult) {
         this.sheared = sheared;
         this.color = color;
         if (color != null)

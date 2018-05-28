@@ -38,14 +38,16 @@ public class SpawnerData implements Data {
         creature = type;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int getData() {
         return creature.getTypeId();
     }
 
     @Override
     public void setData(int d) {
-        EntityType c = EntityType.fromId(d);
+        @SuppressWarnings("deprecation")
+		EntityType c = EntityType.fromId(d);
         if (c != null)
             creature = c;
     }

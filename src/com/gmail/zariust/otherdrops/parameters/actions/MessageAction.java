@@ -118,8 +118,7 @@ public class MessageAction extends Action {
             }
             break;
         case WORLD:
-            for (Player player : occurence.getLocation().getWorld()
-                    .getPlayers()) {
+            for (Player player : occurence.getLocation().getWorld().getPlayers()) {
                 player.sendMessage(message);
             }
             break;
@@ -134,8 +133,7 @@ public class MessageAction extends Action {
 
         for (String key : matches.keySet()) {
             if (parseMe.get(key) != null)
-                actions.add(new MessageAction(parseMe.get(key), matches
-                        .get(key)));
+                actions.add(new MessageAction(parseMe.get(key), matches.get(key)));
         }
         // messages = OtherDropsConfig.getMaybeList(new
         // ConfigurationNode((Map<?, ?>)parseMe), "message", "messages");
@@ -180,40 +178,31 @@ public class MessageAction extends Action {
         if (occurence != null) {
             if (occurence.getTool() != null)
                 toolName = occurence.getTool().getReadableName();
-
             if (occurence.getTool() instanceof PlayerSubject) {
-                toolName = ((PlayerSubject) occurence.getTool()).getTool()
-                        .getReadableName();
-                ItemStack inHand = ((PlayerSubject) occurence.getTool())
-                        .getPlayer().getItemInHand();
+                toolName = ((PlayerSubject) occurence.getTool()).getTool().getReadableName();
+                ItemStack inHand = ((PlayerSubject) occurence.getTool()).getPlayer().getInventory().getItemInMainHand();
                 if (inHand != null)
-                    loreName = (inHand.getItemMeta() == null ? null : inHand
-                            .getItemMeta().getDisplayName());
+                    loreName = (inHand.getItemMeta() == null ? null : inHand.getItemMeta().getDisplayName());
                 if (loreName == null)
                     loreName = toolName;
-                playerName = ((PlayerSubject) occurence.getTool()).getPlayer()
-                        .getName();
+                playerName = ((PlayerSubject) occurence.getTool()).getPlayer().getName();
             } else if (occurence.getTool() instanceof ProjectileAgent) {
                 toolName = occurence.getTool().getReadableName();
                 if (((ProjectileAgent) occurence.getTool()).getShooter() == null) {
-                    Log.logInfo("MessageAction: getShooter = null, this shouldn't happen. ("
-                            + occurence.getTool().toString() + ")");
+                    Log.logInfo("MessageAction: getShooter = null, this shouldn't happen. (" + occurence.getTool().toString() + ")");
                     playerName = "null";
                 } else {
-                    playerName = ((ProjectileAgent) occurence.getTool())
-                            .getShooter().getReadableName();
+                    playerName = ((ProjectileAgent) occurence.getTool()).getShooter().getReadableName();
                     toolName += " shot by " + playerName;
 
-                    Entity ent = ((ProjectileAgent) occurence.getTool())
-                            .getShooter().getEntity();
+                    Entity ent = ((ProjectileAgent) occurence.getTool()).getShooter().getEntity();
                     if (ent instanceof LivingEntity) {
                         loreName = ((LivingEntity) ent).getCustomName();
                     }
 
                 }
             } else if (occurence.getTool() instanceof CreatureSubject) {
-                Entity ent = ((CreatureSubject) occurence.getTool())
-                        .getEntity();
+                Entity ent = ((CreatureSubject) occurence.getTool()).getEntity();
                 if (ent instanceof LivingEntity) {
                     loreName = ((LivingEntity) ent).getCustomName();
                 }
@@ -221,15 +210,12 @@ public class MessageAction extends Action {
             victimName = occurence.getTarget().getReadableName();
 
             if (occurence.getRealEvent() instanceof PlayerDeathEvent) {
-                PlayerDeathEvent ede = (PlayerDeathEvent) occurence
-                        .getRealEvent();
+                PlayerDeathEvent ede = (PlayerDeathEvent) occurence.getRealEvent();
 
                 deathMessage = ede.getDeathMessage();
             }
         }
 
-        return new ODVariables().setPlayerName(playerName).setVictimName(victimName).setDropName(dropName)
-                .setToolName(toolName).setQuantity(quantityString).setDeathMessage(deathMessage).setloreName(loreName).setLocation(occurence.getLocation())
-                .parse(msg);
+        return new ODVariables().setPlayerName(playerName).setVictimName(victimName).setDropName(dropName).setToolName(toolName).setQuantity(quantityString).setDeathMessage(deathMessage).setloreName(loreName).setLocation(occurence.getLocation()).parse(msg);
     }
 }

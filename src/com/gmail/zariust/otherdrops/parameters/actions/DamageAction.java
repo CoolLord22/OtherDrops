@@ -8,12 +8,14 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.ConfigurationNode;
+import com.gmail.zariust.otherdrops.Dependencies;
 import com.gmail.zariust.otherdrops.EntityWrapper;
 import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.OtherDrops;
@@ -24,6 +26,9 @@ import com.gmail.zariust.otherdrops.event.SimpleDrop;
 import com.gmail.zariust.otherdrops.options.DoubleRange;
 import com.gmail.zariust.otherdrops.parameters.Action;
 import com.gmail.zariust.otherdrops.subject.CreatureSubject;
+
+import fr.neatmonster.nocheatplus.checks.CheckType;
+import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 
 public class DamageAction extends Action {
     // "potioneffect: "
@@ -121,26 +126,36 @@ public class DamageAction extends Action {
         return false;
     }
 
-    private void processDamage(CustomDrop drop, OccurredEvent occurence,
-            DoubleRange damageRange, DamageType damageType) {
+    private void processDamage(CustomDrop drop, OccurredEvent occurence, DoubleRange damageRange, DamageType damageType) {
 
         switch (damageActionType) {
         case ATTACKER:
             if (occurence.getPlayerAttacker() != null) {
-                damage(occurence.getPlayerAttacker(), damageRange, damageType,
-                        drop, null);
+            	if(Dependencies.hasNCP()) {
+                    NCPExemptionManager.exemptPermanently(occurence.getPlayerAttacker(), CheckType.FIGHT_SELFHIT);
+                    damage(occurence.getPlayerAttacker(), damageRange, damageType, drop, null);
+                	NCPExemptionManager.unexempt(occurence.getPlayerAttacker(), CheckType.FIGHT_SELFHIT);
+            	}
+            	else {
+                    damage(occurence.getPlayerAttacker(), damageRange, damageType, drop, null);
+            	}
             }
             break;
         case VICTIM:
-            if (occurence.getPlayerVictim() != null)
-                damage(occurence.getPlayerVictim(), damageRange, damageType,
-                        drop, occurence.getAttacker());
+            if (occurence.getPlayerVictim() != null) {
+            	if(Dependencies.hasNCP()) {
+                    NCPExemptionManager.exemptPermanently(occurence.getPlayerVictim(), CheckType.FIGHT_SELFHIT);
+                    damage(occurence.getPlayerVictim(), damageRange, damageType, drop, occurence.getAttacker());
+                	NCPExemptionManager.unexempt(occurence.getPlayerVictim(), CheckType.FIGHT_SELFHIT);
+            	}
+            	else {
+                    damage(occurence.getPlayerVictim(), damageRange, damageType, drop, occurence.getAttacker());
+            	}
+            }
             else if (occurence.getTarget() instanceof CreatureSubject) {
-                Entity ent = ((CreatureSubject) occurence.getTarget())
-                        .getEntity();
+                Entity ent = ((CreatureSubject) occurence.getTarget()).getEntity();
                 if (ent instanceof LivingEntity) {
-                    damage((LivingEntity) ent, damageRange, damageType, drop,
-                            occurence.getAttacker());
+                    damage((LivingEntity) ent, damageRange, damageType, drop, occurence.getAttacker());
                 }
             }
 
@@ -150,28 +165,43 @@ public class DamageAction extends Action {
             // players around radius without an entity?
             Location loc = occurence.getLocation();
             for (Player player : loc.getWorld().getPlayers()) {
-                if (player.getLocation().getX() > (loc.getX() - radius)
-                        || player.getLocation().getX() < (loc.getX() + radius))
-                    if (player.getLocation().getY() > (loc.getY() - radius)
-                            || player.getLocation().getY() < (loc.getY() + radius))
-                        if (player.getLocation().getZ() > (loc.getZ() - radius)
-                                || player.getLocation().getZ() < (loc.getZ() + radius))
-                            damage(player, damageRange, damageType, drop,
-                                    occurence.getAttacker());
+                if (player.getLocation().getX() > (loc.getX() - radius) || player.getLocation().getX() < (loc.getX() + radius))
+                    if (player.getLocation().getY() > (loc.getY() - radius) || player.getLocation().getY() < (loc.getY() + radius))
+                        if (player.getLocation().getZ() > (loc.getZ() - radius) || player.getLocation().getZ() < (loc.getZ() + radius)) {
+                        	if(Dependencies.hasNCP()) {
+                                NCPExemptionManager.exemptPermanently(player, CheckType.FIGHT_SELFHIT);
+                            	damage(player, damageRange, damageType, drop, occurence.getAttacker());
+                            	NCPExemptionManager.unexempt(player, CheckType.FIGHT_SELFHIT);
+                        	}
+                        	else {
+                            	damage(player, damageRange, damageType, drop, occurence.getAttacker());
+                        	}
+                        }
             }
 
             break;
         case SERVER:
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                damage(player, damageRange, damageType, drop,
-                        occurence.getAttacker());
+            	if(Dependencies.hasNCP()) {
+                    NCPExemptionManager.exemptPermanently(player, CheckType.FIGHT_SELFHIT);
+                    damage(player, damageRange, damageType, drop, occurence.getAttacker());
+                	NCPExemptionManager.unexempt(player, CheckType.FIGHT_SELFHIT);
+            	}
+            	else {
+                    damage(player, damageRange, damageType, drop, occurence.getAttacker());
+            	}
             }
             break;
         case WORLD:
-            for (Player player : occurence.getLocation().getWorld()
-                    .getPlayers()) {
-                damage(player, damageRange, damageType, drop,
-                        occurence.getAttacker());
+            for (Player player : occurence.getLocation().getWorld().getPlayers()) {
+            	if(Dependencies.hasNCP()) {
+                    NCPExemptionManager.exemptPermanently(player, CheckType.FIGHT_SELFHIT);
+                    damage(player, damageRange, damageType, drop, occurence.getAttacker());
+                	NCPExemptionManager.unexempt(player, CheckType.FIGHT_SELFHIT);
+            	}
+            	else {
+                    damage(player, damageRange, damageType, drop, occurence.getAttacker());
+            	}
             }
             break;
         case TOOL:
@@ -184,8 +214,7 @@ public class DamageAction extends Action {
 
     }
 
-    private void damage(LivingEntity ent, DoubleRange damageRange,
-            DamageType damageType, CustomDrop drop, LivingEntity attacker) {
+    private void damage(LivingEntity ent, DoubleRange damageRange, DamageType damageType, CustomDrop drop, LivingEntity attacker) {
         Double damageVal = damageRange.getRandomIn(OtherDrops.rng);
         Log.logInfo("Damaging entity: " + ent.toString() + " range="
                 + damageRange.toString() + " value=" + damageVal + " ("
@@ -194,8 +223,8 @@ public class DamageAction extends Action {
         case NORMAL:
             if (damageVal < 0) {
                 double newHealth = ent.getHealth() + (damageVal * -1);
-                if (newHealth > ent.getMaxHealth())
-                    newHealth = ent.getMaxHealth();
+                if (newHealth > ent.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                    newHealth = ent.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                 EntityWrapper.setHealth(ent, newHealth);
             } else if (damageVal > 0) {
                 if (attacker != null) {

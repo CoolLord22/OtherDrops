@@ -33,6 +33,9 @@ import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Painting;
+import org.bukkit.entity.minecart.CommandMinecart;
+import org.bukkit.entity.minecart.ExplosiveMinecart;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.PoweredMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.entity.Vehicle;
@@ -64,7 +67,13 @@ public class VehicleTarget implements Target {
     private static Data getVehicleData(Vehicle vehicle) {
         if (vehicle instanceof StorageMinecart)
             return new ContainerData((StorageMinecart) vehicle);
+        else if (vehicle instanceof HopperMinecart)
+            return new ContainerData((HopperMinecart) vehicle);
         else if (vehicle instanceof PoweredMinecart)
+            return new SimpleData();
+        else if (vehicle instanceof CommandMinecart)
+            return new SimpleData();
+        else if (vehicle instanceof ExplosiveMinecart)
             return new SimpleData();
         else if (vehicle instanceof Boat || vehicle instanceof Minecart)
             return new VehicleData(vehicle);
@@ -152,12 +161,20 @@ public class VehicleTarget implements Target {
         try {
             switch (type) {
             case BOAT:
+            case BOAT_SPRUCE:
+            case BOAT_BIRCH:
+            case BOAT_JUNGLE:
+            case BOAT_ACACIA:
+            case BOAT_DARK_OAK:
             case MINECART:
                 data = VehicleData.parse(type, state);
                 break;
+            case HOPPER_MINECART:
             case STORAGE_MINECART:
                 data = ContainerData.parse(type, state);
                 break;
+            case COMMAND_MINECART:
+            case EXPLOSIVE_MINECART:
             case POWERED_MINECART:
             case PAINTING:
                 data = SimpleData.parse(type, state);

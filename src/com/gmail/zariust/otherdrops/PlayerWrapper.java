@@ -76,6 +76,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
+@SuppressWarnings("deprecation")
 public class PlayerWrapper implements Player {
     private final Player               caller;
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
@@ -516,7 +517,6 @@ public class PlayerWrapper implements Player {
         caller.sendMap(map);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void updateInventory() {
         caller.updateInventory();

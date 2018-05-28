@@ -17,7 +17,8 @@ public class OdSkullMeta extends OdItemMeta {
         this.owner = owner;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public ItemStack setOn(ItemStack stack, Target source) {
         if (owner == null)
             return null;

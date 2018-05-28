@@ -16,6 +16,8 @@
 
 package com.gmail.zariust.otherdrops.data;
 
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -44,13 +46,15 @@ public class VehicleData implements Data {
     VehicleState state;
 
     public VehicleData(Vehicle vehicle) {
-        Entity passenger = vehicle.getPassenger();
-        if (passenger instanceof Player)
-            state = VehicleState.PLAYER;
-        else if (passenger != null)
-            creature = new CreatureDrop(passenger.getType());
-        if (creature == null && state == null)
-            state = VehicleState.EMPTY;
+        List<Entity> passenger = vehicle.getPassengers();
+        for(Entity ent : passenger) {
+            if (ent instanceof Player)
+                state = VehicleState.PLAYER;
+            else if (ent != null)
+                creature = new CreatureDrop(ent.getType());
+            if (creature == null && state == null)
+                state = VehicleState.EMPTY;
+        }
     }
 
     public VehicleData(VehicleState flag) {
@@ -114,8 +118,7 @@ public class VehicleData implements Data {
     @Override
     public String get(Enum<?> mat) {
         if (mat == Material.BOAT || mat == Material.MINECART)
-            return creature == null ? (state == null ? state.toString() : "")
-                    : creature.toString();
+            return creature == null ? (state == null ? "" : state.toString()) : creature.toString();
         return "";
     }
 
@@ -131,12 +134,10 @@ public class VehicleData implements Data {
                     OtherDrops.rng, "", "", "");
             DropResult dropResult = creature.drop(entity.getLocation(),
                     (Target) null, (Location) null, 1, flags);
-            mob = dropResult.getDropped().get(
-                    dropResult.getDropped().size() - 1);
-            // mob = entity.getWorld().spawnCreature(entity.getLocation(),
-            // creature);
+            mob = dropResult.getDropped().get(dropResult.getDropped().size() - 1);
+            // mob = entity.getWorld().spawnCreature(entity.getLocation(), creature);
         }
-        entity.setPassenger(mob);
+        entity.addPassenger(mob);
     }
 
     @Override

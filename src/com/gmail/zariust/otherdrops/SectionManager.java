@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -100,20 +101,21 @@ public class SectionManager {
                 BlockTarget any = (BlockTarget) drop.getTarget();
                 if (any.except != null) {
                     Material compareTo = null;
+                    Material compareToOffhand = null;
                     if (occurence.getEvent() instanceof BlockBreakEvent) {
-                        compareTo = ((BlockBreakEvent) occurence.getEvent())
-                                .getBlock().getType();
-                    } else if (occurence.getEvent() instanceof PlayerInteractEvent) {
+                        compareTo = ((BlockBreakEvent) occurence.getEvent()).getBlock().getType();
+                    } 
+                    else if (occurence.getEvent() instanceof PlayerInteractEvent) {
                         compareTo = null;
-                        PlayerInteractEvent pie = (PlayerInteractEvent) occurence
-                                .getEvent();
+                        compareToOffhand = null;
+                        PlayerInteractEvent pie = (PlayerInteractEvent) occurence.getEvent();
                         if (pie.getPlayer() != null) {
-                            compareTo = pie.getPlayer().getItemInHand()
-                                    .getType();
+                            compareTo = pie.getPlayer().getInventory().getItemInMainHand().getType();
+                            compareToOffhand = pie.getPlayer().getInventory().getItemInOffHand().getType();
                         }
                     }
 
-                    if (any.except.contains(compareTo)) {
+                    if (any.except.contains(compareTo) || any.except.contains(compareToOffhand)) {
                         return;
                     }
                 }
@@ -141,9 +143,7 @@ public class SectionManager {
                 defaultDrop = true;
                 occurence.setOverrideDefault(false); // DEFAULT drop
             }
-            if (simpleDrop.getDropped() != null
-                    && simpleDrop.getDropped().toString()
-                            .equalsIgnoreCase("AIR"))
+            if (simpleDrop.getDropped() != null && simpleDrop.getDropped().toString().equalsIgnoreCase("AIR"))
                 occurence.setOverrideDefault(true); // NOTHING drop
         }
 
@@ -167,8 +167,7 @@ public class SectionManager {
         }
         if (occurence.getRealEvent() != null) {
             if (occurence.getRealEvent() instanceof EntityDeathEvent) {
-                EntityDeathEvent evt = (EntityDeathEvent) occurence
-                        .getRealEvent();
+                EntityDeathEvent evt = (EntityDeathEvent) occurence.getRealEvent();
                 if (occurence.isOverrideDefaultXp()) {
                     Log.logInfo(
                             "PerformDrop: entitydeath - isOverrideDefaultXP=true, clearing xp drop.",
@@ -176,6 +175,12 @@ public class SectionManager {
                     evt.setDroppedExp(0);
                 }
             }
+        }
+        
+        if (occurence.getTrigger() == Trigger.HIT) {
+        	if(occurence.getEvent() instanceof EntityDamageByEntityEvent) {
+        		occurence.setCancelled(false);
+        	}
         }
 
         if (occurence.getReplaceBlockWith() != null)
@@ -275,7 +280,8 @@ public class SectionManager {
             eq.setChestplateDropChance(0);
             eq.setLeggingsDropChance(0);
             eq.setBootsDropChance(0);
-            eq.setItemInHandDropChance(0);
+            eq.setItemInMainHandDropChance(0);
+            eq.setItemInOffHandDropChance(0);
         }
 
     }

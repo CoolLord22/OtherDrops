@@ -33,7 +33,8 @@ import com.gmail.zariust.otherdrops.event.OccurredEvent;
 import com.gmail.zariust.otherdrops.parameters.Condition;
 
 public class Adjacent extends Condition {
-    private List<BlockFace>              blockfaceList;
+    @SuppressWarnings("unused")
+	private List<BlockFace>              blockfaceList;
     private static Map<String, Adjacent> nameLookup = new HashMap<String, Adjacent>();
 
     private Adjacent() {

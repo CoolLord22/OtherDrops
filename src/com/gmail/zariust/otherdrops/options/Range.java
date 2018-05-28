@@ -72,7 +72,7 @@ public abstract class Range<T extends Number & Comparable<T>> {
     }
 
     @SuppressWarnings("unchecked")
-    public <S extends Range<T>> S negate(@SuppressWarnings("unused") S dummy) {
+    public <S extends Range<T>> S negate(S dummy) {
         return (S) negate();
     }
 

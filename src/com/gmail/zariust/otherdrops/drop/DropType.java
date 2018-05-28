@@ -203,7 +203,6 @@ public abstract class DropType {
      *            - used in MoneyDrop's override of this function
      * @return
      */
-    @SuppressWarnings("unused")
     protected int calculateQuantity(double amount, Random rng) {
         int intPart = (int) amount;
         // (int) discards the decimal place - round up if neccessary
@@ -242,8 +241,8 @@ public abstract class DropType {
         
         DropResult dropResult = new DropResult();
         World in = where.getWorld();
-
-        Log.dMsg("DROP MOB: spawnreason: "+spawnReason);
+        
+        Log.dMsg("DROP MOB: spawnreason: " + spawnReason);
         // if this drop is due to a natural spawn, ensure the OD mob limit is not exceeeded
         if (owner == null && (spawnReason.isEmpty() || spawnReason.equalsIgnoreCase("natural"))
                 && in.getLivingEntities().size() > OtherDropsConfig.globalCustomSpawnLimit) {
@@ -255,8 +254,7 @@ public abstract class DropType {
         }
         Entity mob = null;
         
-        Location spawnLoc = where.clone().add(
-                new Location(where.getWorld(), 0.5, 0, 0.5));
+        Location spawnLoc = where.clone().add(new Location(where.getWorld(), 0.5, 0, 0.5));
         OdSpawnListener.otherdropsSpawned.clear(); // only used in on place
         // (here) and only needs
         // to store one entry
@@ -283,7 +281,7 @@ public abstract class DropType {
                     OtherDrops.plugin, "OtherDrops"));
             dropResult.addDropped(mob);
             if (passenger != null)
-                mob.setPassenger(passenger);
+                mob.addPassenger(passenger);
 
             if (ride != null) {
                 dropResult.add(dropCreatureWithRider(where, owner,
@@ -292,8 +290,7 @@ public abstract class DropType {
             }
             dropResult.setQuantity(1);
         } catch (Exception e) {
-            Log.logInfo("DropType (entityspawn): failed to set entity data '" + type.getName()
-                    + "' at location: '" + spawnLoc.toString() + "' (reason: " + e.getLocalizedMessage() + ", " + mobSpawnError + ")", Verbosity.HIGH);
+            Log.logInfo("DropType (entityspawn): failed to set entity data '" + type.toString() + "' at location: '" + spawnLoc.toString() + "' (reason: " + e.getLocalizedMessage() + ", " + mobSpawnError + ")", Verbosity.HIGH);
             // e.printStackTrace();
         }
         return dropResult;

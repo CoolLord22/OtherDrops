@@ -78,6 +78,7 @@
 	        <mkdir dir="bin" />
 	        <!--<copy file="${src}/plugin.yml" todir="bin" />-->
 
+            <property name="towny-location" value="${dependencies}/Towny.jar" />
 	        <property name="bigbrother-location" value="${dependencies}/BigBrother.jar" />
 	        <property name="logblock-location" value="${dependencies}/LogBlock.jar" />
 	        <property name="coreprotect-location" value="${dependencies}/CoreProtect.jar" />
@@ -92,6 +93,7 @@
             <property name="prism-location" value="${dependencies}/Prism.jar" />
             <property name="rpgitems-location" value="${dependencies}/rpgitems.jar" />
             <property name="mcmmo-location" value="${dependencies}/mcMMO.jar" />
+            <property name="ncp-location" value="${dependencies}/NoCheatPlus.jar" />
 
 
 	        <path id="classpath">
@@ -99,6 +101,7 @@
 	            <pathelement location="${lib.bukkit}" />
 	            <pathelement location="${logblock-location}" />
 	            <pathelement location="${coreprotect-location}" />
+	            <pathelement location="${towny-location}" />
 	            <pathelement location="${bigbrother-location}" />
 	            <pathelement location="${mobarena-location}" />
 	            <pathelement location="${moneydrop-location}" />
@@ -111,6 +114,7 @@
                 <pathelement location="${prism-location}" />
                 <pathelement location="${rpgitems-location}" />
                 <pathelement location="${mcmmo-location}" />
+                <pathelement location="${ncp-location}" />
 	        </path>
 	    </target>
 

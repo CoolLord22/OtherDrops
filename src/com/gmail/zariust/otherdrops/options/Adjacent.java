@@ -30,7 +30,8 @@ import com.gmail.zariust.otherdrops.OtherDropsConfig;
 
 public enum Adjacent {
     DOWN, UP;
-    private List<BlockFace>              blockfaceList;
+    @SuppressWarnings("unused")
+	private List<BlockFace>              blockfaceList;
     private static Map<String, Adjacent> nameLookup = new HashMap<String, Adjacent>();
 
     static {

@@ -85,8 +85,7 @@ public class CreatureGroupSubject extends LivingSubject {
         return null;
     }
 
-    public static CreatureGroupSubject parse(String name,
-            @SuppressWarnings("unused") String state) {
+    public static CreatureGroupSubject parse(String name, String state) {
         name = name.toUpperCase();
         if (!name.startsWith("CREATURE_"))
             name = "CREATURE_" + name;

@@ -89,7 +89,8 @@ public class AnySubject implements Agent, Target {
             return null;
     }
 
-    private static BlockTarget parseTargetAnyBlock(String name) {
+    @SuppressWarnings("unused")
+	private static BlockTarget parseTargetAnyBlock(String name) {
         name = name.replace("ANY_BLOCK", "").replaceAll("_", " ").trim();
         if (name.isEmpty())
             return new BlockTarget();
@@ -136,7 +137,6 @@ public class AnySubject implements Agent, Target {
             return new BlockTarget(except);
         else
             return new BlockTarget();
-
     }
 
     @Override

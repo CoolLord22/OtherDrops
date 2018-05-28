@@ -58,7 +58,8 @@ public class SelfDrop extends DropType {
         count = intRange;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected DropResult performDrop(Target source, Location from,
             DropFlags flags) {
         DropResult dropResult = DropResult.fromOverride(this.overrideDefault);
@@ -84,7 +85,7 @@ public class SelfDrop extends DropType {
         } else if (source instanceof BlockTarget) {
             Block block = ((BlockTarget) source).getBlock();
             Material material = block.getType();
-            int data = block.getData(), quantity = count.getRandomIn(flags.rng);
+			int data = block.getData(), quantity = count.getRandomIn(flags.rng);
             switch (material) {
             case AIR:
                 return dropResult;

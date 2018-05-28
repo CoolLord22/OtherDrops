@@ -23,7 +23,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.block.Chest;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.inventory.InventoryHolder;
@@ -112,7 +111,8 @@ public class BlockTarget implements Target {
         this.customName = customName;
     }
 
-    private static Data getData(Block block) {
+    @SuppressWarnings("deprecation")
+	private static Data getData(Block block) {
         if (block == null)
             return new SimpleData();
         switch (block.getType()) {
@@ -136,7 +136,8 @@ public class BlockTarget implements Target {
         return id;
     }
 
-    public int getId() {
+    @SuppressWarnings("deprecation")
+	public int getId() {
         return id.getId();
     }
 
@@ -190,27 +191,40 @@ public class BlockTarget implements Target {
         return match;
     }
 
-    public static Target parse(String name, String state, String customName) {        
+    @SuppressWarnings("deprecation")
+	public static Target parse(String name, String state, String customName) {        
         name = name.toUpperCase();
         state = state.toUpperCase();
         Material mat = null;
-        try {
-            int id = Integer.parseInt(name);
-            // TODO: Need a way to accept non-standard items, but Material is an
-            // enum...
-            // Waiting on change to Bukkit API.
-            mat = Material.getMaterial(id);
-        } catch (NumberFormatException x) {
+        if(name.matches("[0-9]+")) {
+            Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped! Locating item ID...");
+        	Log.logWarning("Please replace the occurence of '" + name + "' with '" + Material.getMaterial(Integer.parseInt(name)).toString() + "'");
+        }
+        
+        mat = Material.getMaterial(name.toUpperCase());
+        
+        if(mat == null) {
             mat = CommonMaterial.matchMaterial(name);
         }
-        if (mat == null)
+        
+        if (mat == null) {
             return null;
+        }
         if (!mat.isBlock()) {
             // Only a very select few non-blocks are permitted as a target
             if (mat != Material.PAINTING && mat != Material.BOAT
                     && mat != Material.MINECART
+                    && mat != Material.COMMAND_MINECART
+                    && mat != Material.EXPLOSIVE_MINECART
+                    && mat != Material.HOPPER_MINECART
                     && mat != Material.POWERED_MINECART
-                    && mat != Material.STORAGE_MINECART)
+                    && mat != Material.STORAGE_MINECART
+                    && mat != Material.BOAT
+                    && mat != Material.BOAT_ACACIA
+                    && mat != Material.BOAT_BIRCH
+                    && mat != Material.BOAT_DARK_OAK
+                    && mat != Material.BOAT_JUNGLE
+                    && mat != Material.BOAT_SPRUCE)
                 return null;
             else
                 return VehicleTarget.parse(mat, state);

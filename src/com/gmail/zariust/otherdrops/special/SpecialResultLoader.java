@@ -95,18 +95,17 @@ public class SpecialResultLoader {
 
     private static SpecialResultHandler loadEvent(File file) {
         String name = file.getName();
-        try {
-            JarFile jarFile = new JarFile(file);
+        try (JarFile jarFile = new JarFile(file)){
             JarEntry infoEntry = jarFile.getJarEntry("event.info");
             if (infoEntry == null)
-                throw new SpecialResultLoadException(
-                        "No event.info file found.");
+                throw new SpecialResultLoadException("No event.info file found.");
 
             InputStream stream = jarFile.getInputStream(infoEntry);
             Properties info = new Properties();
             info.load(stream);
             String mainClass = info.getProperty("class");
-
+            jarFile.close();
+            
             if (mainClass != null) {
                 ClassLoader loader = URLClassLoader.newInstance(
                         new URL[] { file.toURI().toURL() },
@@ -129,10 +128,13 @@ public class SpecialResultLoader {
                 event.info = info;
                 event.version = info.getProperty("version");
                 return event;
-            } else
-                throw new SpecialResultLoadException(
-                        "Missing class= property in event.info.");
-        } catch (IOException e) { // Failed to load jar or event.info
+            }
+            else {
+                throw new SpecialResultLoadException("Missing class= property in event.info.");
+            }
+        } 
+        
+        catch (IOException e) { // Failed to load jar or event.info
             Log.logWarning("Failed to load event from file " + name + ":");
             e.printStackTrace();
         } catch (ClassNotFoundException e) { // Couldn't find specified class

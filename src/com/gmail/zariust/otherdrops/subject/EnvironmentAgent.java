@@ -33,7 +33,8 @@ import com.gmail.zariust.otherdrops.options.ToolDamage;
 
 public class EnvironmentAgent implements Agent {
     private final List<DamageCause> dmg;
-    private final Object            extra;
+    @SuppressWarnings("unused")
+	private final Object            extra;
 
     // TODO: Need auxiliary data?
 

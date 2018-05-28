@@ -54,14 +54,12 @@ public class OdBlockListener implements Listener {
             Vector pt = new Vector(loc.getX(), loc.getY(), loc.getZ());
 
             // Get the region manager for this world
-            RegionManager regionManager = Dependencies.getWorldGuard()
-                    .getGlobalRegionManager().get(block.getWorld());
+            RegionManager regionManager = Dependencies.getWorldGuard().getRegionContainer().get(block.getWorld());
             // Get the "set" for this location
             ApplicableRegionSet set = regionManager.getApplicableRegions(pt);
             // If leaf decay is not allowed, just exit this function
-            if (!set.allows(DefaultFlag.LEAF_DECAY)) {
-                Log.logInfo("Leaf decay denied - worldguard protected region.",
-                        HIGHEST);
+            if (!set.testState(null, DefaultFlag.LEAF_DECAY)) {
+                Log.logWarning("Leaf decay denied - worldguard protected region.");
                 return false;
             }
         }

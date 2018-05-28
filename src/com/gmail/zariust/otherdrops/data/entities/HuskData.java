@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 
 import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.Log;
-import com.gmail.zariust.otherdrops.OtherDropsConfig;
 import com.gmail.zariust.otherdrops.data.CreatureData;
 import com.gmail.zariust.otherdrops.data.Data;
 
@@ -18,7 +17,8 @@ public class HuskData extends CreatureData {
         this.leData = leData;
     }
 
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public void setOn(Entity mob, Player owner) {
         if (mob instanceof Husk) {
         	Husk z = (Husk) mob;

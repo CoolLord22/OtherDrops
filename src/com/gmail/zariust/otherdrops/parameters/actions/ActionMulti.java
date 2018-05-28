@@ -74,8 +74,8 @@ public abstract class ActionMulti extends Action {
 
     @Override
     public List<Action> parse(ConfigurationNode parseMe) {
-        Map<String, ActionType> matches = getMatches("potioneffect",
-                "potioneffects");
+        @SuppressWarnings("unused")
+		Map<String, ActionType> matches = getMatches("potioneffect", "potioneffects");
         List<Action> actions = new ArrayList<Action>();
         /*
          * for (String key : matches.keySet()) { boolean onlyRemove; if

@@ -22,8 +22,7 @@ public abstract class Condition extends Parameter {
 
     public final boolean check(CustomDrop drop, OccurredEvent occurrence) {
         boolean result = checkInstance(drop, occurrence);
-        Log.logInfo("Condition '" + this.getClass().getSimpleName() + "' "
-                + (result ? "passed" : "failed"), Verbosity.HIGHEST);
+        Log.logInfo("Condition '" + this.getClass().getSimpleName() + "' " + (result ? "passed" : "failed"), Verbosity.HIGHEST);
         return result;
     }
 
@@ -39,7 +38,7 @@ public abstract class Condition extends Parameter {
     // (so debug messages based on Verbosity.HIGH etc. won't work)
     public static boolean registerCondition(Condition register) {
         if (register == null) {
-            Log.logInfo("Condition - registering FAILED: " + register.toString());
+            Log.logInfo("Condition - registering FAILED" + register);
         } else {
             conditions.add(register);
         }

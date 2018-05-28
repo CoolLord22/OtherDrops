@@ -25,6 +25,7 @@ import java.io.IOException;
 import me.botsko.prism.Prism;
 import me.botsko.prism.actionlibs.ActionFactory;
 import me.drakespirit.plugins.moneydrop.MoneyDrop;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import me.taylorkelly.bigbrother.BigBrother;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
@@ -51,10 +52,13 @@ import com.gmail.zariust.common.Verbosity;
 import com.gmail.zariust.otherdrops.metrics.Metrics;
 import com.herocraftonline.heroes.Heroes;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.palmergames.bukkit.towny.Towny;
 
 import de.diddiz.LogBlock.Consumer;
 import de.diddiz.LogBlock.LogBlock;
+import fr.neatmonster.nocheatplus.NoCheatPlus;
 
+@SuppressWarnings("unused")
 public class Dependencies {
     // Plugin Dependencies
     private static LogBlock         logBlock        = null;
@@ -66,16 +70,21 @@ public class Dependencies {
                                                              // support
     private static WorldGuardPlugin worldGuard      = null; // for WorldGuard
                                                              // support
+    private static Towny	 		towny 			= null;
+    private static NoCheatPlus		ncp 			= null;
+    private static GriefPrevention  gp 				= null;
+    
     private static HawkEye          hawkEye         = null;
-    private final boolean           usingHawkEye    = false; // for HawkEye
+    private final  boolean          usingHawkEye    = false; // for HawkEye
                                                              // support
     boolean                         enabled;
     private static MobArena         mobArena        = null;
     private static MobArenaHandler  mobArenaHandler = null; // for MobArena
     private static MoneyDrop        moneyDrop       = null; // for MoneyDrop
 
+    
     private static Economy          vaultEcon       = null;
-    private static Permission       vaultPerms      = null;
+	private static Permission       vaultPerms      = null;
 
     static String                   foundPlugins;
     static String                   notFoundPlugins;
@@ -108,6 +117,9 @@ public class Dependencies {
             e.printStackTrace();
         }
         try {
+        	towny = (Towny) getPlugin("Towny");
+        	gp = (GriefPrevention) getPlugin("GriefPrevention");
+        	ncp = (NoCheatPlus) getPlugin("NoCheatPlus");
             hawkEye = (HawkEye) getPlugin("HawkEye");
             mobArena = (MobArena) getPlugin("MobArena");
             moneyDrop = (MoneyDrop) getPlugin("MoneyDrop");
@@ -280,7 +292,8 @@ public class Dependencies {
 
     // If logblock plugin is available, inform it of the block destruction
     // before we change it
-    public static boolean queueBlockBreak(String playerName, Block block, BlockBreakEvent event) {
+    @SuppressWarnings("deprecation")
+	public static boolean queueBlockBreak(String playerName, Block block, BlockBreakEvent event) {
         if (block == null) {
             Log.logWarning(
                     "Queueblockbreak: block is null - this shouldn't happen (please advise developer).  Player = "
@@ -311,8 +324,7 @@ public class Dependencies {
 
         if (Dependencies.hasCoreProtect()) {
             Log.logInfo("Attempting to log to CoreProtect: " + message, HIGHEST);
-            Dependencies.getCoreProtect().logRemoval(playerName,
-                    block.getLocation(), block.getTypeId(), block.getData());
+            Dependencies.getCoreProtect().logRemoval(playerName, block.getLocation(), block.getType(), block.getData());
         }
 
         if (Dependencies.hasHawkEye()) {
@@ -323,27 +335,20 @@ public class Dependencies {
             // boolean result = HawkEyeAPI.addEntry(plugin, new
             // BlockEntry(playerName, DataType.BLOCK_BREAK, block));
 
-            boolean result = HawkEyeAPI.addCustomEntry(OtherDrops.plugin,
-                    "ODBlockBreak",
-                    OtherDrops.plugin.getServer().getPlayer(playerName),
-                    block.getLocation(), block.getType().toString());
+            boolean result = HawkEyeAPI.addCustomEntry(OtherDrops.plugin, "ODBlockBreak", OtherDrops.plugin.getServer().getPlayer(playerName), block.getLocation(), block.getType().toString());
             if (!result)
                 Log.logWarning("Warning: HawkEyeAPI logging failed.",
                         Verbosity.HIGH);
         }
 
         if (Dependencies.hasRegenBlock()) {
-            Log.logInfo("Attempting to send event to RegenBlock. (" + message
-                    + ")", HIGHEST);
-            Dependencies
-                    .getRegenBlock()
-                    .regenBlock(block.getLocation(), block.getType(), block.getData(), OtherDrops.plugin.getServer().getPlayer(playerName), true);
+            Log.logInfo("Attempting to send event to RegenBlock. (" + message + ")", HIGHEST);
+            Dependencies.getRegenBlock().regenBlock(block.getLocation(), block.getType(), block.getData(), OtherDrops.plugin.getServer().getPlayer(playerName), true);
         }
 
         if (hasPrism()) {
             Log.logInfo("Attempting to log to Prism (" + message + ")", HIGHEST);
-            Prism.actionsRecorder.addToQueue(ActionFactory.create(
-                    "block-break", block, playerName));
+            Prism.actionsRecorder.addToQueue(ActionFactory.create("block-break", block, playerName));
         }
         return true;
     }
@@ -362,6 +367,30 @@ public class Dependencies {
 
     private static boolean hasLogBlock() {
         return Dependencies.lbconsumer != null;
+    }
+
+    public static boolean hasTowny() {
+        return Dependencies.towny != null;
+    }
+    
+    public static Towny getTowny() {
+        return Dependencies.towny;
+    }
+
+    public static boolean hasGriefPrevention() {
+        return Dependencies.gp != null;
+    }
+    
+    public static GriefPrevention getGriefPrevention() {
+        return Dependencies.gp;
+    }
+
+    public static boolean hasNCP() {
+        return Dependencies.ncp != null;
+    }
+    
+    public static NoCheatPlus getNCP() {
+        return Dependencies.ncp;
     }
 
     private static Consumer getLogBlock() {

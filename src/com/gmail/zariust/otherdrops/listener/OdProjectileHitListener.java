@@ -16,6 +16,7 @@
 
 package com.gmail.zariust.otherdrops.listener;
 
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Projectile;
@@ -45,7 +46,7 @@ public class OdProjectileHitListener implements Listener {
 
         while(iterator.hasNext()) {
             hitBlock = iterator.next();
-            if(hitBlock.getTypeId()!=0) //Check all non-solid blockid's here.
+            if(hitBlock.getType() != Material.AIR) //Check all non-solid blockid's here.
                 break;
         }
 

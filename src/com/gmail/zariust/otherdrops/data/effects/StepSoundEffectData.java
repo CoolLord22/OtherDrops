@@ -8,7 +8,8 @@ import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.data.EffectData;
 
 public class StepSoundEffectData extends EffectData {
-    public StepSoundEffectData(Material mat) { // BLOCK_BREAK effect
+    @SuppressWarnings("deprecation")
+	public StepSoundEffectData(Material mat) { // BLOCK_BREAK effect
         data = mat.getId();
     }
 
@@ -25,7 +26,8 @@ public class StepSoundEffectData extends EffectData {
 
     }
     
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected String get(Effect effect) {
         return Material.getMaterial(data).toString();
     }

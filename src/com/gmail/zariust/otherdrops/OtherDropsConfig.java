@@ -677,10 +677,7 @@ public class OtherDropsConfig {
                 blockName = blockNameObj.toString();
 
                 if (blockNameObj instanceof Integer) {
-                    Log.logWarning("Integer target: "
-                            + blockName
-                            + " (cannot process - please enclose in quotation marks eg. \""
-                            + blockName + "\")");
+                    Log.logWarning("Integer target: " + blockName + " (cannot process - please enclose in quotation marks eg. \"" + blockName + "\")");
                     this.dropFailed++;
                     continue;
                 }
@@ -915,8 +912,7 @@ public class OtherDropsConfig {
         }
     }
 
-    private CustomDrop loadDrop(ConfigurationNode dropNode, Target target,
-            Trigger trigger, boolean isGroup) {
+    private CustomDrop loadDrop(ConfigurationNode dropNode, Target target, Trigger trigger, boolean isGroup) {
         CustomDrop drop = isGroup ? new GroupDropEvent(target, trigger)
                 : new SimpleDrop(target, trigger);
         loadConditions(dropNode, drop);
@@ -1025,7 +1021,8 @@ public class OtherDropsConfig {
         this.dropSections++;
 
         // Read drop
-        boolean deny = false;
+        @SuppressWarnings("unused")
+		boolean deny = false;
         String dropStr = node.getString("drop", "UNSPECIFIED"); // default value
                                                                 // should be
                                                                 // NOTHING
@@ -1093,13 +1090,7 @@ public class OtherDropsConfig {
         // Random location multiplier
         drop.setRandomLocMult(parseLocationFrom(node, "randomise", 0, 0, 0));
         // Location offset
-        if (drop.getDropped() instanceof CreatureDrop
-                && drop.getTarget() instanceof BlockTarget)
-            // Drop creature in the centre of the block, not on the corner
-            drop.setLocationOffset(parseLocationFrom(node, "offset", 0.5, 1,
-                    0.5));
-        else
-            drop.setLocationOffset(parseLocationFrom(node, "offset", 0, 0, 0));
+        drop.setLocationOffset(parseLocationFrom(node, "offset", 0, 0, 0));
         // Commands, messages, sound effects
         drop.setCommands(getMaybeList(node, "command", "commands"));
         drop.setMessages(getMaybeList(node, "message", "messages"));
@@ -1194,26 +1185,26 @@ public class OtherDropsConfig {
         return prop;
     }
 
-    private BlockTarget parseReplacement(ConfigurationNode node) {
-        String blockName = getStringFrom(node, "replacementblock",
-                "replaceblock", "replace");
+    @SuppressWarnings("deprecation")
+	private BlockTarget parseReplacement(ConfigurationNode node) {
+        String blockName = getStringFrom(node, "replacementblock", "replaceblock", "replace");
         if (blockName == null)
             return null;
         String[] split = blockName.split("@");
         String name = split[0];
         String dataStr = split.length > 1 ? split[1] : "";
         Material mat = null;
-        try {
-            mat = Material.getMaterial(Integer.parseInt(name));
-        } 
-        catch (NumberFormatException e) {
-            mat = Material.getMaterial(name.toUpperCase());
+        if(name.matches("[0-9]+")) {
+            Log.logWarning("Error while parsing: " + name + ". Support for numerical IDs has been dropped! Locating item ID...");
+        	Log.logWarning("Please replace the occurence of '" + name + "' with '" + Material.getMaterial(Integer.parseInt(name)).toString() + "'");
+        	ItemIDReplacer.replaceFile(Integer.parseInt(name), Material.getMaterial(Integer.parseInt(name)).toString());
         }
-        if (mat == null)
+        mat = Material.getMaterial(name.toUpperCase());
+        if (mat == null) {
             return null;
+        }
         if (!mat.isBlock() && !(this.globalAllowAnyReplacementBlock)) {
-            Log.logWarning("Error in 'replacementblock' - " + mat.toString()
-                    + " is not a block-type.");
+            Log.logWarning("Error in 'replacementblock' - " + mat.toString() + " is not a block-type.");
             return null;
         }
 
@@ -1240,8 +1231,7 @@ public class OtherDropsConfig {
     private Map<World, Boolean> parseWorldsFrom(ConfigurationNode node,
             Map<World, Boolean> def) {
         List<String> worlds = getMaybeList(node, "world", "worlds");
-        List<String> worldsExcept = getMaybeList(node, "worldexcept",
-                "worldsexcept");
+        List<String> worldsExcept = getMaybeList(node, "worldexcept", "worldsexcept");
         if (worlds.isEmpty() && worldsExcept.isEmpty())
             return def;
         Map<World, Boolean> result = new HashMap<World, Boolean>();
@@ -1270,8 +1260,7 @@ public class OtherDropsConfig {
         for (String name : worldsExcept) {
             World world = Bukkit.getServer().getWorld(name);
             if (world == null) {
-                Log.logWarning("Invalid world exception " + name
-                        + "; skipping...");
+                Log.logWarning("Invalid world exception " + name + "; skipping...");
                 continue;
             }
             result.put(null, true);
@@ -1540,7 +1529,7 @@ public class OtherDropsConfig {
         else if (upperName.startsWith("ANY") || upperName.equals("ALL"))
             return AnySubject.parseTarget(upperName);
         else if (upperName.startsWith("VEHICLE")
-                || upperName.matches("BOAT|MINECART"))
+                || upperName.matches("BOAT|MINECART|BOAT_SPRUCE|BOAT_JUNGLE|BOAT_BIRCH|BOAT_ACACIA|BOAT_DARK_OAk"))
             return VehicleTarget.parse(
                     Material.getMaterial(upperName.replaceAll("VEHICLE_", "")),
                     data);

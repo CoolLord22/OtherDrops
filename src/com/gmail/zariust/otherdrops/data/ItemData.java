@@ -87,7 +87,7 @@ public class ItemData implements Data, RangeableData {
      * @param mat
      * @return
      */
-    @SuppressWarnings("incomplete-switch")
+    @SuppressWarnings({ "incomplete-switch", "deprecation" })
     private String get(Material mat) {
         if (data == -1)
             return "THIS";
@@ -131,7 +131,8 @@ public class ItemData implements Data, RangeableData {
      * @return
      * @throws IllegalArgumentException
      */
-    public static Data parse(Material mat, String state)
+    @SuppressWarnings("deprecation")
+	public static Data parse(Material mat, String state)
             throws IllegalArgumentException {
         if (mat == null || state == null || state.isEmpty())
             return null;

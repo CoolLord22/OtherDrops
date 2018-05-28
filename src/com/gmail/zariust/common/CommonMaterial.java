@@ -27,6 +27,7 @@ import org.bukkit.SandstoneType;
 import org.bukkit.TreeSpecies;
 import org.bukkit.material.Step;
 
+import com.gmail.zariust.otherdrops.ItemIDReplacer;
 import com.gmail.zariust.otherdrops.Log;
 
 public final class CommonMaterial {
@@ -185,7 +186,7 @@ public final class CommonMaterial {
         aMap.put("bucket of milk", "milk bucket");
 
         aMap.put("inksac", "inksack");
-
+        
         aMap.put("firecharge", "fireball");
 
         aMap.put("skull", "skull_item");
@@ -224,7 +225,8 @@ public final class CommonMaterial {
         ALIASES = Collections.unmodifiableMap(aMap);
     }
 
-    public static Material matchMaterial(String mat) {
+    @SuppressWarnings("deprecation")
+	public static Material matchMaterial(String mat) {
         // Aliases defined here override those in Material; the only example
         // here is WOODEN_DOOR
         // You can remove it if you prefer not to break the occasional config
@@ -235,24 +237,23 @@ public final class CommonMaterial {
         // remove any trailing data (eg. from tool [item]/[quantity])
         String[] split = mat.split("/");
         mat = split[0];
-
+        
         if (mat.matches("[0-9]+")) {
-            return Material.getMaterial(Integer.valueOf(mat));
+            Log.logWarning("Error while parsing: " + mat + ". Support for numerical IDs has been dropped! Locating item ID...");
+        	Log.logWarning("Please replace the occurence of '" + mat + "' with '" + Material.getMaterial(Integer.parseInt(mat)).toString() + "'");
+        	ItemIDReplacer.replaceFile(Integer.parseInt(mat), Material.getMaterial(Integer.parseInt(mat)).toString());
         }
         // CommonMaterial material = enumValue(CommonMaterial.class, mat);
         mat = mat.toLowerCase().replaceAll("[\\s-_]", "");
 
         for (String loopAlias : ALIASES.keySet()) {
-            if (mat.equalsIgnoreCase(loopAlias.toLowerCase().replaceAll(
-                    "[\\s-_]", "")))
-                mat = ALIASES.get(loopAlias).toLowerCase()
-                        .replaceAll("[\\s-_]", "");
+            if (mat.equalsIgnoreCase(loopAlias.toLowerCase().replaceAll("[\\s-_]", "")))
+                mat = ALIASES.get(loopAlias).toLowerCase().replaceAll("[\\s-_]", "");
         }
 
         Material matchedMat = null;
         for (Material loopMat : Material.values()) {
-            if (mat.equalsIgnoreCase(loopMat.name().toLowerCase()
-                    .replaceAll("[\\s-_]", "")))
+            if (mat.equalsIgnoreCase(loopMat.name().toLowerCase().replaceAll("[\\s-_]", "")))
                 matchedMat = loopMat;
         }
 
@@ -271,15 +272,17 @@ public final class CommonMaterial {
     }
 
     // Colors
-    public static int getWoolColor(DyeColor color) {
+    @SuppressWarnings("deprecation")
+	public static int getWoolColor(DyeColor color) {
         return color.getWoolData();
     }
 
-    public static int getDyeColor(DyeColor color) {
+    @SuppressWarnings("deprecation")
+	public static int getDyeColor(DyeColor color) {
         return color.getDyeData();
     }
 
-    @SuppressWarnings("incomplete-switch")
+    @SuppressWarnings({ "incomplete-switch", "deprecation" })
     public static Integer parseBlockOrItemData(Material mat, String state)
             throws IllegalArgumentException {
         Log.logInfo("Checking block data for " + mat.toString() + "@" + state,
@@ -402,7 +405,7 @@ public final class CommonMaterial {
         return null;
     }
 
-    @SuppressWarnings("incomplete-switch")
+    @SuppressWarnings({ "incomplete-switch", "deprecation" })
     public static String getBlockOrItemData(Material mat, int data) {
         try {
             switch (mat) {
@@ -500,7 +503,7 @@ public final class CommonMaterial {
         a2Map.put("CREEPERHEAD", "SKULL_ITEM@4");
         a2Map.put("HEAD", "SKULL_ITEM@3");
 
-        a2Map.put("WITHERSKELETON", "SKELETON@WITHER");
+        a2Map.put("WITHERSKELETON", "WITHER_SKELETON");
 
         String tmpDrop = drop.toUpperCase().replaceAll("[ _-]", "");
         for (String alias : a2Map.keySet()) {

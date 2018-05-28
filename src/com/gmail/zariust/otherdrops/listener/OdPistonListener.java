@@ -27,7 +27,8 @@ import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.OtherDrops;
 
 public class OdPistonListener implements Listener {
-    private OtherDrops parent;
+    @SuppressWarnings("unused")
+	private OtherDrops parent;
 
     public OdPistonListener(OtherDrops instance) {
         parent = instance;

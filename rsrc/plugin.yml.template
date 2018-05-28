@@ -9,19 +9,22 @@ commands:
         description: Administrate the OtherDrops plugin
         aliases: [otherdrops, odreload, odr, odshow, ods, ode, o, odd, odi, odst, odt, odc, odw]
         usage: |
-            Â§aOtherDrops Â§7(configure anything to drop anything) 
-            Â§7Version: 3.2.5-Beta
-            Â§7(Â§a/odrÂ§7) Â§a/od reload Â§7- reload config
-            Â§7(Â§a/odiÂ§7) Â§a/od id Â§7- show data values for item held in hand
-            Â§7(Â§a/odwÂ§7) Â§a/od write Â§7- writes data values for item held in hand to ItemOutput.txt file
-            Â§7(Â§a/oddÂ§7) Â§a/od drop <string> Â§7- parse the string and drop relevant item/mob
-            Â§a/od Â§7(Â§aenableÂ§7|Â§adisableÂ§7) - turn OtherDrops on or off (will reset on server reload)
-            Â§a/od show <block> Â§7- show custom drops for particular blocktype
-            Â§a/od settings Â§7- show current global settings
+            §aOtherDrops §7(configure anything to drop anything) 
+            §7Version: 3.2.5-Beta
+            §7(§a/odr§7) §a/od reload §7- reload config
+            §7(§a/odi§7) §a/od id §7- show data values for item held in hand
+            §7(§a/odw§7) §a/od write §7- writes data values for item held in hand to ItemOutput.txt file
+            §7(§a/odd§7) §a/od drop <string> §7- parse the string and drop relevant item/mob
+            §a/od §7(§aenable§7|§adisable§7) - turn OtherDrops on or off (will reset on server reload)
+            §a/od show <block> §7- show custom drops for particular blocktype
+            §a/od settings §7- show current global settings
 
 softdepend:
   - BigBrother
   - WorldGuard
+  - Towny
+  - NoCheatPlus
+  - GriefPrevention
   - LogBlock
   - HawkEye
   - Vault

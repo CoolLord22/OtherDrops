@@ -87,29 +87,22 @@ public class ContentsDrop extends DropType {
                                         .getSpawnedType(), 0)));
         } else { // It's not a container block, so it must be an entity
             if (source instanceof PlayerSubject)
-                dropResult.addWithoutOverride(drop(where,
-                        ((PlayerSubject) source).getPlayer().getInventory(),
-                        flags.naturally));
+                dropResult.addWithoutOverride(drop(where, ((PlayerSubject) source).getPlayer().getInventory(), flags.naturally));
             else if (source instanceof VehicleTarget) {
                 Entity vehicle = ((VehicleTarget) source).getVehicle();
                 if (vehicle instanceof StorageMinecart)
-                    dropResult.addWithoutOverride(drop(where,
-                            ((StorageMinecart) vehicle).getInventory(),
-                            flags.naturally));
+                    dropResult.addWithoutOverride(drop(where, ((StorageMinecart) vehicle).getInventory(), flags.naturally));
             } else if (source instanceof CreatureSubject) {
                 // Endermen!
                 Entity creature = ((CreatureSubject) source).getAgent();
                 if (creature instanceof Enderman) {
-                    ItemStack stack = ((Enderman) creature)
-                            .getCarriedMaterial().toItemStack(1);
-                    dropResult.addWithoutOverride(drop(where, stack,
-                            flags.naturally));
+                    ItemStack stack = ((Enderman) creature).getCarriedMaterial().toItemStack(1);
+                    dropResult.addWithoutOverride(drop(where, stack, flags.naturally));
                 } else if (creature instanceof LivingEntity) {
-                    ItemStack stack = ((LivingEntity) creature)
-                            .getEquipment().getItemInHand();
-                    dropResult.addWithoutOverride(drop(where, stack,
-                            flags.naturally));
-
+                    ItemStack stack = ((LivingEntity) creature).getEquipment().getItemInMainHand();
+                    ItemStack stackOffHand = ((LivingEntity) creature).getEquipment().getItemInOffHand();
+                    dropResult.addWithoutOverride(drop(where, stack, flags.naturally));
+                    dropResult.addWithoutOverride(drop(where, stackOffHand, flags.naturally));
                 }
             }
         }

@@ -29,6 +29,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Furnace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -44,7 +45,8 @@ public class ContainerData implements Data {
     private boolean       burning, cooking;
     private int           facing;
 
-    public ContainerData(BlockState state) {
+    @SuppressWarnings("deprecation")
+	public ContainerData(BlockState state) {
         if (state instanceof InventoryHolder) {
             Inventory inventory = ((InventoryHolder) state).getInventory();
             ItemStack[] contents = inventory.getContents();
@@ -63,6 +65,17 @@ public class ContainerData implements Data {
     }
 
     public ContainerData(StorageMinecart vehicle) {
+        Inventory inventory = vehicle.getInventory();
+        if (inventory != null) {
+            ItemStack[] contents = inventory.getContents();
+            for (ItemStack stack : contents) {
+                if (stack == null)
+                    continue;
+                inven.add(stack.getType());
+            }
+        }
+    }
+    public ContainerData(HopperMinecart vehicle) {
         Inventory inventory = vehicle.getInventory();
         if (inventory != null) {
             ItemStack[] contents = inventory.getContents();
@@ -151,7 +164,7 @@ public class ContainerData implements Data {
                 result += "COOKING/";
             // Fallthrough intentional
         case DISPENSER:
-            FurnaceAndDispenser fd = new FurnaceAndDispenser(mat, (byte) facing);
+            @SuppressWarnings("deprecation") FurnaceAndDispenser fd = new FurnaceAndDispenser(mat, (byte) facing);
             result += fd.getFacing().toString();
             // Fallthrough intentional
         case STORAGE_MINECART:
@@ -175,7 +188,8 @@ public class ContainerData implements Data {
         return result;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void setOn(BlockState state) {
         if (!(state instanceof InventoryHolder)) {
             Log.logWarning("Tried to change a container block, but no container was found!");
@@ -200,7 +214,7 @@ public class ContainerData implements Data {
             cart.getInventory().addItem(new ItemStack(item, 1));
     }
 
-    @SuppressWarnings("incomplete-switch")
+    @SuppressWarnings({ "incomplete-switch", "deprecation" })
     public static Data parse(Material mat, String state)
             throws IllegalArgumentException {
         if (state == null || state.isEmpty())

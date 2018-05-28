@@ -38,7 +38,8 @@ public class CreatureSubject extends LivingSubject {
     private final EntityType creature;
     private final Data       data;
     private Entity           agent;
-    private String           customName;
+    @SuppressWarnings("unused")
+	private String           customName;
 
     public CreatureSubject() {
         this((EntityType) null);

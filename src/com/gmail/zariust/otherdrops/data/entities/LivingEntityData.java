@@ -6,7 +6,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Skeleton.SkeletonType;
+import org.bukkit.entity.Stray;
+import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.ItemStack;
 
 import com.gmail.zariust.common.Verbosity;
@@ -52,10 +53,14 @@ public class LivingEntityData extends CreatureData {
                     z.getEquipment().setHelmet(equip.head);
                 if (equip.headChance != null)
                     z.getEquipment().setHelmetDropChance(equip.headChance);
-                if (equip.hands != null)
-                    z.getEquipment().setItemInHand(equip.hands);
-                if (equip.handsChance != null)
-                    z.getEquipment().setItemInHandDropChance(equip.handsChance);
+                if (equip.handsMain != null)
+                    z.getEquipment().setItemInMainHand(equip.handsMain);
+                if (equip.handsOff != null)
+                    z.getEquipment().setItemInOffHand(equip.handsOff);
+                if (equip.handsMainChance != null)
+                    z.getEquipment().setItemInMainHandDropChance(equip.handsMainChance);
+                if (equip.handsOffChance != null)
+                    z.getEquipment().setItemInOffHandDropChance(equip.handsOffChance);
                 if (equip.chest != null)
                     z.getEquipment().setChestplate(equip.chest);
                 if (equip.chestChance != null)
@@ -87,14 +92,18 @@ public class LivingEntityData extends CreatureData {
     private void setDefaultEq(LivingEntity mob) {
         if (mob instanceof Skeleton) {
             Skeleton skellie = (Skeleton) mob;
-            if (skellie.getSkeletonType() == SkeletonType.WITHER) {
-                if (equip == null || equip.hands == null)
-                    skellie.getEquipment().setItemInMainHand(
-                            new ItemStack(Material.STONE_SWORD));
-            } else {
-                if (equip == null || equip.hands == null)
-                    skellie.getEquipment().setItemInMainHand(
-                            new ItemStack(Material.BOW));
+                if (equip == null || equip.handsMain == null)
+                    skellie.getEquipment().setItemInMainHand(new ItemStack(Material.BOW));
+        }
+        if (mob instanceof Stray) {
+        	Stray skellie = (Stray) mob;
+                if (equip == null || equip.handsMain == null)
+                    skellie.getEquipment().setItemInMainHand(new ItemStack(Material.BOW));
+        }
+        if (mob instanceof WitherSkeleton) {
+        	WitherSkeleton skellie = (WitherSkeleton) mob;
+            if (equip == null || equip.handsMain == null) {
+                skellie.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));	
             }
         }
     }
@@ -152,9 +161,7 @@ public class LivingEntityData extends CreatureData {
 
     public static CreatureData parseFromEntity(Entity entity) {
         if (entity instanceof LivingEntity) {
-            return new LivingEntityData(EntityWrapper.getMaxHealth((LivingEntity) entity),
-                    CreatureEquipment.parseFromEntity(entity),
-                    ((LivingEntity) entity).getCustomName());
+            return new LivingEntityData(EntityWrapper.getMaxHealth((LivingEntity) entity).getValue(), CreatureEquipment.parseFromEntity(entity), ((LivingEntity) entity).getCustomName());
         } else {
             Log.logInfo("LivingEntityData: error, parseFromEntity given different creature - this shouldn't happen.");
             return null;
@@ -212,9 +219,12 @@ public class LivingEntityData extends CreatureData {
             if (subSplit[1].matches("(?i)(head|helmet)")) {
                 equip.head = getItemStack(slot);
                 equip.headChance = chance;
-            } else if (subSplit[1].matches("(?i)(hands|holding)")) {
-                equip.hands = getItemStack(slot);
-                equip.handsChance = chance;
+            } else if (subSplit[1].matches("(?i)(mainhand)")) {
+                equip.handsMain = getItemStack(slot);
+                equip.handsMainChance = chance;
+            } else if (subSplit[1].matches("(?i)(offhand)")) {
+                equip.handsOff = getItemStack(slot);
+                equip.handsOffChance = chance;
             } else if (subSplit[1].matches("(?i)(chest|chestplate|body)")) {
                 equip.chest = getItemStack(slot);
                 equip.chestChance = chance;
