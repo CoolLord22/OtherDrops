@@ -261,10 +261,7 @@ public final class CommonMaterial {
             Material defaultMat = Material.getMaterial(mat);
             if (defaultMat == null) {
                 if (!(mat.equalsIgnoreCase("default"))) {
-                    Log.logInfo("Error: unknown material (" + mat + ").",
-                            Verbosity.LOW); // low verbosity as only appears at
-                                            // config loading and admin needs to
-                                            // know materials not working
+                    Log.logInfo("Error: unknown material (" + mat + ").", Verbosity.LOW);
                 }
             }
         }
@@ -285,8 +282,7 @@ public final class CommonMaterial {
     @SuppressWarnings({ "incomplete-switch", "deprecation" })
     public static Integer parseBlockOrItemData(Material mat, String state)
             throws IllegalArgumentException {
-        Log.logInfo("Checking block data for " + mat.toString() + "@" + state,
-                Verbosity.HIGH);
+        Log.logInfo("Checking block data for " + mat.toString() + "@" + state, Verbosity.HIGH);
         state = state.toUpperCase();
         if (state.equalsIgnoreCase("this"))
             return -1;
@@ -297,7 +293,6 @@ public final class CommonMaterial {
         case WOOD:
         case WOOD_STEP:
         case WOOD_DOUBLE_STEP:
-            // if (state.equals("JUNGLE")) return 3;
             TreeSpecies species = TreeSpecies.valueOf(state);
             if (species != null)
                 return (int) species.getData();
@@ -316,8 +311,7 @@ public final class CommonMaterial {
                 }
             }
             if (state.contains("!")) {
-                throw new IllegalArgumentException("Illegal block colour: "
-                        + state);
+                throw new IllegalArgumentException("Illegal block colour: " + state);
             }
             DyeColor wool = DyeColor.valueOf(state);
             if (wool != null)
@@ -344,8 +338,7 @@ public final class CommonMaterial {
             case MOSSY_COBBLESTONE:
                 return 5;
             default:
-                throw new IllegalArgumentException("Illegal step material "
-                        + state);
+                throw new IllegalArgumentException("Illegal step material " + state);
             }
         case COBBLE_WALL:
             String upperState = state.toUpperCase();
@@ -354,6 +347,17 @@ public final class CommonMaterial {
             if (upperState.matches("MOSS(Y)*(STONE)*"))
                 return 1;
             break;
+        case DOUBLE_STONE_SLAB2:
+        case STONE_SLAB2:
+            Material step2 = Material.valueOf(state);
+            if (step2 == null)
+                throw new IllegalArgumentException("Unknown material " + state);
+            switch (step2) {
+            case RED_SANDSTONE:
+                return 0;
+            default:
+                throw new IllegalArgumentException("Illegal step material " + state);
+            }
         case DOUBLE_STEP:
         case STEP:
             Material step = Material.valueOf(state);
@@ -364,8 +368,6 @@ public final class CommonMaterial {
                 return 0;
             case SANDSTONE:
                 return 1;
-            case WOOD:
-                return 2;
             case COBBLESTONE:
                 return 3;
             case BRICK:
@@ -374,9 +376,10 @@ public final class CommonMaterial {
                 return 5;
             case NETHER_BRICK:
                 return 6;
+            case QUARTZ:
+            	return 7;
             default:
-                throw new IllegalArgumentException("Illegal step material "
-                        + state);
+                throw new IllegalArgumentException("Illegal step material " + state);
             }
         case LONG_GRASS:
             GrassSpecies grass = GrassSpecies.valueOf(state);
@@ -416,14 +419,7 @@ public final class CommonMaterial {
             case WOOD_STEP:
             case WOOD_DOUBLE_STEP:
                 // if ((byte)((0x3) & data) == 3) return "JUNGLE";
-                return TreeSpecies.getByData((byte) ((0x3) & data)).toString(); // (0x3)
-                                                                                // &
-                                                                                // data
-                                                                                // to
-                                                                                // remove
-                                                                                // leaf
-                                                                                // decay
-                                                                                // flag
+                return TreeSpecies.getByData((byte) ((0x3) & data)).toString(); 
             case WOOL:
             case STAINED_GLASS:
             case STAINED_GLASS_PANE:
@@ -475,9 +471,7 @@ public final class CommonMaterial {
             return "";
         } catch (NullPointerException ex) {
             Log.logWarning(
-                    "CommonMaterial.getBlockOrItemData() failed. Material: "
-                            + mat.toString() + ", Data: " + data,
-                    Verbosity.NORMAL);
+                    "CommonMaterial.getBlockOrItemData() failed. Material: " + mat.toString() + ", Data: " + data, Verbosity.NORMAL);
             return "";
         }
     }
@@ -507,8 +501,7 @@ public final class CommonMaterial {
 
         String tmpDrop = drop.toUpperCase().replaceAll("[ _-]", "");
         for (String alias : a2Map.keySet()) {
-            if (tmpDrop.toUpperCase().replaceAll("[ _-]", "")
-                    .matches(alias + ".*")) {
+            if (tmpDrop.toUpperCase().replaceAll("[ _-]", "").matches(alias + ".*")) {
                 String[] nameSplit = tmpDrop.split("~", 2);
                 tmpDrop = nameSplit[0].replaceAll("@", "!");
                 String[] nameSplit2 = tmpDrop.split("!", 2);
@@ -526,8 +519,7 @@ public final class CommonMaterial {
 
     public static boolean fuzzyMatchString(String one, String two) {
 
-        if (one.toLowerCase().replaceAll("[\\s-_]", "")
-                .equals(two.toLowerCase().replaceAll("[\\s-_]", "")))
+        if (one.toLowerCase().replaceAll("[\\s-_]", "").equals(two.toLowerCase().replaceAll("[\\s-_]", "")))
             return true;
         return false;
     }
