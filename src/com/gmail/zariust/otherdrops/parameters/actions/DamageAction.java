@@ -234,6 +234,15 @@ public class DamageAction extends Action {
                 } else {
                     EntityWrapper.damage(ent, damageVal);
                 }
+            } else if (damageVal == 0) {
+                if (attacker != null) {
+                    Log.logInfo("Attacker found, " + attacker.toString(),
+                            Verbosity.HIGH);
+                    EntityWrapper.damage(ent, damageVal, attacker); 
+                }
+                else {
+                	EntityWrapper.damage(ent, damageVal);
+                }
             }
             break;
         case FIRE:

@@ -1,5 +1,6 @@
 package com.gmail.zariust.otherdrops;
 
+import org.bukkit.EntityEffect;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
@@ -32,11 +33,21 @@ public class EntityWrapper {
     }
 
     public static void damage(LivingEntity ent, Double damageVal, LivingEntity attacker) {
-        ent.damage(damageVal, attacker);
+    	if(damageVal == 0) {
+    		ent.playEffect(EntityEffect.HURT);
+    	}
+    	else {
+    		ent.damage(damageVal, attacker);
+    	}
     }
 
     public static void damage(LivingEntity ent, Double damageVal) {
-        ent.damage(damageVal);
+    	if(damageVal == 0) { 	
+    		ent.playEffect(EntityEffect.HURT);
+    	}
+    	else {
+    		ent.damage(damageVal);
+    	}
     }
     
     
