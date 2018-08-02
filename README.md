@@ -9,6 +9,8 @@ OUTDATED: Please see the project page for full details here: <https://dev.bukkit
 
 Please see the spigot page for more download information here: <https://www.spigotmc.org/resources/otherdrops-updated.51793/>
 
+If you are looking for the 1.13 branch of the plugin, check here: <https://github.com/CoolLord22/OtherDrops1.13>
+
 Building from source
 --------------------
 

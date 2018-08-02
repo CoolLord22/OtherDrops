@@ -27,6 +27,7 @@ import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.minecart.StorageMinecart;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -101,8 +102,17 @@ public class ContentsDrop extends DropType {
                 } else if (creature instanceof LivingEntity) {
                     ItemStack stack = ((LivingEntity) creature).getEquipment().getItemInMainHand();
                     ItemStack stackOffHand = ((LivingEntity) creature).getEquipment().getItemInOffHand();
+                    EntityEquipment mobEquipment = ((LivingEntity) creature).getEquipment();
+                    ItemStack helmet = mobEquipment.getHelmet();
+                    ItemStack chest = mobEquipment.getChestplate();
+                    ItemStack legging = mobEquipment.getLeggings();
+                    ItemStack boot = mobEquipment.getBoots();
                     dropResult.addWithoutOverride(drop(where, stack, flags.naturally));
                     dropResult.addWithoutOverride(drop(where, stackOffHand, flags.naturally));
+                    dropResult.addWithoutOverride(drop(where, helmet, flags.naturally));
+                    dropResult.addWithoutOverride(drop(where, chest, flags.naturally));
+                    dropResult.addWithoutOverride(drop(where, legging, flags.naturally));
+                    dropResult.addWithoutOverride(drop(where, boot, flags.naturally));
                 }
             }
         }

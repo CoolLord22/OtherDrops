@@ -57,6 +57,7 @@ import com.gmail.zariust.otherdrops.event.DropsList;
 import com.gmail.zariust.otherdrops.event.GroupDropEvent;
 import com.gmail.zariust.otherdrops.event.SimpleDrop;
 import com.gmail.zariust.otherdrops.parameters.Trigger;
+import com.gmail.zariust.otherdrops.parameters.conditions.Cooldown;
 import com.gmail.zariust.otherdrops.subject.PlayerSubject;
 import com.gmail.zariust.otherdrops.subject.Target;
 import com.herocraftonline.heroes.characters.Hero;
@@ -507,6 +508,7 @@ public class OtherDropsCommand implements CommandExecutor {
      */
     private void cmdReload(CommandSender sender) {
         otherdrops.config.load(sender);
+        Cooldown.cooldowns.clear();
         sender.sendMessage("OtherDrops config reloaded.");
         Log.logInfo("Config reloaded by " + getName(sender) + ".");
     }
