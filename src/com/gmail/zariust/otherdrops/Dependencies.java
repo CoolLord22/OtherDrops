@@ -44,6 +44,8 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import uk.co.oliwali.HawkEye.HawkEye;
 import uk.co.oliwali.HawkEye.util.HawkEyeAPI;
 
+import com.gamingmesh.jobs.Jobs;
+import com.gamingmesh.jobs.listeners.JobsPaymentListener;
 import com.garbagemule.MobArena.MobArena;
 import com.garbagemule.MobArena.MobArenaHandler;
 import com.gmail.nossr50.mcMMO;
@@ -71,6 +73,7 @@ public class Dependencies {
     private static WorldGuardPlugin worldGuard      = null; // for WorldGuard
                                                              // support
     private static Towny	 		towny 			= null;
+    private static Jobs	 			jobs 			= null;
     private static NoCheatPlus		ncp 			= null;
     private static GriefPrevention  gp 				= null;
     
@@ -119,6 +122,7 @@ public class Dependencies {
         try {
         	towny = (Towny) getPlugin("Towny");
         	gp = (GriefPrevention) getPlugin("GriefPrevention");
+        	jobs = (Jobs) getPlugin("Jobs");
         	ncp = (NoCheatPlus) getPlugin("NoCheatPlus");
             hawkEye = (HawkEye) getPlugin("HawkEye");
             mobArena = (MobArena) getPlugin("MobArena");
@@ -315,6 +319,12 @@ public class Dependencies {
             bigBrother.onBlockBroken(playerName, block, block.getWorld()
                     .getName());
         }
+        
+        if (Dependencies.hasJobs()) {
+        	Log.logInfo("Attempting to send BlockBreakEvent to Jobs: " + message, HIGHEST);
+        	JobsPaymentListener jpl = new JobsPaymentListener(Dependencies.getJobs()); 
+        	jpl.onBlockBreak(event);
+        }
 
         if (Dependencies.hasLogBlock()) {
             BlockState before = block.getState();
@@ -375,6 +385,14 @@ public class Dependencies {
     
     public static Towny getTowny() {
         return Dependencies.towny;
+    }
+
+    public static boolean hasJobs() {
+        return Dependencies.jobs != null;
+    }
+    
+    public static Jobs getJobs() {
+        return Dependencies.jobs;
     }
 
     public static boolean hasGriefPrevention() {

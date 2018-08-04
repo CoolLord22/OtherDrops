@@ -30,6 +30,7 @@ softdepend:
   - Vault
   - Multiverse-Core
   - CoreProtect
+  - Jobs
 permissions:
     otherdrops.admin.id:
         default: op

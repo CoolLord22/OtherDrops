@@ -78,6 +78,7 @@
 	        <mkdir dir="bin" />
 	        <!--<copy file="${src}/plugin.yml" todir="bin" />-->
 
+            <property name="jobs-location" value="${dependencies}/Jobs.jar" />
             <property name="towny-location" value="${dependencies}/Towny.jar" />
 	        <property name="bigbrother-location" value="${dependencies}/BigBrother.jar" />
 	        <property name="logblock-location" value="${dependencies}/LogBlock.jar" />
@@ -102,6 +103,7 @@
 	            <pathelement location="${logblock-location}" />
 	            <pathelement location="${coreprotect-location}" />
 	            <pathelement location="${towny-location}" />
+	            <pathelement location="${jobs-location}" />
 	            <pathelement location="${bigbrother-location}" />
 	            <pathelement location="${mobarena-location}" />
 	            <pathelement location="${moneydrop-location}" />
