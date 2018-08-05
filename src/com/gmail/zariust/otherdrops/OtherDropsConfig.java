@@ -207,6 +207,7 @@ public class OtherDropsConfig {
     private boolean                    lootOverridesDefault;
     public static boolean              globalRedstonewireTriggersSurrounding = true;
     public static boolean              globalUpdateChecking					 = true;
+    public static boolean 			   globalFallToGround					 = true;
     public static boolean              globalDisableMetrics                  = false;
     public static boolean              primedTNTEnabled		                 = false;
 
@@ -532,6 +533,7 @@ public class OtherDropsConfig {
         globalAllowAnyReplacementBlock = globalConfig.getBoolean("allow_any_replacementblock", false);
         globalRedstonewireTriggersSurrounding = globalConfig.getBoolean("redstonewire_triggers_surrounding", true);
         globalUpdateChecking = globalConfig.getBoolean("update_checker", true);
+        globalFallToGround = globalConfig.getBoolean("item_falls_on_ground", true);
         globalDisableMetrics = globalConfig.getBoolean("disable_metrics", false);
         primedTNTEnabled = globalConfig.getBoolean("primed_tnt", false);
         globalOverrideExplosionCap = globalConfig.getBoolean("override_explosion_cap", false);

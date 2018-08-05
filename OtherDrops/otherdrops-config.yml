@@ -17,6 +17,10 @@ disable_metrics: false
 update_checker: true
 
 #######################
+# Should items fall onto the ground? - set this to false if you want items to go directly into the player's inventory
+item_falls_on_ground: true
+
+#######################
 # WARNING: ONLY CHANGE THIS IF YOU KNOW WHAT YOU ARE DOING!!!
 # Changing this to true will enable dropping Primed TNT from blocks and items interactions.
 # Regularly, the plugin only permits dropping primed TNT from a monster/animal mob. Changing this
