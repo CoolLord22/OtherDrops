@@ -189,8 +189,8 @@ public class MessageAction extends Action {
             } else if (occurence.getTool() instanceof ProjectileAgent) {
                 toolName = occurence.getTool().getReadableName();
                 if (((ProjectileAgent) occurence.getTool()).getShooter() == null) {
-                    Log.logInfo("MessageAction: getShooter = null, this shouldn't happen. (" + occurence.getTool().toString() + ")");
-                    playerName = "null";
+                    playerName = "Dispenser";
+                    toolName += " shot by " + playerName;
                 } else {
                     playerName = ((ProjectileAgent) occurence.getTool()).getShooter().getReadableName();
                     toolName += " shot by " + playerName;
