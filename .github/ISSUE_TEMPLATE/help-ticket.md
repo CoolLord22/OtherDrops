@@ -19,7 +19,7 @@ about: Create a help ticket if you can't figure something out
  - OS: [e.g. Windows 10]
  - Java Version [e.g. 8 build 171]
  - Server Version [e.g. Spigot 1.12]
- - Plugin Version [e.g. 3.2.6]
+ - Plugin Version [e.g. 3.2.6 Legacy/1.13]
  
 **Checklist**:	
 <!-- Make sure you have completed the following steps (put an "X" between of brackets): -->	
