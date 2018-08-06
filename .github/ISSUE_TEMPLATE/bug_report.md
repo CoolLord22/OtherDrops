@@ -24,7 +24,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. Windows 10]
  - Java Version [e.g. 8 build 171]
  - Server Version [e.g. Spigot 1.12]
- - Plugin Version [e.g. 3.2.6]
+ - Plugin Version [e.g. 3.2.6 Legacy/1.13]
 
 **Additional context**
 Add any other context about the problem here.
