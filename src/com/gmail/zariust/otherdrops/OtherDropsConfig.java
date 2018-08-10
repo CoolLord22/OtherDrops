@@ -1318,6 +1318,10 @@ public class OtherDropsConfig {
                     result.put(biomeMatch, !biomeNegated);
                     matched = true;
                 }
+                else if(name.equalsIgnoreCase("ALL") || name.equalsIgnoreCase("ANY")) {
+                	result.put(null, true);
+                	matched = true;
+                }
                 Log.logInfo("Biome match: checking " + name + " against " + biomeMatch.name() + ", match = " + matched, HIGHEST);
             }
             if (!matched) {
