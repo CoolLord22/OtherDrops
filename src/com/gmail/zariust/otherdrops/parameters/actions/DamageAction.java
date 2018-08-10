@@ -131,19 +131,12 @@ public class DamageAction extends Action {
         switch (damageActionType) {
         case ATTACKER:
             if (occurence.getPlayerAttacker() != null) {
-            	if(Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
-                    NCPExemptionManager.exemptPermanently(occurence.getPlayerAttacker(), CheckType.FIGHT_SELFHIT);
-                    damage(occurence.getPlayerAttacker(), damageRange, damageType, drop, null);
-                	NCPExemptionManager.unexempt(occurence.getPlayerAttacker(), CheckType.FIGHT_SELFHIT);
-            	}
-            	else {
-                    damage(occurence.getPlayerAttacker(), damageRange, damageType, drop, null);
-            	}
+            	damage(occurence.getPlayerAttacker(), damageRange, damageType, drop, null);
             }
             break;
         case VICTIM:
             if (occurence.getPlayerVictim() != null) {
-            	if(Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
+            	if (Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
                     NCPExemptionManager.exemptPermanently(occurence.getPlayerVictim(), CheckType.FIGHT_SELFHIT);
                     damage(occurence.getPlayerVictim(), damageRange, damageType, drop, occurence.getAttacker());
                 	NCPExemptionManager.unexempt(occurence.getPlayerVictim(), CheckType.FIGHT_SELFHIT);
@@ -155,7 +148,7 @@ public class DamageAction extends Action {
             else if (occurence.getTarget() instanceof CreatureSubject) {
                 Entity ent = ((CreatureSubject) occurence.getTarget()).getEntity();
                 if (ent instanceof LivingEntity) {
-                    damage((LivingEntity) ent, damageRange, damageType, drop, occurence.getAttacker());
+                	damage((LivingEntity) ent, damageRange, damageType, drop, occurence.getAttacker());
                 }
             }
 
@@ -168,7 +161,7 @@ public class DamageAction extends Action {
                 if (player.getLocation().getX() > (loc.getX() - radius) || player.getLocation().getX() < (loc.getX() + radius))
                     if (player.getLocation().getY() > (loc.getY() - radius) || player.getLocation().getY() < (loc.getY() + radius))
                         if (player.getLocation().getZ() > (loc.getZ() - radius) || player.getLocation().getZ() < (loc.getZ() + radius)) {
-                        	if(Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
+                        	if (Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
                                 NCPExemptionManager.exemptPermanently(player, CheckType.FIGHT_SELFHIT);
                             	damage(player, damageRange, damageType, drop, occurence.getAttacker());
                             	NCPExemptionManager.unexempt(player, CheckType.FIGHT_SELFHIT);
@@ -182,7 +175,7 @@ public class DamageAction extends Action {
             break;
         case SERVER:
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            	if(Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
+            	if (Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
                     NCPExemptionManager.exemptPermanently(player, CheckType.FIGHT_SELFHIT);
                     damage(player, damageRange, damageType, drop, occurence.getAttacker());
                 	NCPExemptionManager.unexempt(player, CheckType.FIGHT_SELFHIT);
@@ -194,7 +187,7 @@ public class DamageAction extends Action {
             break;
         case WORLD:
             for (Player player : occurence.getLocation().getWorld().getPlayers()) {
-            	if(Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
+            	if (Dependencies.hasNCP() && (occurence.getAttacker() instanceof Player)) {
                     NCPExemptionManager.exemptPermanently(player, CheckType.FIGHT_SELFHIT);
                     damage(player, damageRange, damageType, drop, occurence.getAttacker());
                 	NCPExemptionManager.unexempt(player, CheckType.FIGHT_SELFHIT);
@@ -228,16 +221,14 @@ public class DamageAction extends Action {
                 EntityWrapper.setHealth(ent, newHealth);
             } else if (damageVal > 0) {
                 if (attacker != null) {
-                    Log.logInfo("Attacker found, " + attacker.toString(),
-                            Verbosity.HIGH);
+                    Log.logInfo("Attacker found, " + attacker.toString(), Verbosity.HIGH);
                     EntityWrapper.damage(ent, damageVal, attacker);
                 } else {
                     EntityWrapper.damage(ent, damageVal);
                 }
             } else if (damageVal == 0) {
                 if (attacker != null) {
-                    Log.logInfo("Attacker found, " + attacker.toString(),
-                            Verbosity.HIGH);
+                    Log.logInfo("Attacker found, " + attacker.toString(), Verbosity.HIGH);
                     EntityWrapper.damage(ent, damageVal, attacker); 
                 }
                 else {

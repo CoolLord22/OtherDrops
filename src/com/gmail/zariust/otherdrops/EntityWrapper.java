@@ -3,9 +3,9 @@ package com.gmail.zariust.otherdrops;
 //import org.bukkit.EntityEffect;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.block.Dispenser;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
@@ -45,13 +45,28 @@ public class EntityWrapper {
             		ent.damage(0.0001, attacker);
                 	NCPExemptionManager.unexempt(attacker.getUniqueId(), CheckType.ALL);
             	}
+        		else {
+            		ent.damage(0.0001, attacker);
+        		}
     		}
-    		if(attacker instanceof Dispenser) {
-    			
+    		else {
+        		ent.damage(0.0001, attacker);
     		}
     	}
     	else {
-    		ent.damage(damageVal, attacker);
+    		if(attacker instanceof Player) {
+        		if(Dependencies.hasNCP()) {
+                    NCPExemptionManager.exemptPermanently(attacker.getUniqueId(), CheckType.ALL);
+            		ent.damage(damageVal, attacker);
+                	NCPExemptionManager.unexempt(attacker.getUniqueId(), CheckType.ALL);
+            	}
+        		else {
+            		ent.damage(damageVal, attacker);
+        		}
+    		}
+    		else {
+        		ent.damage(damageVal, attacker);
+    		}
     	}
     }
 
