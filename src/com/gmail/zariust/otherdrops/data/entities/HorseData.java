@@ -95,49 +95,50 @@ public class HorseData extends CreatureData {
 
             for (String sub : split) {
                 sub = sub.toLowerCase().replaceAll("[\\s-_]", "");
-                if (sub.contains("!tamed")) {
+                if (sub.contains("tamed")) {
                     thisTamed = true;
                 }
-                if (sub.contains("!untamed")) {
+                if (sub.contains("untamed")) {
                     thisTamed = false;
                 }
 
                 //start color matching
-                if (sub.contains("!colorblack")) {
+                if (sub.contains("colorblack")) {
                 	thisColor = (Horse.Color.BLACK);
                 }
-                if (sub.contains("!colorbrown")) {
+                if (sub.contains("colorbrown")) {
                 	thisColor = (Horse.Color.BROWN);
                 }
-                if (sub.contains("!colordarkbrown")) {
+                if (sub.contains("colordarkbrown")) {
                 	thisColor = (Horse.Color.DARK_BROWN);
                 }
-                if (sub.contains("!colorchestnut")) {
+                if (sub.contains("colorchestnut")) {
                 	thisColor = (Horse.Color.CHESTNUT);
                 }
-                if (sub.contains("!colorcreamy")) {
+                if (sub.contains("colorcreamy")) {
                 	thisColor = (Horse.Color.CREAMY);
                 }
-                if (sub.contains("!colorgray")) {
+                if (sub.contains("colorgray")) {
                 	thisColor = (Horse.Color.GRAY);
                 }
-                if (sub.contains("!colorwhite")) {
+                if (sub.contains("colorwhite")) {
                 	thisColor = (Horse.Color.WHITE);
                 }
-                
-                if (sub.contains("!styleblackdots")) {
+
+                //start style matching
+                if (sub.contains("styleblackdots")) {
                 	thisStyle = (Horse.Style.BLACK_DOTS);
                 }
-                if (sub.contains("!stylenone")) {
+                if (sub.contains("stylenone")) {
                 	thisStyle = (Horse.Style.NONE);
                 }
-                if (sub.contains("!stylewhite")) {
+                if (sub.contains("stylewhite")) {
                 	thisStyle = (Horse.Style.WHITE);
                 }
-                if (sub.contains("!stylewhitefield")) {
+                if (sub.contains("stylewhitefield")) {
                 	thisStyle = (Horse.Style.WHITEFIELD);
                 }
-                if (sub.contains("!stylewhitedots")) {
+                if (sub.contains("stylewhitedots")) {
                 	thisStyle = (Horse.Style.WHITE_DOTS);
                 }
             }

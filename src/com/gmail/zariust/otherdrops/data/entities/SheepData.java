@@ -94,9 +94,9 @@ public class SheepData extends CreatureData {
             for (String subAge : splitAge) {
                 subAge = subAge.toLowerCase().replaceAll("[\\s-_]", "");
                 
-                if (subAge.contains("!adult"))
+                if (subAge.contains("adult"))
                     adult = true;
-                else if (subAge.contains("!baby"))
+                else if (subAge.contains("baby"))
                     adult = false;
                 else {
                 	adult = null;
@@ -106,9 +106,9 @@ public class SheepData extends CreatureData {
             for (String subShear : splitShear) {
             	subShear = subShear.toLowerCase().replaceAll("[\\s-_]", "");
 
-                if (subShear.contains("!sheared"))
+                if (subShear.contains("sheared"))
                 	sheared = true;
-                else if (subShear.contains("!unsheared"))
+                else if (subShear.contains("unsheared"))
                 	sheared = false;
                 else {
                 	sheared = null;
@@ -118,52 +118,52 @@ public class SheepData extends CreatureData {
             
             for (String subColor : splitColor) {
             	subColor = subColor.toLowerCase().replaceAll("[\\s-_]", "");
-                if (subColor.contains("!white"))
+                if (subColor.contains("white"))
                 	color = DyeColor.WHITE;
                 
-                else if (subColor.contains("!orange"))
+                else if (subColor.contains("orange"))
                 	color = DyeColor.ORANGE;
                 
-                else if (subColor.contains("!magenta"))
+                else if (subColor.contains("magenta"))
                 	color = DyeColor.MAGENTA;
                 
-                else if (subColor.contains("!lightblue"))
+                else if (subColor.contains("lightblue"))
                 	color = DyeColor.LIGHT_BLUE;
                 
-                else if (subColor.contains("!yellow"))
+                else if (subColor.contains("yellow"))
                 	color = DyeColor.YELLOW;
                 
-                else if (subColor.contains("!lime"))
+                else if (subColor.contains("lime"))
                 	color = DyeColor.LIME;
                 
-                else if (subColor.contains("!pink"))
+                else if (subColor.contains("pink"))
                 	color = DyeColor.PINK;
                 
-                else if (subColor.contains("!gray"))
+                else if (subColor.contains("gray"))
                 	color = DyeColor.GRAY;
                 
-                else if (subColor.contains("!silver"))
+                else if (subColor.contains("silver"))
                 	color = DyeColor.SILVER;
                 
-                else if (subColor.contains("!cyan"))
+                else if (subColor.contains("cyan"))
                 	color = DyeColor.CYAN;
                 
-                else if (subColor.contains("!purple"))
+                else if (subColor.contains("purple"))
                 	color = DyeColor.PURPLE;
                 
-                else if (subColor.contains("!blue"))
+                else if (subColor.contains("blue"))
                 	color = DyeColor.BLUE;
                 
-                else if (subColor.contains("!brown"))
+                else if (subColor.contains("brown"))
                 	color = DyeColor.BROWN;
                 
-                else if (subColor.contains("!green"))
+                else if (subColor.contains("green"))
                 	color = DyeColor.GREEN;
                 
-                else if (subColor.contains("!red"))
+                else if (subColor.contains("red"))
                 	color = DyeColor.RED;
                 
-                else if (subColor.contains("!black"))
+                else if (subColor.contains("black"))
                 	color = DyeColor.BLACK;
                 
                 else {

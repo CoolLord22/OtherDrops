@@ -75,10 +75,10 @@ public class DonkeyData extends CreatureData {
 
             for (String sub : split) {
                 sub = sub.toLowerCase().replaceAll("[\\s-_]", "");
-                if (sub.contains("!tamed")) {
+                if (sub.contains("tamed")) {
                     thisTamed = true;
                     continue;
-            	} else if (sub.contains("!untamed")) {
+            	} else if (sub.contains("untamed")) {
             		thisTamed = false;
             		continue;
             	}
