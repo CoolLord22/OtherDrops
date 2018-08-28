@@ -140,6 +140,20 @@ public class OtherDrops extends JavaPlugin {
             exception.printStackTrace();
         }
 
+        try {
+            File configFile = new File(folder.getAbsolutePath() + File.separator + "known_lists" + File.separator + "MaterialList" + ".txt");
+            configFile.getParentFile().mkdirs();
+            configFile.createNewFile();
+            out = new BufferedWriter(new FileWriter(configFile));
+            for (Material mat : Material.values()) {
+                if (mat != null)
+                    out.write(mat.name().toString() + "\n");
+            }
+            out.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
         CustomMobSupport.exportCustomMobNames(folder);
         CustomMobSupport.exportCustomBlockNames(folder);
 
@@ -187,7 +201,8 @@ public class OtherDrops extends JavaPlugin {
             configFile.createNewFile();
             out = new BufferedWriter(new FileWriter(configFile));
             Collections.sort(list);
-            out.write(list.toString());
+            for(String mat : list)
+            	out.write(mat + "\n");
             out.close();
         } catch (IOException exception) {
             exception.printStackTrace();
