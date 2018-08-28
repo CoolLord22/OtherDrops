@@ -78,6 +78,9 @@ public class OdPlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        if (event.getHand() == EquipmentSlot.OFF_HAND) {
+            return; // off hand packet, ignore.
+        }
         if (event.isCancelled())
             return;
         if (event.getPlayer() != null)
