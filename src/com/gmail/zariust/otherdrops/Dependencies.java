@@ -26,10 +26,8 @@ import me.botsko.prism.Prism;
 import me.botsko.prism.actionlibs.ActionFactory;
 import me.drakespirit.plugins.moneydrop.MoneyDrop;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import me.taylorkelly.bigbrother.BigBrother;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
-import net.dmg2.RegenBlock.RegenBlock;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
@@ -40,9 +38,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
-
-import uk.co.oliwali.HawkEye.HawkEye;
-import uk.co.oliwali.HawkEye.util.HawkEyeAPI;
 
 import com.gamingmesh.jobs.Jobs;
 import com.gamingmesh.jobs.listeners.JobsPaymentListener;
@@ -56,18 +51,11 @@ import com.herocraftonline.heroes.Heroes;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.palmergames.bukkit.towny.Towny;
 
-import de.diddiz.LogBlock.Consumer;
-import de.diddiz.LogBlock.LogBlock;
 import fr.neatmonster.nocheatplus.NoCheatPlus;
 
 @SuppressWarnings("unused")
 public class Dependencies {
     // Plugin Dependencies
-    private static LogBlock         logBlock        = null;
-    private static Consumer         lbconsumer      = null; // for LogBlock
-                                                             // support
-    private static BigBrother       bigBrother      = null; // for BigBrother
-                                                             // support
     private static CoreProtectAPI   coreProtect     = null; // for CoreProtect
                                                              // support
     private static WorldGuardPlugin worldGuard      = null; // for WorldGuard
@@ -77,9 +65,6 @@ public class Dependencies {
     private static NoCheatPlus		ncp 			= null;
     private static GriefPrevention  gp 				= null;
     
-    private static HawkEye          hawkEye         = null;
-    private final  boolean          usingHawkEye    = false; // for HawkEye
-                                                             // support
     boolean                         enabled;
     private static MobArena         mobArena        = null;
     private static MobArenaHandler  mobArenaHandler = null; // for MobArena
@@ -91,7 +76,6 @@ public class Dependencies {
 
     static String                   foundPlugins;
     static String                   notFoundPlugins;
-    private static RegenBlock       regenBlock;
     private static Heroes           heroes;
     private static Prism            prism           = null;
 
@@ -107,8 +91,6 @@ public class Dependencies {
             if (!OtherDropsConfig.globalDisableMetrics)
                 enableMetrics();
             worldGuard = (WorldGuardPlugin) getPlugin("WorldGuard");
-            logBlock = (LogBlock) getPlugin("LogBlock");
-            bigBrother = (BigBrother) getPlugin("BigBrother");
         } catch (Exception e) {
             Log.logInfo("Failed to load one or more optional dependencies - continuing OtherDrops startup.");
             e.printStackTrace();
@@ -124,10 +106,8 @@ public class Dependencies {
         	gp = (GriefPrevention) getPlugin("GriefPrevention");
         	jobs = (Jobs) getPlugin("Jobs");
         	ncp = (NoCheatPlus) getPlugin("NoCheatPlus");
-            hawkEye = (HawkEye) getPlugin("HawkEye");
             mobArena = (MobArena) getPlugin("MobArena");
             moneyDrop = (MoneyDrop) getPlugin("MoneyDrop");
-            regenBlock = (RegenBlock) getPlugin("RegenBlock");
             heroes = (Heroes) getPlugin("Heroes");
             prism = (Prism) getPlugin("Prism");
             rpgItems = (think.rpgitems.Plugin) getPlugin("RPG Items");
@@ -149,10 +129,6 @@ public class Dependencies {
                 foundPlugins += ", CoreProtect";
                 // coreProtect.testAPI(); //Will print out
                 // "[CoreProtect] API Test Successful." in the console.
-            }
-
-            if (logBlock != null) {
-                lbconsumer = logBlock.getConsumer();
             }
 
             if (mobArena != null) {
@@ -312,13 +288,6 @@ public class Dependencies {
             BlockListener bl = new BlockListener(Dependencies.getMcmmo());
             bl.onBlockBreak(event);
         }
-
-        if (Dependencies.hasBigBrother()) {
-            // Block Breakage
-            Log.logInfo("Attempting to log to BigBrother: " + message, HIGHEST);
-            bigBrother.onBlockBroken(playerName, block, block.getWorld()
-                    .getName());
-        }
         
         if (Dependencies.hasJobs()) {
         	Log.logInfo("Attempting to send BlockBreakEvent to Jobs: " + message, HIGHEST);
@@ -326,34 +295,9 @@ public class Dependencies {
         	jpl.onBlockBreak(event);
         }
 
-        if (Dependencies.hasLogBlock()) {
-            BlockState before = block.getState();
-            Log.logInfo("Attempting to log to LogBlock: " + message, HIGHEST);
-            Dependencies.getLogBlock().queueBlockBreak(playerName, before);
-        }
-
         if (Dependencies.hasCoreProtect()) {
             Log.logInfo("Attempting to log to CoreProtect: " + message, HIGHEST);
             Dependencies.getCoreProtect().logRemoval(playerName, block.getLocation(), block.getType(), block.getData());
-        }
-
-        if (Dependencies.hasHawkEye()) {
-            Log.logInfo("Attempting to log to HawkEye: " + message, HIGHEST);
-
-            // FIXME: Causes class not found since I'm using
-            // "new BlockEntry(...)" - need to stick to API methods?
-            // boolean result = HawkEyeAPI.addEntry(plugin, new
-            // BlockEntry(playerName, DataType.BLOCK_BREAK, block));
-
-            boolean result = HawkEyeAPI.addCustomEntry(OtherDrops.plugin, "ODBlockBreak", OtherDrops.plugin.getServer().getPlayer(playerName), block.getLocation(), block.getType().toString());
-            if (!result)
-                Log.logWarning("Warning: HawkEyeAPI logging failed.",
-                        Verbosity.HIGH);
-        }
-
-        if (Dependencies.hasRegenBlock()) {
-            Log.logInfo("Attempting to send event to RegenBlock. (" + message + ")", HIGHEST);
-            Dependencies.getRegenBlock().regenBlock(block.getLocation(), block.getType(), block.getData(), OtherDrops.plugin.getServer().getPlayer(playerName), true);
         }
 
         if (hasPrism()) {
@@ -361,22 +305,6 @@ public class Dependencies {
             Prism.actionsRecorder.addToQueue(ActionFactory.create("block-break", block, playerName));
         }
         return true;
-    }
-
-    private static RegenBlock getRegenBlock() {
-        return Dependencies.regenBlock;
-    }
-
-    private static boolean hasRegenBlock() {
-        return Dependencies.regenBlock != null;
-    }
-
-    private static boolean hasHawkEye() {
-        return Dependencies.hawkEye != null;
-    }
-
-    private static boolean hasLogBlock() {
-        return Dependencies.lbconsumer != null;
     }
 
     public static boolean hasTowny() {
@@ -409,14 +337,6 @@ public class Dependencies {
     
     public static NoCheatPlus getNCP() {
         return Dependencies.ncp;
-    }
-
-    private static Consumer getLogBlock() {
-        return Dependencies.lbconsumer;
-    }
-
-    private static boolean hasBigBrother() {
-        return Dependencies.bigBrother != null;
     }
 
     public static boolean hasMobArena() {

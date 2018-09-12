@@ -20,13 +20,10 @@ commands:
             §a/od settings §7- show current global settings
 
 softdepend:
-  - BigBrother
   - WorldGuard
   - Towny
   - NoCheatPlus
   - GriefPrevention
-  - LogBlock
-  - HawkEye
   - Vault
   - Multiverse-Core
   - CoreProtect
