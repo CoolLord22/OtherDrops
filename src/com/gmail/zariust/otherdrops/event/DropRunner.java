@@ -370,9 +370,12 @@ public class DropRunner implements Runnable {
 	public boolean checkIfNoPerms(Player who, Location location, OccurredEvent theEvent) {
     	boolean canBuild = true;
 
-    	if(Dependencies.hasWorldGuard()) 
-			if(!Dependencies.getWorldGuard().canBuild(who, location))
-				canBuild = false;
+    	if(Dependencies.hasWorldGuard()) {
+    		if(OtherDropsConfig.globalenablewgmatching) {
+    			if(!Dependencies.getWorldGuard().canBuild(who, location))
+    				canBuild = false;
+    		}
+    	}
 		
 		if(Dependencies.hasTowny())
 			if(!PlayerCacheUtil.getCachePermission(who, location, 3, ActionType.DESTROY) || !PlayerCacheUtil.getCachePermission(who, location, 3, ActionType.SWITCH) 

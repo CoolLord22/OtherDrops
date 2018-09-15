@@ -199,6 +199,7 @@ public class OtherDropsConfig {
     public static boolean              enchantmentsIgnoreLevel;
     public static boolean              enchantmentsRestrictMatching			 = true;
     public static boolean              spawnTriggerIgnoreOtherDropsSpawn     = true;
+    public static boolean              globalenablewgmatching				 = false;
     private boolean                    globalLootOverridesDefault;
     private boolean                    globalMoneyOverridesDefault;
     private boolean                    globalXpOverridesDefault;
@@ -522,6 +523,8 @@ public class OtherDropsConfig {
         configKeysGetDeep = globalConfig.getBoolean("config_keys_get_deep", true);
 
         spawnTriggerIgnoreOtherDropsSpawn = globalConfig.getBoolean("spawntrigger_ignores_otherdrops_spawn", true);
+        
+        globalenablewgmatching = globalConfig.getBoolean("enable_wg_matching", false);
 
         globalLootOverridesDefault = globalConfig.getBoolean("loot_overrides_default", true);
         globalMoneyOverridesDefault = globalConfig.getBoolean("money_overrides_default", false);

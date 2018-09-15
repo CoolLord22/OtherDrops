@@ -13,6 +13,10 @@ money-precision: 2
 disable_metrics: false
 
 #######################
+# Enable WorldGuard BUILD Perms? - set this to true if you want drops to only run where players can build
+enable_wg_matching: false
+
+#######################
 # Should we check for updates? - set this to false if you don't want to be notified of new versions
 update_checker: true
 
