@@ -175,7 +175,10 @@ public class ODVariables {
 
     private static String substituteColorCodes(String msg) {
         msg = ChatColor.translateAlternateColorCodes('&', msg);
+        msg = msg.replace("&_", "please do not use this text sequence it replaces an underscore");
         msg = msg.replace("&&", "&"); // replace "escaped" ampersand
+        msg = msg.replace('_', ' ');
+        msg = msg.replace("please do not use this text sequence it replaces an underscore", "_");
         return msg;
     }
 

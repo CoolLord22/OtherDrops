@@ -73,9 +73,9 @@ public class ZombieData extends CreatureData {
 
             for (String sub : split) {
                 sub = sub.toLowerCase().replaceAll("[\\s-_]", "");
-                if (sub.contains("!adult"))
+                if (sub.contains("adult"))
                     adult = true;
-                else if (sub.contains("!baby"))
+                else if (sub.contains("baby"))
                     adult = false;
             }
         }

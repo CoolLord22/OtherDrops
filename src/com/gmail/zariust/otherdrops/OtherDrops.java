@@ -35,6 +35,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -106,6 +107,7 @@ public class OtherDrops extends JavaPlugin {
         writeNames(Profession.class);
         writeNames("Horse.Color", Horse.Color.class);
         writeNames("Horse.Style", Horse.Style.class);
+        writeNames("Rabbit.Type", Rabbit.Type.class);
 
         File folder = new File("plugins" + File.separator + "OtherDrops");
         BufferedWriter out = null;
@@ -132,6 +134,20 @@ public class OtherDrops extends JavaPlugin {
             for (PotionEffectType mat : PotionEffectType.values()) {
                 if (mat != null)
                     out.write(mat.getName().toString() + "\n");
+            }
+            out.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+        try {
+            File configFile = new File(folder.getAbsolutePath() + File.separator + "known_lists" + File.separator + "MaterialList" + ".txt");
+            configFile.getParentFile().mkdirs();
+            configFile.createNewFile();
+            out = new BufferedWriter(new FileWriter(configFile));
+            for (Material mat : Material.values()) {
+                if (mat != null)
+                    out.write(mat.name().toString() + "\n");
             }
             out.close();
         } catch (IOException exception) {
@@ -185,7 +201,8 @@ public class OtherDrops extends JavaPlugin {
             configFile.createNewFile();
             out = new BufferedWriter(new FileWriter(configFile));
             Collections.sort(list);
-            out.write(list.toString());
+            for(String mat : list)
+            	out.write(mat + "\n");
             out.close();
         } catch (IOException exception) {
             exception.printStackTrace();

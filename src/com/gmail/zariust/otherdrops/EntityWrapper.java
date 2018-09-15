@@ -1,8 +1,12 @@
 package com.gmail.zariust.otherdrops;
 
+//import org.bukkit.EntityEffect;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import fr.neatmonster.nocheatplus.checks.CheckType;
+import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 
 /**
  * EntityWrapper: this allows easier changing of health setting methods to revert
@@ -32,11 +36,45 @@ public class EntityWrapper {
     }
 
     public static void damage(LivingEntity ent, Double damageVal, LivingEntity attacker) {
-        ent.damage(damageVal, attacker);
+    	if(damageVal == 0.0) {
+    		if(attacker instanceof Player) {
+        		if(Dependencies.hasNCP()) {
+                    NCPExemptionManager.exemptPermanently(attacker.getUniqueId(), CheckType.ALL);
+            		ent.damage(0.0001, attacker);
+                	NCPExemptionManager.unexempt(attacker.getUniqueId(), CheckType.ALL);
+            	}
+        		else {
+            		ent.damage(0.0001, attacker);
+        		}
+    		}
+    		else {
+        		ent.damage(0.0001, attacker);
+    		}
+    	}
+    	else {
+    		if(attacker instanceof Player) {
+        		if(Dependencies.hasNCP()) {
+                    NCPExemptionManager.exemptPermanently(attacker.getUniqueId(), CheckType.ALL);
+            		ent.damage(damageVal, attacker);
+                	NCPExemptionManager.unexempt(attacker.getUniqueId(), CheckType.ALL);
+            	}
+        		else {
+            		ent.damage(damageVal, attacker);
+        		}
+    		}
+    		else {
+        		ent.damage(damageVal, attacker);
+    		}
+    	}
     }
 
     public static void damage(LivingEntity ent, Double damageVal) {
-        ent.damage(damageVal);
+    	if(damageVal == 0.0) {
+    		ent.damage(0.0001);
+    	}
+    	else {
+    		ent.damage(damageVal);
+    	}
     }
     
     

@@ -10,7 +10,7 @@ commands:
         aliases: [otherdrops, odreload, odr, odshow, ods, ode, o, odd, odi, odst, odt, odc, odw]
         usage: |
             §aOtherDrops §7(configure anything to drop anything) 
-            §7Version: 3.2.5-Beta
+            §7Version: <Version>
             §7(§a/odr§7) §a/od reload §7- reload config
             §7(§a/odi§7) §a/od id §7- show data values for item held in hand
             §7(§a/odw§7) §a/od write §7- writes data values for item held in hand to ItemOutput.txt file
@@ -20,16 +20,14 @@ commands:
             §a/od settings §7- show current global settings
 
 softdepend:
-  - BigBrother
   - WorldGuard
   - Towny
   - NoCheatPlus
   - GriefPrevention
-  - LogBlock
-  - HawkEye
   - Vault
   - Multiverse-Core
   - CoreProtect
+  - Jobs
 permissions:
     otherdrops.admin.id:
         default: op

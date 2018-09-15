@@ -274,6 +274,12 @@ public class ProjectileAgent implements Agent {
             mat = Material.SPECTRAL_ARROW;
         else if (name.equals("TIPPEDARROW"))
             mat = Material.TIPPED_ARROW;
+        else if (name.equals("ENDERPEARL"))
+            mat = Material.ENDER_PEARL;
+        else if (name.equals("WITHERSKULL"))
+            mat = Material.SKULL;
+        else if (name.equals("EXPBOTTLE"))
+            mat = Material.EXP_BOTTLE;
         else if (name.equals("ANY"))
             mat = null;
         else {

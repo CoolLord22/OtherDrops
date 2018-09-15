@@ -7,6 +7,7 @@ builds/*
 doc/*
 *.*~
 OtherDrops-*.jar
+OtherDropsLegacy-*.jar
 OtherDrops/events/*.jar
 lib/bukkit*.jar
 .eclipse-build

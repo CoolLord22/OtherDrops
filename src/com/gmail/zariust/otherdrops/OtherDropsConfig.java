@@ -199,6 +199,7 @@ public class OtherDropsConfig {
     public static boolean              enchantmentsIgnoreLevel;
     public static boolean              enchantmentsRestrictMatching			 = true;
     public static boolean              spawnTriggerIgnoreOtherDropsSpawn     = true;
+    public static boolean              globalenablewgmatching				 = false;
     private boolean                    globalLootOverridesDefault;
     private boolean                    globalMoneyOverridesDefault;
     private boolean                    globalXpOverridesDefault;
@@ -207,6 +208,7 @@ public class OtherDropsConfig {
     private boolean                    lootOverridesDefault;
     public static boolean              globalRedstonewireTriggersSurrounding = true;
     public static boolean              globalUpdateChecking					 = true;
+    public static boolean 			   globalFallToGround					 = true;
     public static boolean              globalDisableMetrics                  = false;
     public static boolean              primedTNTEnabled		                 = false;
 
@@ -521,6 +523,8 @@ public class OtherDropsConfig {
         configKeysGetDeep = globalConfig.getBoolean("config_keys_get_deep", true);
 
         spawnTriggerIgnoreOtherDropsSpawn = globalConfig.getBoolean("spawntrigger_ignores_otherdrops_spawn", true);
+        
+        globalenablewgmatching = globalConfig.getBoolean("enable_wg_matching", false);
 
         globalLootOverridesDefault = globalConfig.getBoolean("loot_overrides_default", true);
         globalMoneyOverridesDefault = globalConfig.getBoolean("money_overrides_default", false);
@@ -532,6 +536,7 @@ public class OtherDropsConfig {
         globalAllowAnyReplacementBlock = globalConfig.getBoolean("allow_any_replacementblock", false);
         globalRedstonewireTriggersSurrounding = globalConfig.getBoolean("redstonewire_triggers_surrounding", true);
         globalUpdateChecking = globalConfig.getBoolean("update_checker", true);
+        globalFallToGround = globalConfig.getBoolean("item_falls_on_ground", true);
         globalDisableMetrics = globalConfig.getBoolean("disable_metrics", false);
         primedTNTEnabled = globalConfig.getBoolean("primed_tnt", false);
         globalOverrideExplosionCap = globalConfig.getBoolean("override_explosion_cap", false);
@@ -1315,6 +1320,10 @@ public class OtherDropsConfig {
                 if (name.equalsIgnoreCase(biomeMatch.name())) {
                     result.put(biomeMatch, !biomeNegated);
                     matched = true;
+                }
+                else if(name.equalsIgnoreCase("ALL") || name.equalsIgnoreCase("ANY")) {
+                	result.put(null, true);
+                	matched = true;
                 }
                 Log.logInfo("Biome match: checking " + name + " against " + biomeMatch.name() + ", match = " + matched, HIGHEST);
             }

@@ -30,13 +30,11 @@ public class ItemIDReplacer {
 	}
 	
 	public static Boolean checkEmpty() {
-		Boolean isEmpty = false;
-		if(folder.isDirectory()) {
-			if(folder.list().length > 0) {
-				isEmpty = false;
-			}
-			else {
-				isEmpty = true;
+		Boolean isEmpty = true;
+		if(folder.exists()) {
+			if(folder.isDirectory()) {
+				if(folder.list().length > 0) 
+					isEmpty = false;
 			}
 		}
 		return isEmpty;

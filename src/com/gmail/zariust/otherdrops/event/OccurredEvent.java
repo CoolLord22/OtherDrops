@@ -1097,10 +1097,10 @@ public class OccurredEvent extends AbstractDropEvent implements Cancellable {
             if (ent instanceof LivingEntity)
                 return (LivingEntity) ent;
         } else if (getTool() instanceof ProjectileAgent) {
-            if (((ProjectileAgent) getTool()).getShooter().getEntity() instanceof LivingEntity) {
-                return (LivingEntity) ((ProjectileAgent) getTool())
-                        .getShooter().getEntity();
-            }
+            if (((ProjectileAgent) getTool()).getShooter() == null)
+            	return null;
+            else if(((ProjectileAgent) getTool()).getShooter().getEntity() instanceof LivingEntity)
+            	return (LivingEntity) ((ProjectileAgent) getTool()).getShooter().getEntity();
         }
         return null;
     }

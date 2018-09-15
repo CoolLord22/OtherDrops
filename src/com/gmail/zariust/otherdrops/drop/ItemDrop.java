@@ -24,6 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -32,10 +33,12 @@ import com.gmail.zariust.common.CommonEnchantments;
 import com.gmail.zariust.common.CommonEntity;
 import com.gmail.zariust.otherdrops.Log;
 import com.gmail.zariust.otherdrops.OtherDrops;
+import com.gmail.zariust.otherdrops.OtherDropsConfig;
 import com.gmail.zariust.otherdrops.data.Data;
 import com.gmail.zariust.otherdrops.data.ItemData;
 import com.gmail.zariust.otherdrops.options.DoubleRange;
 import com.gmail.zariust.otherdrops.options.IntRange;
+import com.gmail.zariust.otherdrops.subject.PlayerSubject;
 import com.gmail.zariust.otherdrops.subject.Target;
 import com.gmail.zariust.otherdrops.things.ODItem;
 import com.gmail.zariust.otherdrops.things.ODVariables;
@@ -146,11 +149,19 @@ public class ItemDrop extends DropType {
                                 // items one by one
             count = rolledQuantity; // set #times to drop = #items to be dropped
         }
-
-        while (count-- > 0)
-            dropResult.addWithoutOverride(drop(where, stack, flags.naturally));
+        Player playerReceivingItem = flags.recipient;
+        while (count-- > 0) {
+        	if(!OtherDropsConfig.globalFallToGround) {
+        		playerReceivingItem.getInventory().addItem(stack);
+                playerReceivingItem.updateInventory();
+        	}
+        	else {
+                dropResult.addWithoutOverride(drop(where, stack, flags.naturally));
+        	}
+        }
 
         setLoreName(dropResult.getDropped(), flags);
+        
         return dropResult;
     }
 

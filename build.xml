@@ -45,7 +45,7 @@
 	    <property name="lib.bukkit.jar" refid="lib.bukkit.jar" />
 	    <propertyregex property="lib.bukkit.version" input="${lib.bukkit.jar}" regexp="([\d\.-R]+-r\d+)\.jar$" select="\1" />
 
-	    <property name="output-jar" value="${ant.project.name}-${otherdrops.version}.jar" />
+	    <property name="output-jar" value="${ant.project.name}Legacy-${otherdrops.version}.jar" />
 	    <property name="events-dir" value="${ant.project.name}/events" />
 
 	    <property name="debuglevel" value="source,lines" />
@@ -78,18 +78,15 @@
 	        <mkdir dir="bin" />
 	        <!--<copy file="${src}/plugin.yml" todir="bin" />-->
 
+            <property name="jobs-location" value="${dependencies}/Jobs.jar" />
             <property name="towny-location" value="${dependencies}/Towny.jar" />
-	        <property name="bigbrother-location" value="${dependencies}/BigBrother.jar" />
-	        <property name="logblock-location" value="${dependencies}/LogBlock.jar" />
 	        <property name="coreprotect-location" value="${dependencies}/CoreProtect.jar" />
 	        <property name="mobarena-location" value="${dependencies}/MobArena.jar" />
 	        <property name="moneydrop-location" value="${dependencies}/MoneyDrop.jar" />
 	        <property name="heroes-location" value="${dependencies}/Heroes.jar" />
 	        <property name="worldguard-location" value="${dependencies}/WorldGuard.jar" />
 	        <property name="worldedit-location" value="${dependencies}/WorldEdit.jar" />
-	        <property name="hawkeye-location" value="${dependencies}/HawkEye.jar" />
 	        <property name="vault-location" value="${dependencies}/Vault.jar" />
-	        <property name="regenblock-location" value="${dependencies}/RegenBlock.jar" />
             <property name="prism-location" value="${dependencies}/Prism.jar" />
             <property name="rpgitems-location" value="${dependencies}/rpgitems.jar" />
             <property name="mcmmo-location" value="${dependencies}/mcMMO.jar" />
@@ -99,18 +96,15 @@
 	        <path id="classpath">
 	            <pathelement location="bin" />
 	            <pathelement location="${lib.bukkit}" />
-	            <pathelement location="${logblock-location}" />
 	            <pathelement location="${coreprotect-location}" />
 	            <pathelement location="${towny-location}" />
-	            <pathelement location="${bigbrother-location}" />
+	            <pathelement location="${jobs-location}" />
 	            <pathelement location="${mobarena-location}" />
 	            <pathelement location="${moneydrop-location}" />
 	            <pathelement location="${heroes-location}" />
 	            <pathelement location="${worldguard-location}" />
 	            <pathelement location="${worldedit-location}" />
-	            <pathelement location="${hawkeye-location}" />
 	            <pathelement location="${vault-location}" />
-	            <pathelement location="${regenblock-location}" />
                 <pathelement location="${prism-location}" />
                 <pathelement location="${rpgitems-location}" />
                 <pathelement location="${mcmmo-location}" />

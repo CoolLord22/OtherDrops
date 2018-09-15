@@ -13,8 +13,16 @@ money-precision: 2
 disable_metrics: false
 
 #######################
+# Enable WorldGuard BUILD Perms? - set this to true if you want drops to only run where players can build
+enable_wg_matching: false
+
+#######################
 # Should we check for updates? - set this to false if you don't want to be notified of new versions
 update_checker: true
+
+#######################
+# Should items fall onto the ground? - set this to false if you want items to go directly into the player's inventory
+item_falls_on_ground: true
 
 #######################
 # WARNING: ONLY CHANGE THIS IF YOU KNOW WHAT YOU ARE DOING!!!

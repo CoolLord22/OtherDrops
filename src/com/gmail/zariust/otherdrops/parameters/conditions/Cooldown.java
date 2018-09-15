@@ -9,7 +9,7 @@ import java.util.Set;
  * 
  */
 public class Cooldown {
-    private static Set<PlayerCooldown> cooldowns = new HashSet<PlayerCooldown>();
+    public static Set<PlayerCooldown> cooldowns = new HashSet<PlayerCooldown>();
 
     public static void addCooldown(String cooldownName, long lengthInMillis) {
         PlayerCooldown pc = new PlayerCooldown(cooldownName, lengthInMillis);
@@ -17,8 +17,7 @@ public class Cooldown {
         // This section prevents duplicate cooldowns
         while (it.hasNext()) {
             PlayerCooldown iterated = it.next();
-            if (iterated.getCooldownName().equalsIgnoreCase(
-                    pc.getCooldownName())) {
+            if (iterated.getCooldownName().equalsIgnoreCase(pc.getCooldownName())) {
                 it.remove();
             }
         }

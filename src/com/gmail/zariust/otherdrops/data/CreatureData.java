@@ -78,6 +78,7 @@ public class CreatureData implements Data, RangeableData {
         // Specific data (+Ageable(+LivingEntity))
         aMap.put(EntityType.OCELOT, OcelotData.class);
         aMap.put(EntityType.PIG, PigData.class);
+        aMap.put(EntityType.RABBIT, RabbitData.class);
         aMap.put(EntityType.SHEEP, SheepData.class);
         aMap.put(EntityType.VILLAGER, VillagerData.class);
         aMap.put(EntityType.WOLF, WolfData.class);

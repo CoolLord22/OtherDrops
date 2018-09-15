@@ -69,9 +69,9 @@ public class PigData extends CreatureData {
 
             for (String sub : split) {
                 sub = sub.toLowerCase().replaceAll("[\\s-_]", "");
-                if (sub.contains("!saddled"))
+                if (sub.contains("saddled"))
                     saddled = true;
-                else if (sub.contains("!unsaddled"))
+                else if (sub.contains("unsaddled"))
                     saddled = false;
             }
         }

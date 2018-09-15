@@ -10,7 +10,9 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -368,9 +370,12 @@ public class DropRunner implements Runnable {
 	public boolean checkIfNoPerms(Player who, Location location, OccurredEvent theEvent) {
     	boolean canBuild = true;
 
-    	if(Dependencies.hasWorldGuard()) 
-			if(!Dependencies.getWorldGuard().canBuild(who, location))
-				canBuild = false;
+    	if(Dependencies.hasWorldGuard()) {
+    		if(OtherDropsConfig.globalenablewgmatching) {
+    			if(!Dependencies.getWorldGuard().canBuild(who, location))
+    				canBuild = false;
+    		}
+    	}
 		
 		if(Dependencies.hasTowny())
 			if(!PlayerCacheUtil.getCachePermission(who, location, 3, ActionType.DESTROY) || !PlayerCacheUtil.getCachePermission(who, location, 3, ActionType.SWITCH) 
@@ -482,11 +487,19 @@ public class DropRunner implements Runnable {
                         occurence, amount);
 
                 CommandSender from;
-                if (who == null || override == null)
+                if (who == null || override == null) {
                     from = Bukkit.getConsoleSender();
-                else
+                }
+                else {
                     from = new PlayerWrapper(who, override, suppress);
-                Bukkit.getServer().dispatchCommand(from, command);
+                }
+                try {
+                    Bukkit.getServer().dispatchCommand(from, command);
+                }
+                catch (CommandException ex) {
+                	CraftPlayer from2 = ((CraftPlayer) who);
+                    Bukkit.getServer().dispatchCommand(from2, command);
+                }
             }
         }
     }
