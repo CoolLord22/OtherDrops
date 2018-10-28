@@ -221,6 +221,7 @@ public final class CommonMaterial {
         aMap.put("hardenedclay", "hardclay");
 
         aMap.put("leaves_1", "leaves");
+        aMap.put("leaves_2", "leaves2");
 
         ALIASES = Collections.unmodifiableMap(aMap);
     }
@@ -284,18 +285,46 @@ public final class CommonMaterial {
             throws IllegalArgumentException {
         Log.logInfo("Checking block data for " + mat.toString() + "@" + state, Verbosity.HIGH);
         state = state.toUpperCase();
+        boolean firstType = false;
+        
         if (state.equalsIgnoreCase("this"))
             return -1;
         switch (mat) {
-        case LOG:
-        case LEAVES:
         case SAPLING:
         case WOOD:
-        case WOOD_STEP:
         case WOOD_DOUBLE_STEP:
             TreeSpecies species = TreeSpecies.valueOf(state);
             if (species != null)
                 return (int) species.getData();
+            break;
+        case LOG:
+        case LEAVES:
+        	firstType = true;
+        	// fall through to next switch statement below
+        case LOG_2:
+        case LEAVES_2:
+            TreeSpecies species2 = TreeSpecies.valueOf(state);
+            if (species2 != null) {
+            	switch(species2) {
+            	case GENERIC:
+            	case REDWOOD:
+            	case BIRCH:
+            	case JUNGLE:
+            		if(!firstType)
+            		break;
+            	case ACACIA:
+            	case DARK_OAK:
+            		if(firstType)
+            		break;
+            	}
+            	return (int) (((species2.getData() & 0x3)));
+            }
+            break;
+        case WOOD_STEP:
+            TreeSpecies species3 = TreeSpecies.valueOf(state);
+            if (species3 != null) {
+            	return (int) ((species3.getData()));
+            }
             break;
         case WOOL:
         case STAINED_GLASS:
@@ -412,14 +441,19 @@ public final class CommonMaterial {
     public static String getBlockOrItemData(Material mat, int data) {
         try {
             switch (mat) {
+            case WOOD:
+            case SAPLING: 
+            case WOOD_DOUBLE_STEP:
+            	return TreeSpecies.getByData((byte)data).toString();
             case LOG:
             case LEAVES:
-            case SAPLING:
-            case WOOD:
+            	data = data%4;
+            	return TreeSpecies.getByData((byte) (data & 0x3)).toString();
+            case LOG_2:
+            case LEAVES_2:
+            	return TreeSpecies.getByData((byte) (0x4|data & 0x1)).toString();
             case WOOD_STEP:
-            case WOOD_DOUBLE_STEP:
-                // if ((byte)((0x3) & data) == 3) return "JUNGLE";
-                return TreeSpecies.getByData((byte) ((0x3) & data)).toString(); 
+            	return TreeSpecies.getByData((byte) ((data%8 & 0x7))).toString();
             case WOOL:
             case STAINED_GLASS:
             case STAINED_GLASS_PANE:
