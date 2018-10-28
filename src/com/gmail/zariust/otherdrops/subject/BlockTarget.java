@@ -127,6 +127,14 @@ public class BlockTarget implements Target {
             return new NoteData(block.getState());
         case JUKEBOX:
             return new RecordData(block.getState());
+        case LOG:
+        case LEAVES:
+        	return new SimpleData(block.getData()%4);
+        case LOG_2:
+        case LEAVES_2:
+        	return new SimpleData(block.getData()%4);
+        case WOOD_STEP:
+        	return new SimpleData(block.getData()%8);
         default:
             return new SimpleData(block.getData());
         }

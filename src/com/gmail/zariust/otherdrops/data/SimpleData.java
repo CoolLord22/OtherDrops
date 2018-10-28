@@ -147,6 +147,7 @@ public class SimpleData implements Data, RangeableData {
             case CROPS:
             case CARROT:
             case POTATO:
+            case BEETROOT_BLOCK:
                 return CropState.getByData((byte) data).toString();
                 // Blocks whose only attribute is direction
             case LADDER:
@@ -314,8 +315,11 @@ public class SimpleData implements Data, RangeableData {
         state = state.toUpperCase();
         int ret = -1;
         switch (mat) {
+        case WOOD:
         case LOG:
+        case LOG_2:
         case LEAVES:
+        case LEAVES_2:
         case SAPLING:
         case WOOL:
         case DOUBLE_STEP:
@@ -334,6 +338,7 @@ public class SimpleData implements Data, RangeableData {
         case CROPS:
         case CARROT:
         case POTATO:
+        case BEETROOT_BLOCK:
             CropState crops = CropState.valueOf(state);
             if (crops != null)
                 ret = crops.getData();
