@@ -137,6 +137,7 @@ public class EnvironmentAgent implements Agent {
                 causes.add(DamageCause.CUSTOM);
             else if (name.equals("BURN")) {
                 causes.add(DamageCause.FIRE_TICK);
+                causes.add(DamageCause.HOT_FLOOR);
                 causes.add(DamageCause.FIRE);
                 causes.add(DamageCause.LAVA);
             } else
