@@ -39,6 +39,7 @@ import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -105,6 +106,7 @@ public class OtherDrops extends JavaPlugin {
         writeNames(SpawnReason.class);
         writeNames(TreeType.class);
         writeNames(Profession.class);
+        writeNames(DamageCause.class);
         writeNames("Horse.Color", Horse.Color.class);
         writeNames("Horse.Style", Horse.Style.class);
         writeNames("Rabbit.Type", Rabbit.Type.class);
