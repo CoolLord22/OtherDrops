@@ -1501,7 +1501,7 @@ public class OtherDropsConfig {
             else if (upperName.startsWith("EXPLOSION"))
                 return ExplosionAgent.parse(name, data);
             else
-                return ToolAgent.parse(name, data, item.getEnchantments(), item.getDisplayName());
+                return ToolAgent.parse(name, data, item.getEnchantments(), item.getDisplayName(), item.lore);
 
         }
     }

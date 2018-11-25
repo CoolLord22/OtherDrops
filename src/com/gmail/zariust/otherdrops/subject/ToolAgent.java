@@ -43,6 +43,7 @@ public class ToolAgent implements Agent {
     private List<CMEnchantment> enchantments;
     public int                  quantityRequired;
     private String              loreName;
+    private List<String>        loreText;
 
     public ToolAgent() {
         this((Material) null);
@@ -67,17 +68,20 @@ public class ToolAgent implements Agent {
                 : new ItemData(item), item == null ? 1 : item.getAmount());
 
         actualTool = item;
-        if (item != null && item.getItemMeta() != null)
+        if (item != null && item.getItemMeta() != null) {
             loreName = item.getItemMeta().getDisplayName();
+            loreText = item.getItemMeta().getLore();
+        }
     }
 
     public ToolAgent(Material tool, Data d, List<CMEnchantment> enchList,
-            int quantity, String loreName) {
+            int quantity, String loreName, List<String> loreText) {
         id = tool;
         data = d;
         enchantments = enchList;
         this.quantityRequired = quantity;
         this.loreName = loreName;
+        this.loreText = loreText;
     }
 
     public ToolAgent(Material tool, Data d, List<CMEnchantment> enchList,
@@ -150,6 +154,13 @@ public class ToolAgent implements Agent {
                 return false;
         }
 
+        if (loreText != null && !loreText.isEmpty()) {
+            if (tool.getTool().loreText == null)
+                return false;
+            if (!this.loreText.equals(tool.getTool().loreText))
+                return false;
+        }
+
         if (id == null)
             return true;
         else if (quantityRequired > tool.getTool().quantityRequired
@@ -188,11 +199,11 @@ public class ToolAgent implements Agent {
     }
 
     public static Agent parse(String name, String state) {
-        return parse(name, state, null, "");
+        return parse(name, state, null, "", null);
     }
 
     public static Agent parse(String name, String state,
-            List<CMEnchantment> enchPass, String loreName) {
+            List<CMEnchantment> enchPass, String loreName, List<String> loreText) {
         name = name.toUpperCase();
         state = state.toUpperCase();
 
@@ -209,7 +220,7 @@ public class ToolAgent implements Agent {
         // data otherwise later matching fails
         if (state.isEmpty())
             return new ToolAgent(mat, null, enchPass, quantityRequired,
-                    loreName);
+                    loreName, loreText);
 
         // Parse data, which could be an integer or an appropriate enum name
         try {
@@ -226,8 +237,8 @@ public class ToolAgent implements Agent {
         }
         if (data != null)
             return new ToolAgent(mat, data, enchPass, quantityRequired,
-                    loreName);
-        return new ToolAgent(mat, null, enchPass, quantityRequired, loreName);
+                    loreName, loreText);
+        return new ToolAgent(mat, null, enchPass, quantityRequired, loreName, loreText);
     }
 
     private static int getToolQuantity(String name, String state) {

@@ -72,6 +72,7 @@ public class ODItem {
                     } else if (item.displayname != null
                             && !item.displayname.isEmpty()) {
                         // displayname found, treat next as lore
+                    	value = ChatColor.translateAlternateColorCodes('&', value);
                         item.lore.add(value);
                     } else {
                         // first check for enchantment
@@ -90,6 +91,9 @@ public class ODItem {
             item.name = drop;
         }
 
+        if (drop.endsWith("~"))
+        	item.displayname = "";
+        
         return item;
     }
 
