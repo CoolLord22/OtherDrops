@@ -39,6 +39,7 @@ import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import com.bgsoftware.wildstacker.api.WildStacker;
 import com.gamingmesh.jobs.Jobs;
 import com.gamingmesh.jobs.listeners.JobsPaymentListener;
 import com.garbagemule.MobArena.MobArena;
@@ -61,6 +62,7 @@ public class Dependencies {
     private static WorldGuardPlugin worldGuard      = null; // for WorldGuard
                                                              // support
     private static Towny	 		towny 			= null;
+    private static WildStacker	    wildStacker 	= null;
     private static Jobs	 			jobs 			= null;
     private static NoCheatPlus		ncp 			= null;
     private static GriefPrevention  gp 				= null;
@@ -103,6 +105,7 @@ public class Dependencies {
         }
         try {
         	towny = (Towny) getPlugin("Towny");
+        	wildStacker = (WildStacker) getPlugin("WildStacker");
         	gp = (GriefPrevention) getPlugin("GriefPrevention");
         	jobs = (Jobs) getPlugin("Jobs");
         	ncp = (NoCheatPlus) getPlugin("NoCheatPlus");
@@ -309,6 +312,10 @@ public class Dependencies {
 
     public static boolean hasTowny() {
         return Dependencies.towny != null;
+    }
+    
+    public static boolean hasWildStacker() {
+        return Dependencies.wildStacker != null;
     }
     
     public static Towny getTowny() {
