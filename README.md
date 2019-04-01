@@ -1,4 +1,4 @@
-OtherDrops
+OtherDrops [![Discord][discordImg]][discordLink]
 ==========
 
 OtherDrops is a plugin for the Minecraft Bukkit API that lets you completely
@@ -26,3 +26,7 @@ Then build using your IDE or:
     $ ant jar
 
 Use `ant -p` to see a complete list of Ant tasks.
+
+[discordImg]: https://img.shields.io/discord/418432278113550337.svg?logo=discord&logoWidth=18&colorB=7289DA
+
+[discordLink]: https://discordapp.com/invite/eHBxk5q
