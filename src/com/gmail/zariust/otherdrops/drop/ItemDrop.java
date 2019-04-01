@@ -36,6 +36,7 @@ import com.gmail.zariust.otherdrops.OtherDrops;
 import com.gmail.zariust.otherdrops.OtherDropsConfig;
 import com.gmail.zariust.otherdrops.data.Data;
 import com.gmail.zariust.otherdrops.data.ItemData;
+import com.gmail.zariust.otherdrops.drop.DropType.DropFlags;
 import com.gmail.zariust.otherdrops.options.DoubleRange;
 import com.gmail.zariust.otherdrops.options.IntRange;
 import com.gmail.zariust.otherdrops.subject.Target;
@@ -116,15 +117,15 @@ public class ItemDrop extends DropType {
      * @return
      */
     public ItemStack getItem() {
-        return getItem(null);
+        return getItem(null, null);
     }
 
-    public ItemStack getItem(Target source) {
+    public ItemStack getItem(Target source, DropFlags flags) {
         short data = processTHISdata(source);
         rolledQuantity = quantity.getRandomIn(OtherDrops.rng);
         ItemStack stack = new ItemStack(material, rolledQuantity, data);
         stack = CommonEnchantments.applyEnchantments(stack, enchantments);
-        setItemMeta(stack, source);
+        setItemMeta(stack, source, flags);
         return stack;
     }
 
@@ -138,7 +139,7 @@ public class ItemDrop extends DropType {
         if (material == Material.AIR)
             dropResult.setOverrideDefault(true);
 
-        ItemStack stack = getItem(source); // get the item stack with relevant
+        ItemStack stack = getItem(source, flags); // get the item stack with relevant
                                            // enchantments and/or metadata
         int count = 1; // if DropSpread is false we drop a single (multi-item)
                        // stack
@@ -150,7 +151,7 @@ public class ItemDrop extends DropType {
         }
         Player playerReceivingItem = flags.recipient;
         while (count-- > 0) {
-        	if(!OtherDropsConfig.globalFallToGround) {
+        	if(!OtherDropsConfig.globalFallToGround && playerReceivingItem != null) {
         		playerReceivingItem.getInventory().addItem(stack);
                 playerReceivingItem.updateInventory();
         	}
@@ -171,10 +172,29 @@ public class ItemDrop extends DropType {
      * @param stack
      * @param source
      */
-    private void setItemMeta(ItemStack stack, Target source) {
+    private void setItemMeta(ItemStack stack, Target source, DropFlags flags) {
         if ((durability instanceof ItemData)
                 && ((ItemData) durability).itemMeta != null) {
             stack = ((ItemData) durability).itemMeta.setOn(stack, source);
+        }
+        
+        if(flags != null) {
+            if (stack != null && displayName != null && !(displayName.isEmpty())) {
+                    ItemMeta im = stack.getItemMeta();
+
+                    String victimName = flags.victim; // TODO: fix these
+                    String parsedLoreName = parseLore(displayName, flags, victimName);
+
+                    im.setDisplayName(parsedLoreName);
+                    if (lore != null && !lore.isEmpty()) {
+                        List<String> parsedLore = new ArrayList<String>();
+                        for (String line : lore) {
+                            parsedLore.add(parseLore(line, flags, victimName));
+                        }
+                        im.setLore(parsedLore);
+                    }
+                    stack.setItemMeta(im);
+            }
         }
     }
 
