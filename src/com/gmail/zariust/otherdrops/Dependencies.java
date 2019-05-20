@@ -265,12 +265,7 @@ public class Dependencies {
     }
 
     public static void enableMetrics() {
-        try {
-            metrics = new Metrics(OtherDrops.plugin);
-            metrics.start();
-        } catch (IOException e) {
-            // Failed to submit the stats :-(
-        }
+    	metrics = new Metrics(OtherDrops.plugin);
     }
 
     // If logblock plugin is available, inform it of the block destruction
