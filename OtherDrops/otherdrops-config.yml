@@ -10,7 +10,7 @@ money-precision: 2
 
 #######################
 # Disable anonymous logging - set this to true if you get errors in older Tekkit or Bukkit versions on startup
-disable_metrics: false
+# This value has been moved to the bStats/ folder. Please change the config option and disable BStats server side.
 
 #######################
 # Enable WorldGuard BUILD Perms? - set this to true if you want drops to only run where players can build

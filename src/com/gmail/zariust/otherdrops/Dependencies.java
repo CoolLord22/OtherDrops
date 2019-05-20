@@ -90,8 +90,7 @@ public class Dependencies {
             foundPlugins = "";
             notFoundPlugins = ""; // need to reset variables to allow for
                                   // reloads
-            if (!OtherDropsConfig.globalDisableMetrics)
-                enableMetrics();
+            enableMetrics();
             worldGuard = (WorldGuardPlugin) getPlugin("WorldGuard");
         } catch (Exception e) {
             Log.logInfo("Failed to load one or more optional dependencies - continuing OtherDrops startup.");
