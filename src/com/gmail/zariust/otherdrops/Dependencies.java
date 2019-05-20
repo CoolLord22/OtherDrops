@@ -81,7 +81,6 @@ public class Dependencies {
     private static Heroes           heroes;
     private static Prism            prism           = null;
 
-    private static Metrics          metrics         = null;
     private static think.rpgitems.Plugin          rpgItems        = null;
     private static mcMMO            mcmmo           = null;
 
@@ -90,7 +89,6 @@ public class Dependencies {
             foundPlugins = "";
             notFoundPlugins = ""; // need to reset variables to allow for
                                   // reloads
-            enableMetrics();
             worldGuard = (WorldGuardPlugin) getPlugin("WorldGuard");
         } catch (Exception e) {
             Log.logInfo("Failed to load one or more optional dependencies - continuing OtherDrops startup.");
@@ -263,10 +261,6 @@ public class Dependencies {
         vaultPerms = rsp_perms.getProvider();
     }
 
-    public static void enableMetrics() {
-    	metrics = new Metrics(OtherDrops.plugin);
-    }
-
     // If logblock plugin is available, inform it of the block destruction
     // before we change it
     @SuppressWarnings("deprecation")
@@ -386,14 +380,6 @@ public class Dependencies {
 
     public static Heroes getHeroes() {
         return Dependencies.heroes;
-    }
-
-    public static boolean hasMetrics() {
-        return Dependencies.metrics != null;
-    }
-
-    public static Metrics getMetrics() {
-        return Dependencies.metrics;
     }
 
     public static Prism getPrism() {

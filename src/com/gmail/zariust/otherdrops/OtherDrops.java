@@ -61,6 +61,7 @@ import com.gmail.zariust.otherdrops.listener.OdRedstoneListener;
 import com.gmail.zariust.otherdrops.listener.OdSpawnListener;
 import com.gmail.zariust.otherdrops.listener.OdVehicleListener;
 import com.gmail.zariust.otherdrops.listener.PlayerJoinUpdateChecker;
+import com.gmail.zariust.otherdrops.metrics.BStats;
 import com.gmail.zariust.otherdrops.options.Weather;
 
 public class OtherDrops extends JavaPlugin {
@@ -76,6 +77,7 @@ public class OtherDrops extends JavaPlugin {
     public OtherDropsConfig      config = null;
     protected boolean            enableBlockTo;
     protected boolean            disableEntityDrops;
+    private BStats metrics;
 
     public OtherDrops() {
         plugin = this;
@@ -93,6 +95,8 @@ public class OtherDrops extends JavaPlugin {
         Log.logInfo("OtherDrops loaded.");
         if (OtherDropsConfig.globalUpdateChecking)
         	Updater.runUpdateCheck();
+        metrics = new BStats(this);
+        metrics.registerMetrics();
     }
 
     // Exports known enum lists to text files as this can assist in viewing what values are available to use and/or new values that have
