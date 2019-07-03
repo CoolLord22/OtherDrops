@@ -79,6 +79,7 @@
 	        <!--<copy file="${src}/plugin.yml" todir="bin" />-->
 
             <property name="jobs-location" value="${dependencies}/Jobs.jar" />
+            <property name="mythicmobs-location" value="${dependencies}/MythicMobs.jar" />
             <property name="towny-location" value="${dependencies}/Towny.jar" />
 	        <property name="coreprotect-location" value="${dependencies}/CoreProtect.jar" />
 	        <property name="mobarena-location" value="${dependencies}/MobArena.jar" />
@@ -99,6 +100,7 @@
 	            <pathelement location="${coreprotect-location}" />
 	            <pathelement location="${towny-location}" />
 	            <pathelement location="${jobs-location}" />
+	            <pathelement location="${mythicmobs-location}" />
 	            <pathelement location="${mobarena-location}" />
 	            <pathelement location="${moneydrop-location}" />
 	            <pathelement location="${heroes-location}" />
