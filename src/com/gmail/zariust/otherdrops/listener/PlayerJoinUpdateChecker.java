@@ -13,7 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.Plugin;
 
-import com.gmail.zariust.otherdrops.ItemIDReplacer;
 import com.gmail.zariust.otherdrops.OtherDrops;
 import com.gmail.zariust.otherdrops.OtherDropsConfig;
 
@@ -44,12 +43,6 @@ public class PlayerJoinUpdateChecker implements Listener {
     		player.sendMessage(ChatColor.GREEN + "[OtherDrops Version] " + ChatColor.RED + OtherDrops.plugin.getDescription().getVersion());
     		player.sendMessage(ChatColor.GREEN + "[Server Version] " + ChatColor.RED + Bukkit.getVersion() + " API " + Bukkit.getBukkitVersion());
     		player.sendMessage(ChatColor.GREEN + "[Plugin List] " + ChatColor.WHITE + pluginList + "(" + numPlug + ")");
-    	}
-    	
-    	if(player.isOp() || player.hasPermission("otherdrops.admin.reloadconfig")) {
-	    	if(!ItemIDReplacer.checkEmpty()) {
-	    		player.sendMessage(ChatColor.GREEN + "[OtherDrops] " + ChatColor.RED + "The directory folder " + ChatColor.GREEN + "\\plugins\\OtherDrops\\materialchange\\" + ChatColor.RED + " is not empty! If you have already corrected the item IDs to Material values, please delete all .yml files present.");
-	    	}
     	}
     }
 
