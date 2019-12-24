@@ -78,6 +78,7 @@ public class OtherDrops extends JavaPlugin {
     protected boolean            enableBlockTo;
     protected boolean            disableEntityDrops;
     private BStats metrics;
+	public static Updater updateChecker;
 
     public OtherDrops() {
         plugin = this;
@@ -92,11 +93,15 @@ public class OtherDrops extends JavaPlugin {
         registerCommands();
         if (OtherDropsConfig.exportEnumLists)
             exportEnumLists();
-        Log.logInfo("OtherDrops loaded.");
-        if (OtherDropsConfig.globalUpdateChecking)
-        	Updater.runUpdateCheck();
+		if (OtherDropsConfig.globalUpdateChecking) {
+			updateChecker = new Updater(this);
+			for(String line : updateChecker.checkForUpdate()) {
+				Log.logInfoNoVerbosity(line);
+			}
+		}
         metrics = new BStats(this);
         metrics.registerMetrics();
+        Log.logInfo("OtherDrops loaded.");
     }
 
     // Exports known enum lists to text files as this can assist in viewing what values are available to use and/or new values that have

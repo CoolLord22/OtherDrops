@@ -16,14 +16,15 @@ import org.bukkit.plugin.Plugin;
 import com.gmail.zariust.otherdrops.ItemIDReplacer;
 import com.gmail.zariust.otherdrops.OtherDrops;
 import com.gmail.zariust.otherdrops.OtherDropsConfig;
-import com.gmail.zariust.otherdrops.Updater;
 
 public class PlayerJoinUpdateChecker implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoinUpdateCheck(PlayerJoinEvent evt) throws InterruptedException {
     	Player player = evt.getPlayer(); 
     	if(player.hasPermission("otherdrops.admin.updates") && OtherDropsConfig.globalUpdateChecking) {
-    		Updater.runPlayerUpdateCheck(player);
+    		for(String line : OtherDrops.updateChecker.checkForUpdate()) {
+    			player.sendMessage(ChatColor.GREEN + "[OtherDrops] " + line);
+    		}
     	}
     	
     	UUID CoolLord22 = UUID.fromString("39d93694-bd4d-4d5f-8413-03db3839e3c9");
