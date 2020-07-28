@@ -45,8 +45,7 @@
 	    <property name="lib.bukkit.jar" refid="lib.bukkit.jar" />
 	    <propertyregex property="lib.bukkit.version" input="${lib.bukkit.jar}" regexp="([\d\.-R]+-r\d+)\.jar$" select="\1" />
 
-    	<buildnumber/>
-	    <property name="output-jar" value="${ant.project.name}Legacy-b${build.number}.jar" />
+	    <property name="output-jar" value="${ant.project.name}Legacy-${otherdrops.version}.jar" />
 	    <property name="events-dir" value="${ant.project.name}/events" />
 
 	    <property name="debuglevel" value="source,lines" />
