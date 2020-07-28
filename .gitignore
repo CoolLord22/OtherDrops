@@ -6,8 +6,7 @@ bin-test/*
 builds/*
 doc/*
 *.*~
-OtherDrops-*.jar
-OtherDropsLegacy-*.jar
+OtherDrops*.jar
 OtherDrops/events/*.jar
 lib/bukkit*.jar
 .eclipse-build
@@ -20,7 +19,7 @@ src/com/gmail/zariust/bukkit/obevents/.DS_Store
 .recommenders/
 
 # Ignore plugin.yml as generated from plugin.yml.template
-rsrc/plugin.yml
 /.metadata/
 
 .externalToolBuilders/New_Builder.launch
+build.number
