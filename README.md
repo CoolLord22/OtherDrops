@@ -1,3 +1,8 @@
+# REPOSITORY NO LONGER USED, PLEASE USE NON-LEGACY BRANCH  <https://github.com/CoolLord22/OtherDrops1.13>
+#
+#
+#
+#
 OtherDrops
 ==========
 
